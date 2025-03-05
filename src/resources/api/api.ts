@@ -1,0 +1,40 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../../resource';
+import * as ClusterAPI from './cluster';
+import {
+  Cluster,
+  ClusterCreateParams,
+  ClusterDeleteParams,
+  ClusterListResponse,
+  ClusterResource,
+} from './cluster';
+import * as VmAPI from './vm';
+import { Vm, VmCreateBranchParams, VmDeleteParams, VmListResponse, VmResource, VmUpdateParams } from './vm';
+
+export class API extends APIResource {
+  cluster: ClusterAPI.ClusterResource = new ClusterAPI.ClusterResource(this._client);
+  vm: VmAPI.VmResource = new VmAPI.VmResource(this._client);
+}
+
+API.ClusterResource = ClusterResource;
+API.VmResource = VmResource;
+
+export declare namespace API {
+  export {
+    ClusterResource as ClusterResource,
+    type Cluster as Cluster,
+    type ClusterListResponse as ClusterListResponse,
+    type ClusterCreateParams as ClusterCreateParams,
+    type ClusterDeleteParams as ClusterDeleteParams,
+  };
+
+  export {
+    VmResource as VmResource,
+    type Vm as Vm,
+    type VmListResponse as VmListResponse,
+    type VmUpdateParams as VmUpdateParams,
+    type VmDeleteParams as VmDeleteParams,
+    type VmCreateBranchParams as VmCreateBranchParams,
+  };
+}
