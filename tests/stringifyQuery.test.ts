@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { VersSDKTs } from 'vers-sdk-ts';
+import { Vers } from 'vers-sdk-ts';
 
-const { stringifyQuery } = VersSDKTs.prototype as any;
+const { stringifyQuery } = Vers.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [
