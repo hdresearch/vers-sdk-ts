@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'firecracker-manager/internal/uploads';
-import { toFile } from 'firecracker-manager/uploads';
+import { multipartFormRequestOptions, createForm } from 'vers-sdk-ts/internal/uploads';
+import { toFile } from 'vers-sdk-ts/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

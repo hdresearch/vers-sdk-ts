@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { FirecrackerManager } from 'firecracker-manager';
+import { VersSDKTs } from 'vers-sdk-ts';
 
-const { stringifyQuery } = FirecrackerManager.prototype as any;
+const { stringifyQuery } = VersSDKTs.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [
