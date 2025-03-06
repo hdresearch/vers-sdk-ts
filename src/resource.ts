@@ -1,11 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import type { VersSDKTs } from './client';
+import type { Vers } from './client';
 
 export class APIResource {
-  protected _client: VersSDKTs;
+  protected _client: Vers;
 
-  constructor(client: VersSDKTs) {
+  constructor(client: Vers) {
     this._client = client;
   }
 }

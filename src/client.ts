@@ -42,7 +42,7 @@ export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'debug';
 const parseLogLevel = (
   maybeLevel: string | undefined,
   sourceName: string,
-  client: VersSDKTs,
+  client: Vers,
 ): LogLevel | undefined => {
   if (!maybeLevel) {
     return undefined;
@@ -74,7 +74,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['VERS_SDK_TS_BASE_URL'].
+   * Defaults to process.env['VERS_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -126,7 +126,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['VERS_SDK_TS_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['VERS_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -141,9 +141,9 @@ export interface ClientOptions {
 type FinalizedRequestInit = RequestInit & { headers: Headers };
 
 /**
- * API Client for interfacing with the Vers SDK Ts API.
+ * API Client for interfacing with the Vers API.
  */
-export class VersSDKTs {
+export class Vers {
   apiKey: string | null;
 
   baseURL: string;
@@ -159,10 +159,10 @@ export class VersSDKTs {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Vers SDK Ts API.
+   * API Client for interfacing with the Vers API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['VERS_SDK_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['VERS_SDK_TS_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['VERS_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -171,7 +171,7 @@ export class VersSDKTs {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('VERS_SDK_TS_BASE_URL'),
+    baseURL = readEnv('VERS_BASE_URL'),
     apiKey = readEnv('VERS_SDK_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
@@ -182,14 +182,14 @@ export class VersSDKTs {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? VersSDKTs.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Vers.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('VERS_SDK_TS_LOG'), "process.env['VERS_SDK_TS_LOG']", this) ??
+      parseLogLevel(readEnv('VERS_LOG'), "process.env['VERS_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -238,7 +238,7 @@ export class VersSDKTs {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.VersSDKTsError(
+        throw new Errors.VersError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -703,10 +703,10 @@ export class VersSDKTs {
     }
   }
 
-  static VersSDKTs = this;
+  static Vers = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static VersSDKTsError = Errors.VersSDKTsError;
+  static VersError = Errors.VersError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -724,8 +724,8 @@ export class VersSDKTs {
 
   api: API.API = new API.API(this);
 }
-VersSDKTs.API = ApiapiAPI;
-export declare namespace VersSDKTs {
+Vers.API = ApiapiAPI;
+export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
 
   export { ApiapiAPI as API };
