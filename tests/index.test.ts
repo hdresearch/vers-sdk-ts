@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'firecracker-manager/api-promise';
+import { APIPromise } from 'vers-sdk-ts/api-promise';
 
 import util from 'node:util';
-import FirecrackerManager from 'firecracker-manager';
-import { APIUserAbortError } from 'firecracker-manager';
+import VersSDKTs from 'vers-sdk-ts';
+import { APIUserAbortError } from 'vers-sdk-ts';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -20,7 +20,7 @@ describe('instantiate client', () => {
   });
 
   describe('defaultHeaders', () => {
-    const client = new FirecrackerManager({
+    const client = new VersSDKTs({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
       apiKey: 'My API Key',
@@ -54,14 +54,14 @@ describe('instantiate client', () => {
 
     beforeEach(() => {
       process.env = { ...env };
-      process.env['FIRECRACKER_MANAGER_LOG'] = undefined;
+      process.env['VERS_SDK_TS_LOG'] = undefined;
     });
 
     afterEach(() => {
       process.env = env;
     });
 
-    const forceAPIResponseForClient = async (client: FirecrackerManager) => {
+    const forceAPIResponseForClient = async (client: VersSDKTs) => {
       await new APIPromise(
         client,
         Promise.resolve({
@@ -87,14 +87,14 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new FirecrackerManager({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
+      const client = new VersSDKTs({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).toHaveBeenCalled();
     });
 
     test('default logLevel is warn', async () => {
-      const client = new FirecrackerManager({ apiKey: 'My API Key' });
+      const client = new VersSDKTs({ apiKey: 'My API Key' });
       expect(client.logLevel).toBe('warn');
     });
 
@@ -107,7 +107,7 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      const client = new FirecrackerManager({ logger: logger, logLevel: 'info', apiKey: 'My API Key' });
+      const client = new VersSDKTs({ logger: logger, logLevel: 'info', apiKey: 'My API Key' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -122,8 +122,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['FIRECRACKER_MANAGER_LOG'] = 'debug';
-      const client = new FirecrackerManager({ logger: logger, apiKey: 'My API Key' });
+      process.env['VERS_SDK_TS_LOG'] = 'debug';
+      const client = new VersSDKTs({ logger: logger, apiKey: 'My API Key' });
       expect(client.logLevel).toBe('debug');
 
       await forceAPIResponseForClient(client);
@@ -139,11 +139,11 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['FIRECRACKER_MANAGER_LOG'] = 'not a log level';
-      const client = new FirecrackerManager({ logger: logger, apiKey: 'My API Key' });
+      process.env['VERS_SDK_TS_LOG'] = 'not a log level';
+      const client = new VersSDKTs({ logger: logger, apiKey: 'My API Key' });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
-        'process.env[\'FIRECRACKER_MANAGER_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
+        'process.env[\'VERS_SDK_TS_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
       );
     });
 
@@ -156,8 +156,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['FIRECRACKER_MANAGER_LOG'] = 'debug';
-      const client = new FirecrackerManager({ logger: logger, logLevel: 'off', apiKey: 'My API Key' });
+      process.env['VERS_SDK_TS_LOG'] = 'debug';
+      const client = new VersSDKTs({ logger: logger, logLevel: 'off', apiKey: 'My API Key' });
 
       await forceAPIResponseForClient(client);
       expect(debugMock).not.toHaveBeenCalled();
@@ -172,8 +172,8 @@ describe('instantiate client', () => {
         error: jest.fn(),
       };
 
-      process.env['FIRECRACKER_MANAGER_LOG'] = 'not a log level';
-      const client = new FirecrackerManager({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
+      process.env['VERS_SDK_TS_LOG'] = 'not a log level';
+      const client = new VersSDKTs({ logger: logger, logLevel: 'debug', apiKey: 'My API Key' });
       expect(client.logLevel).toBe('debug');
       expect(warnMock).not.toHaveBeenCalled();
     });
@@ -181,7 +181,7 @@ describe('instantiate client', () => {
 
   describe('defaultQuery', () => {
     test('with null query params given', () => {
-      const client = new FirecrackerManager({
+      const client = new VersSDKTs({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
         apiKey: 'My API Key',
@@ -190,7 +190,7 @@ describe('instantiate client', () => {
     });
 
     test('multiple default query params', () => {
-      const client = new FirecrackerManager({
+      const client = new VersSDKTs({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
         apiKey: 'My API Key',
@@ -199,7 +199,7 @@ describe('instantiate client', () => {
     });
 
     test('overriding with `undefined`', () => {
-      const client = new FirecrackerManager({
+      const client = new VersSDKTs({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { hello: 'world' },
         apiKey: 'My API Key',
@@ -209,7 +209,7 @@ describe('instantiate client', () => {
   });
 
   test('custom fetch', async () => {
-    const client = new FirecrackerManager({
+    const client = new VersSDKTs({
       baseURL: 'http://localhost:5000/',
       apiKey: 'My API Key',
       fetch: (url) => {
@@ -227,7 +227,7 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new FirecrackerManager({
+    const client = new VersSDKTs({
       baseURL: 'http://localhost:5000/',
       apiKey: 'My API Key',
       fetch: defaultFetch,
@@ -235,7 +235,7 @@ describe('instantiate client', () => {
   });
 
   test('custom signal', async () => {
-    const client = new FirecrackerManager({
+    const client = new VersSDKTs({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
       apiKey: 'My API Key',
       fetch: (...args) => {
@@ -267,7 +267,7 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new FirecrackerManager({
+    const client = new VersSDKTs({
       baseURL: 'http://localhost:5000/',
       apiKey: 'My API Key',
       fetch: testFetch,
@@ -279,75 +279,69 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new FirecrackerManager({
-        baseURL: 'http://localhost:5000/custom/path/',
-        apiKey: 'My API Key',
-      });
+      const client = new VersSDKTs({ baseURL: 'http://localhost:5000/custom/path/', apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     test('no trailing slash', () => {
-      const client = new FirecrackerManager({
-        baseURL: 'http://localhost:5000/custom/path',
-        apiKey: 'My API Key',
-      });
+      const client = new VersSDKTs({ baseURL: 'http://localhost:5000/custom/path', apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     afterEach(() => {
-      process.env['FIRECRACKER_MANAGER_BASE_URL'] = undefined;
+      process.env['VERS_SDK_TS_BASE_URL'] = undefined;
     });
 
     test('explicit option', () => {
-      const client = new FirecrackerManager({ baseURL: 'https://example.com', apiKey: 'My API Key' });
+      const client = new VersSDKTs({ baseURL: 'https://example.com', apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://example.com');
     });
 
     test('env variable', () => {
-      process.env['FIRECRACKER_MANAGER_BASE_URL'] = 'https://example.com/from_env';
-      const client = new FirecrackerManager({ apiKey: 'My API Key' });
+      process.env['VERS_SDK_TS_BASE_URL'] = 'https://example.com/from_env';
+      const client = new VersSDKTs({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
-      process.env['FIRECRACKER_MANAGER_BASE_URL'] = ''; // empty
-      const client = new FirecrackerManager({ apiKey: 'My API Key' });
+      process.env['VERS_SDK_TS_BASE_URL'] = ''; // empty
+      const client = new VersSDKTs({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://api.example.com');
     });
 
     test('blank env variable', () => {
-      process.env['FIRECRACKER_MANAGER_BASE_URL'] = '  '; // blank
-      const client = new FirecrackerManager({ apiKey: 'My API Key' });
+      process.env['VERS_SDK_TS_BASE_URL'] = '  '; // blank
+      const client = new VersSDKTs({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('https://api.example.com');
     });
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new FirecrackerManager({ maxRetries: 4, apiKey: 'My API Key' });
+    const client = new VersSDKTs({ maxRetries: 4, apiKey: 'My API Key' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new FirecrackerManager({ apiKey: 'My API Key' });
+    const client2 = new VersSDKTs({ apiKey: 'My API Key' });
     expect(client2.maxRetries).toEqual(2);
   });
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['FIRECRACKER_MANAGER_API_KEY'] = 'My API Key';
-    const client = new FirecrackerManager();
+    process.env['VERS_SDK_API_KEY'] = 'My API Key';
+    const client = new VersSDKTs();
     expect(client.apiKey).toBe('My API Key');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
-    process.env['FIRECRACKER_MANAGER_API_KEY'] = 'another My API Key';
-    const client = new FirecrackerManager({ apiKey: 'My API Key' });
+    process.env['VERS_SDK_API_KEY'] = 'another My API Key';
+    const client = new VersSDKTs({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });
 });
 
 describe('request building', () => {
-  const client = new FirecrackerManager({ apiKey: 'My API Key' });
+  const client = new VersSDKTs({ apiKey: 'My API Key' });
 
   describe('custom headers', () => {
     test('handles undefined', () => {
@@ -366,7 +360,7 @@ describe('request building', () => {
 });
 
 describe('default encoder', () => {
-  const client = new FirecrackerManager({ apiKey: 'My API Key' });
+  const client = new VersSDKTs({ apiKey: 'My API Key' });
 
   class Serializable {
     toJSON() {
@@ -451,7 +445,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new FirecrackerManager({ apiKey: 'My API Key', timeout: 10, fetch: testFetch });
+    const client = new VersSDKTs({ apiKey: 'My API Key', timeout: 10, fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -481,7 +475,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new FirecrackerManager({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new VersSDKTs({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -505,7 +499,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new FirecrackerManager({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new VersSDKTs({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -534,7 +528,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new FirecrackerManager({
+    const client = new VersSDKTs({
       apiKey: 'My API Key',
       fetch: testFetch,
       maxRetries: 4,
@@ -567,7 +561,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new FirecrackerManager({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
+    const client = new VersSDKTs({ apiKey: 'My API Key', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -597,7 +591,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new FirecrackerManager({ apiKey: 'My API Key', fetch: testFetch });
+    const client = new VersSDKTs({ apiKey: 'My API Key', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -627,7 +621,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new FirecrackerManager({ apiKey: 'My API Key', fetch: testFetch });
+    const client = new VersSDKTs({ apiKey: 'My API Key', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);

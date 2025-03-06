@@ -55,12 +55,12 @@ $ cd vers-sdk-ts
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link firecracker-manager
+$ yarn link vers-sdk-ts
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global firecracker-manager
+$ pnpm link -—global vers-sdk-ts
 ```
 
 ## Running tests
