@@ -16,9 +16,9 @@ before making any information public.
 ## Reporting Non-SDK Related Security Issues
 
 If you encounter security issues that are not directly related to SDKs but pertain to the services
-or products provided by Firecracker Manager please follow the respective company's security reporting guidelines.
+or products provided by Vers SDK Ts please follow the respective company's security reporting guidelines.
 
-### Firecracker Manager Terms and Policies
+### Vers SDK Ts Terms and Policies
 
 Please contact dev-feedback@firecracker-manager.com for any questions or concerns regarding security of our services.
 

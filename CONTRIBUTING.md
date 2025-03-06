@@ -42,25 +42,25 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:stainless-sdks/firecracker-manager-typescript.git
+$ npm install git+ssh://git@github.com:hdresearch/vers-sdk-ts.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/stainless-sdks/firecracker-manager-typescript
-$ cd firecracker-manager-typescript
+$ git clone https://www.github.com/hdresearch/vers-sdk-ts
+$ cd vers-sdk-ts
 
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link firecracker-manager
+$ yarn link vers-sdk-ts
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global firecracker-manager
+$ pnpm link -—global vers-sdk-ts
 ```
 
 ## Running tests

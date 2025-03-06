@@ -1,12 +1,12 @@
 {
-  "name": "firecracker-manager",
-  "version": "0.0.1-alpha.0",
-  "description": "The official TypeScript library for the Firecracker Manager API",
-  "author": "Firecracker Manager <dev-feedback@firecracker-manager.com>",
+  "name": "vers-sdk-ts",
+  "version": "0.1.0-alpha.1",
+  "description": "The official TypeScript library for the Vers SDK Ts API",
+  "author": "Vers SDK Ts <dev-feedback@firecracker-manager.com>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:stainless-sdks/firecracker-manager-typescript",
+  "repository": "github:hdresearch/vers-sdk-ts",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "files": [
@@ -50,8 +50,8 @@
     "synckit": "0.8.8"
   },
   "imports": {
-    "firecracker-manager": ".",
-    "firecracker-manager/*": "./src/*"
+    "vers-sdk-ts": ".",
+    "vers-sdk-ts/*": "./src/*"
   },
   "exports": {
     ".": {
