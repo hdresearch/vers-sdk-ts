@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "firecracker-manager/*": ["dist/src/*"],
-      "firecracker-manager": ["dist/src/index.ts"],
+      "vers/*": ["dist/src/*"],
+      "vers": ["dist/src/index.ts"],
     },
     "noEmit": false,
     "declaration": true,

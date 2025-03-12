@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Chelsea } from 'firecracker-manager';
+import { Chelsea } from 'vers';
 
 const { stringifyQuery } = Chelsea.prototype as any;
 

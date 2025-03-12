@@ -20,7 +20,7 @@ or products provided by Chelsea please follow the respective company's security 
 
 ### Chelsea Terms and Policies
 
-Please contact dev-feedback@firecracker-manager.com for any questions or concerns regarding security of our services.
+Please contact support@hdr.is for any questions or concerns regarding security of our services.
 
 ---
 
