@@ -1,8 +1,8 @@
-# Chelsea TypeScript API Library
+# Vers TypeScript API Library
 
 [![NPM version](https://img.shields.io/npm/v/vers.svg)](https://npmjs.org/package/vers) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vers)
 
-This library provides convenient access to the Chelsea REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Vers REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [hdr.is](https://hdr.is). The full API of this library can be found in [api.md](api.md).
 
@@ -23,9 +23,9 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Chelsea from 'vers';
+import Vers from 'vers';
 
-const client = new Chelsea({
+const client = new Vers({
   apiKey: process.env['FIRECRACKER_MANAGER_API_KEY'], // This is the default and can be omitted
 });
 
@@ -42,14 +42,14 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Chelsea from 'vers';
+import Vers from 'vers';
 
-const client = new Chelsea({
+const client = new Vers({
   apiKey: process.env['FIRECRACKER_MANAGER_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
-  const clusters: Chelsea.API.ClusterListResponse = await client.api.cluster.list();
+  const clusters: Vers.API.ClusterListResponse = await client.api.cluster.list();
 }
 
 main();
@@ -67,7 +67,7 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const clusters = await client.api.cluster.list().catch(async (err) => {
-    if (err instanceof Chelsea.APIError) {
+    if (err instanceof Vers.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
       console.log(err.headers); // {server: 'nginx', ...}
@@ -104,7 +104,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new Chelsea({
+const client = new Vers({
   maxRetries: 0, // default is 2
 });
 
@@ -121,7 +121,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new Chelsea({
+const client = new Vers({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -147,7 +147,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new Chelsea();
+const client = new Vers();
 
 const response = await client.api.cluster.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -168,13 +168,13 @@ console.log(clusters);
 
 The log level can be configured in two ways:
 
-1. Via the `CHELSEA_LOG` environment variable
+1. Via the `VERS_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Chelsea from 'vers';
+import Vers from 'vers';
 
-const client = new Chelsea({
+const client = new Vers({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -200,13 +200,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Chelsea from 'vers';
+import Vers from 'vers';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new Chelsea({
-  logger: logger.child({ name: 'Chelsea' }),
+const client = new Vers({
+  logger: logger.child({ name: 'Vers' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -270,10 +270,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Chelsea from 'vers';
+import Vers from 'vers';
 import fetch from 'my-fetch';
 
-const client = new Chelsea({ fetch });
+const client = new Vers({ fetch });
 ```
 
 ### Fetch options
@@ -281,9 +281,9 @@ const client = new Chelsea({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Chelsea from 'vers';
+import Vers from 'vers';
 
-const client = new Chelsea({
+const client = new Vers({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -298,11 +298,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Chelsea from 'vers';
+import Vers from 'vers';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new Chelsea({
+const client = new Vers({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -312,9 +312,9 @@ const client = new Chelsea({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Chelsea from 'vers';
+import Vers from 'vers';
 
-const client = new Chelsea({
+const client = new Vers({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -324,10 +324,10 @@ const client = new Chelsea({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Chelsea from 'npm:vers';
+import Vers from 'npm:vers';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new Chelsea({
+const client = new Vers({
   fetchOptions: {
     client: httpClient,
   },
