@@ -58,14 +58,19 @@ export class VmResource extends APIResource {
 
 export interface Vm {
   /**
+   * The ID of the VM.
+   */
+  id: string;
+
+  /**
    * The IDs of direct children branched from this VM.
    */
   children: Array<string>;
 
   /**
-   * The ID of the VM according to Firecracker.
+   * The VM's local IP address on the VM subnet
    */
-  firecracker_id: string;
+  ip_address: string;
 
   /**
    * The VM's network configuration
@@ -88,27 +93,15 @@ export namespace Vm {
    * The VM's network configuration
    */
   export interface NetworkInfo {
-    eth0_ip: string;
+    guest_ip: string;
 
-    host_veth_ip: string;
-
-    host_veth_name: string;
-
-    mac_address: string;
-
-    namespace_gateway: string;
-
-    namespace_name: string;
+    guest_mac: string;
 
     tap0_ip: string;
 
     tap0_name: string;
 
-    vm_veth_ip: string;
-
-    vm_veth_name: string;
-
-    vm_veth_namespace: string;
+    vm_namespace: string;
   }
 }
 

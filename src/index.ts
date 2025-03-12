@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Vers as default } from './client';
+export { Chelsea as default } from './client';
 
 export { type Uploadable, toFile } from './uploads';
 export { APIPromise } from './api-promise';
-export { Vers, type ClientOptions } from './client';
+export { Chelsea, type ClientOptions } from './client';
 export {
-  VersError,
+  ChelseaError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,

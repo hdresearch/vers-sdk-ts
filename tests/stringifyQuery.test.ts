@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Vers } from 'vers-sdk-ts';
+import { Chelsea } from 'firecracker-manager';
 
-const { stringifyQuery } = Vers.prototype as any;
+const { stringifyQuery } = Chelsea.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

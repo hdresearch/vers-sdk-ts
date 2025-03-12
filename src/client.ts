@@ -42,7 +42,7 @@ export type LogLevel = 'off' | 'error' | 'warn' | 'info' | 'debug';
 const parseLogLevel = (
   maybeLevel: string | undefined,
   sourceName: string,
-  client: Vers,
+  client: Chelsea,
 ): LogLevel | undefined => {
   if (!maybeLevel) {
     return undefined;
@@ -67,14 +67,14 @@ const parseLogLevel = (
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['VERS_SDK_API_KEY'].
+   * Defaults to process.env['FIRECRACKER_MANAGER_API_KEY'].
    */
   apiKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['VERS_BASE_URL'].
+   * Defaults to process.env['CHELSEA_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -126,7 +126,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['VERS_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['CHELSEA_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -141,9 +141,9 @@ export interface ClientOptions {
 type FinalizedRequestInit = RequestInit & { headers: Headers };
 
 /**
- * API Client for interfacing with the Vers API.
+ * API Client for interfacing with the Chelsea API.
  */
-export class Vers {
+export class Chelsea {
   apiKey: string | null;
 
   baseURL: string;
@@ -159,10 +159,10 @@ export class Vers {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Vers API.
+   * API Client for interfacing with the Chelsea API.
    *
-   * @param {string | null | undefined} [opts.apiKey=process.env['VERS_SDK_API_KEY'] ?? null]
-   * @param {string} [opts.baseURL=process.env['VERS_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
+   * @param {string | null | undefined} [opts.apiKey=process.env['FIRECRACKER_MANAGER_API_KEY'] ?? null]
+   * @param {string} [opts.baseURL=process.env['CHELSEA_BASE_URL'] ?? https://api.example.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -171,8 +171,8 @@ export class Vers {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('VERS_BASE_URL'),
-    apiKey = readEnv('VERS_SDK_API_KEY') ?? null,
+    baseURL = readEnv('CHELSEA_BASE_URL'),
+    apiKey = readEnv('FIRECRACKER_MANAGER_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
@@ -182,14 +182,14 @@ export class Vers {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Vers.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Chelsea.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('VERS_LOG'), "process.env['VERS_LOG']", this) ??
+      parseLogLevel(readEnv('CHELSEA_LOG'), "process.env['CHELSEA_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -238,7 +238,7 @@ export class Vers {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.VersError(
+        throw new Errors.ChelseaError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -703,10 +703,10 @@ export class Vers {
     }
   }
 
-  static Vers = this;
+  static Chelsea = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static VersError = Errors.VersError;
+  static ChelseaError = Errors.ChelseaError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -724,8 +724,8 @@ export class Vers {
 
   api: API.API = new API.API(this);
 }
-Vers.API = ApiapiAPI;
-export declare namespace Vers {
+Chelsea.API = ApiapiAPI;
+export declare namespace Chelsea {
   export type RequestOptions = Opts.RequestOptions;
 
   export { ApiapiAPI as API };
