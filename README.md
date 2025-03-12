@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import Vers from 'vers';
 
 const client = new Vers({
-  apiKey: process.env['FIRECRACKER_MANAGER_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -45,7 +45,7 @@ This library includes TypeScript definitions for all request params and response
 import Vers from 'vers';
 
 const client = new Vers({
-  apiKey: process.env['FIRECRACKER_MANAGER_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
