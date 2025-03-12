@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'firecracker-manager/internal/to-file';
-import { toFile } from 'firecracker-manager/uploads';
+import type { ResponseLike } from 'vers/internal/to-file';
+import { toFile } from 'vers/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('firecracker-manager/uploads');
+    const uploads = await import('vers/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

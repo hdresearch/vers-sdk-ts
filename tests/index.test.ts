@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'firecracker-manager/api-promise';
+import { APIPromise } from 'vers/api-promise';
 
 import util from 'node:util';
-import Chelsea from 'firecracker-manager';
-import { APIUserAbortError } from 'firecracker-manager';
+import Chelsea from 'vers';
+import { APIUserAbortError } from 'vers';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

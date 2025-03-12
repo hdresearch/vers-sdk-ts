@@ -55,12 +55,12 @@ $ cd firecracker-manager-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link firecracker-manager
+$ yarn link vers
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global firecracker-manager
+$ pnpm link -—global vers
 ```
 
 ## Running tests

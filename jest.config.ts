@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^firecracker-manager$': '<rootDir>/src/index.ts',
-    '^firecracker-manager/(.*)$': '<rootDir>/src/$1',
+    '^vers$': '<rootDir>/src/index.ts',
+    '^vers/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',
