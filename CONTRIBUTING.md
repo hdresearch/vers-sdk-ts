@@ -55,12 +55,12 @@ $ cd vers-sdk-ts
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link vers-sdk-ts
+$ yarn link vers
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global vers-sdk-ts
+$ pnpm link -—global vers
 ```
 
 ## Running tests

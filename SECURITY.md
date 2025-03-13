@@ -20,7 +20,7 @@ or products provided by Vers please follow the respective company's security rep
 
 ### Vers Terms and Policies
 
-Please contact dev-feedback@firecracker-manager.com for any questions or concerns regarding security of our services.
+Please contact support@hdr.is for any questions or concerns regarding security of our services.
 
 ---
 

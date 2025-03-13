@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'vers-sdk-ts/api-promise';
+import { APIPromise } from 'vers/api-promise';
 
 import util from 'node:util';
-import Vers from 'vers-sdk-ts';
-import { APIUserAbortError } from 'vers-sdk-ts';
+import Vers from 'vers';
+import { APIUserAbortError } from 'vers';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
@@ -319,14 +319,14 @@ describe('instantiate client', () => {
 
   test('with environment variable arguments', () => {
     // set options via env var
-    process.env['VERS_SDK_API_KEY'] = 'My API Key';
+    process.env['VERS_API_KEY'] = 'My API Key';
     const client = new Vers();
     expect(client.apiKey).toBe('My API Key');
   });
 
   test('with overridden environment variable arguments', () => {
     // set options via env var
-    process.env['VERS_SDK_API_KEY'] = 'another My API Key';
+    process.env['VERS_API_KEY'] = 'another My API Key';
     const client = new Vers({ apiKey: 'My API Key' });
     expect(client.apiKey).toBe('My API Key');
   });

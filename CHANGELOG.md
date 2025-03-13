@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2025-03-13)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/hdresearch/vers-sdk-ts/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#9](https://github.com/hdresearch/vers-sdk-ts/issues/9)) ([ca5cfc7](https://github.com/hdresearch/vers-sdk-ts/commit/ca5cfc741bcee03741dbcb72a8ebd6ba22863902))
+* **api:** update via SDK Studio ([8ff0222](https://github.com/hdresearch/vers-sdk-ts/commit/8ff0222ea20217e258d822b59f967ec2634b7f08))
+* **api:** update via SDK Studio ([811b3e1](https://github.com/hdresearch/vers-sdk-ts/commit/811b3e1935e0eb6d07baa21dd0d93112ab6b3ae3))
+* **api:** update via SDK Studio ([e5715db](https://github.com/hdresearch/vers-sdk-ts/commit/e5715db6f18f96283de3e98aa5d7825aac110eb6))
+* **api:** update via SDK Studio ([f01be4c](https://github.com/hdresearch/vers-sdk-ts/commit/f01be4c770b15d8f3ee615a7f023309f60a92427))
+* **client:** accept RFC6838 JSON content types ([#11](https://github.com/hdresearch/vers-sdk-ts/issues/11)) ([7835536](https://github.com/hdresearch/vers-sdk-ts/commit/783553628cc939cdcbbca257b2d7de4c46f5f348))
+
+
+### Chores
+
+* go live ([#12](https://github.com/hdresearch/vers-sdk-ts/issues/12)) ([6f26035](https://github.com/hdresearch/vers-sdk-ts/commit/6f26035fa49797c54bd769f553c963c835313c0a))
+
 ## 0.1.0-alpha.2 (2025-03-06)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/hdresearch/vers-sdk-ts/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)

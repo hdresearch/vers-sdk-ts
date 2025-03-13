@@ -1,4 +1,4 @@
-import { fromBase64, toBase64 } from 'vers-sdk-ts/internal/utils/base64';
+import { fromBase64, toBase64 } from 'vers/internal/utils/base64';
 
 describe.each(['Buffer', 'atob'])('with %s', (mode) => {
   let originalBuffer: BufferConstructor;

@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'vers-sdk-ts/internal/uploads';
-import { toFile } from 'vers-sdk-ts/uploads';
+import { multipartFormRequestOptions, createForm } from 'vers/internal/uploads';
+import { toFile } from 'vers/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

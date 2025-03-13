@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "vers-sdk-ts/*": ["src/*"],
-      "vers-sdk-ts": ["src/index.ts"]
+      "vers/*": ["src/*"],
+      "vers": ["src/index.ts"]
     },
     "noEmit": true,
 

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Vers from 'vers-sdk-ts';
+import Vers from 'vers';
 
 const client = new Vers({
   apiKey: 'My API Key',
