@@ -12,7 +12,9 @@ export {
   VmResource,
   type Vm,
   type VmListResponse,
+  type VmExecuteResponse,
   type VmUpdateParams,
   type VmDeleteParams,
   type VmCreateBranchParams,
+  type VmExecuteParams,
 } from './vm';

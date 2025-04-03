@@ -10,7 +10,16 @@ import {
   ClusterResource,
 } from './cluster';
 import * as VmAPI from './vm';
-import { Vm, VmCreateBranchParams, VmDeleteParams, VmListResponse, VmResource, VmUpdateParams } from './vm';
+import {
+  Vm,
+  VmCreateBranchParams,
+  VmDeleteParams,
+  VmExecuteParams,
+  VmExecuteResponse,
+  VmListResponse,
+  VmResource,
+  VmUpdateParams,
+} from './vm';
 
 export class API extends APIResource {
   cluster: ClusterAPI.ClusterResource = new ClusterAPI.ClusterResource(this._client);
@@ -33,8 +42,10 @@ export declare namespace API {
     VmResource as VmResource,
     type Vm as Vm,
     type VmListResponse as VmListResponse,
+    type VmExecuteResponse as VmExecuteResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
     type VmCreateBranchParams as VmCreateBranchParams,
+    type VmExecuteParams as VmExecuteParams,
   };
 }

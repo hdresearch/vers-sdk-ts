@@ -54,6 +54,10 @@ export class VmResource extends APIResource {
     const { body } = params;
     return this._client.post(path`/api/vm/${vmID}/branch`, { body: body, ...options });
   }
+
+  execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
+    return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
+  }
 }
 
 export interface Vm {
@@ -107,6 +111,22 @@ export namespace Vm {
 
 export type VmListResponse = Array<Vm>;
 
+export interface VmExecuteResponse {
+  id: string;
+
+  command_result: VmExecuteResponse.CommandResult;
+}
+
+export namespace VmExecuteResponse {
+  export interface CommandResult {
+    exit_code: number;
+
+    stderr: string;
+
+    stdout: string;
+  }
+}
+
 export interface VmUpdateParams {
   body: 'pause' | 'resume';
 }
@@ -122,12 +142,18 @@ export interface VmCreateBranchParams {
   body: unknown;
 }
 
+export interface VmExecuteParams {
+  command: string;
+}
+
 export declare namespace VmResource {
   export {
     type Vm as Vm,
     type VmListResponse as VmListResponse,
+    type VmExecuteResponse as VmExecuteResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
     type VmCreateBranchParams as VmCreateBranchParams,
+    type VmExecuteParams as VmExecuteParams,
   };
 }
