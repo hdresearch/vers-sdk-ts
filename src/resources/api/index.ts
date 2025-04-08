@@ -2,16 +2,19 @@
 
 export { API } from './api';
 export {
-  ClusterResource,
-  type Cluster,
+  Cluster,
+  type ClusterCreateResponse,
+  type ClusterRetrieveResponse,
   type ClusterListResponse,
+  type ClusterDeleteResponse,
   type ClusterCreateParams,
-  type ClusterDeleteParams,
 } from './cluster';
 export {
-  VmResource,
-  type Vm,
+  Vm,
+  type VmRetrieveResponse,
+  type VmUpdateResponse,
   type VmListResponse,
+  type VmCreateBranchResponse,
   type VmExecuteResponse,
   type VmUpdateParams,
   type VmDeleteParams,

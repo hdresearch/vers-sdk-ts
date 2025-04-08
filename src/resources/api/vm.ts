@@ -6,22 +6,19 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class VmResource extends APIResource {
+export class Vm extends APIResource {
   /**
    * Retrieve information on a particular VM.
    */
-  retrieve(vmID: string, options?: RequestOptions): APIPromise<Vm> {
+  retrieve(vmID: string, options?: RequestOptions): APIPromise<VmRetrieveResponse> {
     return this._client.get(path`/api/vm/${vmID}`, options);
   }
 
   /**
-   * Attempt to update VM state. Will return a 409 if you attempt to resume a VM
-   * which has children. Parent VMs must not be mutated, in order to ensure all
-   * children are derived from the same snapshot.
+   * Update VM state (pause/resume)
    */
-  update(vmID: string, params: VmUpdateParams, options?: RequestOptions): APIPromise<Vm> {
-    const { body } = params;
-    return this._client.patch(path`/api/vm/${vmID}`, { body: body, ...options });
+  update(vmID: string, body: VmUpdateParams, options?: RequestOptions): APIPromise<VmUpdateResponse> {
+    return this._client.patch(path`/api/vm/${vmID}`, { body, ...options });
   }
 
   /**
@@ -50,17 +47,24 @@ export class VmResource extends APIResource {
   /**
    * Creates a branch of the specified VM.
    */
-  createBranch(vmID: string, params: VmCreateBranchParams, options?: RequestOptions): APIPromise<Vm> {
+  createBranch(
+    vmID: string,
+    params: VmCreateBranchParams,
+    options?: RequestOptions,
+  ): APIPromise<VmCreateBranchResponse> {
     const { body } = params;
     return this._client.post(path`/api/vm/${vmID}/branch`, { body: body, ...options });
   }
 
+  /**
+   * Execute a command on the specified VM.
+   */
   execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
     return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
   }
 }
 
-export interface Vm {
+export interface VmRetrieveResponse {
   /**
    * The ID of the VM.
    */
@@ -79,7 +83,7 @@ export interface Vm {
   /**
    * The VM's network configuration
    */
-  network_info: Vm.NetworkInfo;
+  network_info: VmRetrieveResponse.NetworkInfo;
 
   /**
    * Whether the VM is running, paused, or not started.
@@ -92,7 +96,7 @@ export interface Vm {
   parent_id?: string | null;
 }
 
-export namespace Vm {
+export namespace VmRetrieveResponse {
   /**
    * The VM's network configuration
    */
@@ -109,7 +113,156 @@ export namespace Vm {
   }
 }
 
-export type VmListResponse = Array<Vm>;
+export interface VmUpdateResponse {
+  /**
+   * The ID of the VM.
+   */
+  id: string;
+
+  /**
+   * The IDs of direct children branched from this VM.
+   */
+  children: Array<string>;
+
+  /**
+   * The VM's local IP address on the VM subnet
+   */
+  ip_address: string;
+
+  /**
+   * The VM's network configuration
+   */
+  network_info: VmUpdateResponse.NetworkInfo;
+
+  /**
+   * Whether the VM is running, paused, or not started.
+   */
+  state: 'Not started' | 'Running' | 'Paused';
+
+  /**
+   * The parent VM's ID, if present. If None, then this VM is a root VM.
+   */
+  parent_id?: string | null;
+}
+
+export namespace VmUpdateResponse {
+  /**
+   * The VM's network configuration
+   */
+  export interface NetworkInfo {
+    guest_ip: string;
+
+    guest_mac: string;
+
+    tap0_ip: string;
+
+    tap0_name: string;
+
+    vm_namespace: string;
+  }
+}
+
+export type VmListResponse = Array<VmListResponse.VmListResponseItem>;
+
+export namespace VmListResponse {
+  export interface VmListResponseItem {
+    /**
+     * The ID of the VM.
+     */
+    id: string;
+
+    /**
+     * The IDs of direct children branched from this VM.
+     */
+    children: Array<string>;
+
+    /**
+     * The VM's local IP address on the VM subnet
+     */
+    ip_address: string;
+
+    /**
+     * The VM's network configuration
+     */
+    network_info: VmListResponseItem.NetworkInfo;
+
+    /**
+     * Whether the VM is running, paused, or not started.
+     */
+    state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * The parent VM's ID, if present. If None, then this VM is a root VM.
+     */
+    parent_id?: string | null;
+  }
+
+  export namespace VmListResponseItem {
+    /**
+     * The VM's network configuration
+     */
+    export interface NetworkInfo {
+      guest_ip: string;
+
+      guest_mac: string;
+
+      tap0_ip: string;
+
+      tap0_name: string;
+
+      vm_namespace: string;
+    }
+  }
+}
+
+export interface VmCreateBranchResponse {
+  /**
+   * The ID of the VM.
+   */
+  id: string;
+
+  /**
+   * The IDs of direct children branched from this VM.
+   */
+  children: Array<string>;
+
+  /**
+   * The VM's local IP address on the VM subnet
+   */
+  ip_address: string;
+
+  /**
+   * The VM's network configuration
+   */
+  network_info: VmCreateBranchResponse.NetworkInfo;
+
+  /**
+   * Whether the VM is running, paused, or not started.
+   */
+  state: 'Not started' | 'Running' | 'Paused';
+
+  /**
+   * The parent VM's ID, if present. If None, then this VM is a root VM.
+   */
+  parent_id?: string | null;
+}
+
+export namespace VmCreateBranchResponse {
+  /**
+   * The VM's network configuration
+   */
+  export interface NetworkInfo {
+    guest_ip: string;
+
+    guest_mac: string;
+
+    tap0_ip: string;
+
+    tap0_name: string;
+
+    vm_namespace: string;
+  }
+}
 
 export interface VmExecuteResponse {
   id: string;
@@ -127,13 +280,21 @@ export namespace VmExecuteResponse {
   }
 }
 
-export interface VmUpdateParams {
-  body: 'pause' | 'resume';
+export type VmUpdateParams = VmUpdateParams.Variant0 | VmUpdateParams.Variant1;
+
+export declare namespace VmUpdateParams {
+  export interface Variant0 {
+    action: 'pause';
+  }
+
+  export interface Variant1 {
+    action: 'resume';
+  }
 }
 
 export interface VmDeleteParams {
   /**
-   * Optionally stop all child VMs recursively
+   * Optionally delete all child VMs recursively
    */
   recursive?: boolean;
 }
@@ -146,10 +307,12 @@ export interface VmExecuteParams {
   command: string;
 }
 
-export declare namespace VmResource {
+export declare namespace Vm {
   export {
-    type Vm as Vm,
+    type VmRetrieveResponse as VmRetrieveResponse,
+    type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
+    type VmCreateBranchResponse as VmCreateBranchResponse,
     type VmExecuteResponse as VmExecuteResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
