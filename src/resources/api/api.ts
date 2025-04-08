@@ -5,43 +5,49 @@ import * as ClusterAPI from './cluster';
 import {
   Cluster,
   ClusterCreateParams,
-  ClusterDeleteParams,
+  ClusterCreateResponse,
+  ClusterDeleteResponse,
   ClusterListResponse,
-  ClusterResource,
+  ClusterRetrieveResponse,
 } from './cluster';
 import * as VmAPI from './vm';
 import {
   Vm,
   VmCreateBranchParams,
+  VmCreateBranchResponse,
   VmDeleteParams,
   VmExecuteParams,
   VmExecuteResponse,
   VmListResponse,
-  VmResource,
+  VmRetrieveResponse,
   VmUpdateParams,
+  VmUpdateResponse,
 } from './vm';
 
 export class API extends APIResource {
-  cluster: ClusterAPI.ClusterResource = new ClusterAPI.ClusterResource(this._client);
-  vm: VmAPI.VmResource = new VmAPI.VmResource(this._client);
+  cluster: ClusterAPI.Cluster = new ClusterAPI.Cluster(this._client);
+  vm: VmAPI.Vm = new VmAPI.Vm(this._client);
 }
 
-API.ClusterResource = ClusterResource;
-API.VmResource = VmResource;
+API.Cluster = Cluster;
+API.Vm = Vm;
 
 export declare namespace API {
   export {
-    ClusterResource as ClusterResource,
-    type Cluster as Cluster,
+    Cluster as Cluster,
+    type ClusterCreateResponse as ClusterCreateResponse,
+    type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterCreateParams as ClusterCreateParams,
-    type ClusterDeleteParams as ClusterDeleteParams,
   };
 
   export {
-    VmResource as VmResource,
-    type Vm as Vm,
+    Vm as Vm,
+    type VmRetrieveResponse as VmRetrieveResponse,
+    type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
+    type VmCreateBranchResponse as VmCreateBranchResponse,
     type VmExecuteResponse as VmExecuteResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
