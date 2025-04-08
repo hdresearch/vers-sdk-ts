@@ -1,17 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as VmAPI from './vm';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class ClusterResource extends APIResource {
+export class Cluster extends APIResource {
   /**
-   * Start a new cluster.
+   * Create a new cluster.
    */
-  create(params: ClusterCreateParams, options?: RequestOptions): APIPromise<Cluster> {
+  create(params: ClusterCreateParams, options?: RequestOptions): APIPromise<ClusterCreateResponse> {
     const { body } = params;
     return this._client.post('/api/cluster', { body: body, ...options });
   }
@@ -19,7 +17,7 @@ export class ClusterResource extends APIResource {
   /**
    * Retrieve information on a particular cluster.
    */
-  retrieve(clusterID: string, options?: RequestOptions): APIPromise<Cluster> {
+  retrieve(clusterID: string, options?: RequestOptions): APIPromise<ClusterRetrieveResponse> {
     return this._client.get(path`/api/cluster/${clusterID}`, options);
   }
 
@@ -33,61 +31,317 @@ export class ClusterResource extends APIResource {
   /**
    * Delete a cluster.
    */
-  delete(
-    clusterID: string,
-    params: ClusterDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { force } = params ?? {};
-    return this._client.delete(path`/api/cluster/${clusterID}`, {
-      query: { force },
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(clusterID: string, options?: RequestOptions): APIPromise<ClusterDeleteResponse> {
+    return this._client.delete(path`/api/cluster/${clusterID}`, options);
   }
 }
 
-export interface Cluster {
+export interface ClusterCreateResponse {
   /**
    * The cluster's ID.
    */
   id: string;
 
   /**
+   * How many VMs are currently running on this cluster.
+   */
+  vm_count: number;
+
+  /**
    * The VMs that are children of the cluster, including the root VM.
    */
-  children: Array<VmAPI.Vm>;
+  vms: Array<ClusterCreateResponse.Vm>;
 
   /**
    * The ID of the cluster's root VM.
    */
-  root_vm_id: string;
+  root_vm_id?: string | null;
+}
+
+export namespace ClusterCreateResponse {
+  export interface Vm {
+    /**
+     * The ID of the VM.
+     */
+    id: string;
+
+    /**
+     * The IDs of direct children branched from this VM.
+     */
+    children: Array<string>;
+
+    /**
+     * The VM's local IP address on the VM subnet
+     */
+    ip_address: string;
+
+    /**
+     * The VM's network configuration
+     */
+    network_info: Vm.NetworkInfo;
+
+    /**
+     * Whether the VM is running, paused, or not started.
+     */
+    state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * The parent VM's ID, if present. If None, then this VM is a root VM.
+     */
+    parent_id?: string | null;
+  }
+
+  export namespace Vm {
+    /**
+     * The VM's network configuration
+     */
+    export interface NetworkInfo {
+      guest_ip: string;
+
+      guest_mac: string;
+
+      tap0_ip: string;
+
+      tap0_name: string;
+
+      vm_namespace: string;
+    }
+  }
+}
+
+export interface ClusterRetrieveResponse {
+  /**
+   * The cluster's ID.
+   */
+  id: string;
 
   /**
    * How many VMs are currently running on this cluster.
    */
   vm_count: number;
+
+  /**
+   * The VMs that are children of the cluster, including the root VM.
+   */
+  vms: Array<ClusterRetrieveResponse.Vm>;
+
+  /**
+   * The ID of the cluster's root VM.
+   */
+  root_vm_id?: string | null;
 }
 
-export type ClusterListResponse = Array<Cluster>;
+export namespace ClusterRetrieveResponse {
+  export interface Vm {
+    /**
+     * The ID of the VM.
+     */
+    id: string;
+
+    /**
+     * The IDs of direct children branched from this VM.
+     */
+    children: Array<string>;
+
+    /**
+     * The VM's local IP address on the VM subnet
+     */
+    ip_address: string;
+
+    /**
+     * The VM's network configuration
+     */
+    network_info: Vm.NetworkInfo;
+
+    /**
+     * Whether the VM is running, paused, or not started.
+     */
+    state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * The parent VM's ID, if present. If None, then this VM is a root VM.
+     */
+    parent_id?: string | null;
+  }
+
+  export namespace Vm {
+    /**
+     * The VM's network configuration
+     */
+    export interface NetworkInfo {
+      guest_ip: string;
+
+      guest_mac: string;
+
+      tap0_ip: string;
+
+      tap0_name: string;
+
+      vm_namespace: string;
+    }
+  }
+}
+
+export type ClusterListResponse = Array<ClusterListResponse.ClusterListResponseItem>;
+
+export namespace ClusterListResponse {
+  export interface ClusterListResponseItem {
+    /**
+     * The cluster's ID.
+     */
+    id: string;
+
+    /**
+     * How many VMs are currently running on this cluster.
+     */
+    vm_count: number;
+
+    /**
+     * The VMs that are children of the cluster, including the root VM.
+     */
+    vms: Array<ClusterListResponseItem.Vm>;
+
+    /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id?: string | null;
+  }
+
+  export namespace ClusterListResponseItem {
+    export interface Vm {
+      /**
+       * The ID of the VM.
+       */
+      id: string;
+
+      /**
+       * The IDs of direct children branched from this VM.
+       */
+      children: Array<string>;
+
+      /**
+       * The VM's local IP address on the VM subnet
+       */
+      ip_address: string;
+
+      /**
+       * The VM's network configuration
+       */
+      network_info: Vm.NetworkInfo;
+
+      /**
+       * Whether the VM is running, paused, or not started.
+       */
+      state: 'Not started' | 'Running' | 'Paused';
+
+      /**
+       * The parent VM's ID, if present. If None, then this VM is a root VM.
+       */
+      parent_id?: string | null;
+    }
+
+    export namespace Vm {
+      /**
+       * The VM's network configuration
+       */
+      export interface NetworkInfo {
+        guest_ip: string;
+
+        guest_mac: string;
+
+        tap0_ip: string;
+
+        tap0_name: string;
+
+        vm_namespace: string;
+      }
+    }
+  }
+}
+
+export interface ClusterDeleteResponse {
+  /**
+   * The cluster's ID.
+   */
+  id: string;
+
+  /**
+   * How many VMs are currently running on this cluster.
+   */
+  vm_count: number;
+
+  /**
+   * The VMs that are children of the cluster, including the root VM.
+   */
+  vms: Array<ClusterDeleteResponse.Vm>;
+
+  /**
+   * The ID of the cluster's root VM.
+   */
+  root_vm_id?: string | null;
+}
+
+export namespace ClusterDeleteResponse {
+  export interface Vm {
+    /**
+     * The ID of the VM.
+     */
+    id: string;
+
+    /**
+     * The IDs of direct children branched from this VM.
+     */
+    children: Array<string>;
+
+    /**
+     * The VM's local IP address on the VM subnet
+     */
+    ip_address: string;
+
+    /**
+     * The VM's network configuration
+     */
+    network_info: Vm.NetworkInfo;
+
+    /**
+     * Whether the VM is running, paused, or not started.
+     */
+    state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * The parent VM's ID, if present. If None, then this VM is a root VM.
+     */
+    parent_id?: string | null;
+  }
+
+  export namespace Vm {
+    /**
+     * The VM's network configuration
+     */
+    export interface NetworkInfo {
+      guest_ip: string;
+
+      guest_mac: string;
+
+      tap0_ip: string;
+
+      tap0_name: string;
+
+      vm_namespace: string;
+    }
+  }
+}
 
 export interface ClusterCreateParams {
   body: unknown;
 }
 
-export interface ClusterDeleteParams {
-  /**
-   * If true, will delete the cluster and all its children. Otherwise, will only
-   * delete the cluster if it has no children (besides the root VM)
-   */
-  force?: boolean;
-}
-
-export declare namespace ClusterResource {
+export declare namespace Cluster {
   export {
-    type Cluster as Cluster,
+    type ClusterCreateResponse as ClusterCreateResponse,
+    type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterCreateParams as ClusterCreateParams,
-    type ClusterDeleteParams as ClusterDeleteParams,
   };
 }
