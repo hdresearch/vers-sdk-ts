@@ -6,18 +6,18 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class Vm extends APIResource {
+export class VmResource extends APIResource {
   /**
    * Retrieve information on a particular VM.
    */
-  retrieve(vmID: string, options?: RequestOptions): APIPromise<VmRetrieveResponse> {
+  retrieve(vmID: string, options?: RequestOptions): APIPromise<Vm> {
     return this._client.get(path`/api/vm/${vmID}`, options);
   }
 
   /**
    * Update VM state (pause/resume)
    */
-  update(vmID: string, body: VmUpdateParams, options?: RequestOptions): APIPromise<VmUpdateResponse> {
+  update(vmID: string, body: VmUpdateParams, options?: RequestOptions): APIPromise<Vm> {
     return this._client.patch(path`/api/vm/${vmID}`, { body, ...options });
   }
 
@@ -47,11 +47,7 @@ export class Vm extends APIResource {
   /**
    * Creates a branch of the specified VM.
    */
-  createBranch(
-    vmID: string,
-    params: VmCreateBranchParams,
-    options?: RequestOptions,
-  ): APIPromise<VmCreateBranchResponse> {
+  createBranch(vmID: string, params: VmCreateBranchParams, options?: RequestOptions): APIPromise<Vm> {
     const { body } = params;
     return this._client.post(path`/api/vm/${vmID}/branch`, { body: body, ...options });
   }
@@ -64,7 +60,7 @@ export class Vm extends APIResource {
   }
 }
 
-export interface VmRetrieveResponse {
+export interface Vm {
   /**
    * The ID of the VM.
    */
@@ -83,7 +79,7 @@ export interface VmRetrieveResponse {
   /**
    * The VM's network configuration
    */
-  network_info: VmRetrieveResponse.NetworkInfo;
+  network_info: Vm.NetworkInfo;
 
   /**
    * Whether the VM is running, paused, or not started.
@@ -96,7 +92,7 @@ export interface VmRetrieveResponse {
   parent_id?: string | null;
 }
 
-export namespace VmRetrieveResponse {
+export namespace Vm {
   /**
    * The VM's network configuration
    */
@@ -113,156 +109,7 @@ export namespace VmRetrieveResponse {
   }
 }
 
-export interface VmUpdateResponse {
-  /**
-   * The ID of the VM.
-   */
-  id: string;
-
-  /**
-   * The IDs of direct children branched from this VM.
-   */
-  children: Array<string>;
-
-  /**
-   * The VM's local IP address on the VM subnet
-   */
-  ip_address: string;
-
-  /**
-   * The VM's network configuration
-   */
-  network_info: VmUpdateResponse.NetworkInfo;
-
-  /**
-   * Whether the VM is running, paused, or not started.
-   */
-  state: 'Not started' | 'Running' | 'Paused';
-
-  /**
-   * The parent VM's ID, if present. If None, then this VM is a root VM.
-   */
-  parent_id?: string | null;
-}
-
-export namespace VmUpdateResponse {
-  /**
-   * The VM's network configuration
-   */
-  export interface NetworkInfo {
-    guest_ip: string;
-
-    guest_mac: string;
-
-    tap0_ip: string;
-
-    tap0_name: string;
-
-    vm_namespace: string;
-  }
-}
-
-export type VmListResponse = Array<VmListResponse.VmListResponseItem>;
-
-export namespace VmListResponse {
-  export interface VmListResponseItem {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
-
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: VmListResponseItem.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace VmListResponseItem {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
-  }
-}
-
-export interface VmCreateBranchResponse {
-  /**
-   * The ID of the VM.
-   */
-  id: string;
-
-  /**
-   * The IDs of direct children branched from this VM.
-   */
-  children: Array<string>;
-
-  /**
-   * The VM's local IP address on the VM subnet
-   */
-  ip_address: string;
-
-  /**
-   * The VM's network configuration
-   */
-  network_info: VmCreateBranchResponse.NetworkInfo;
-
-  /**
-   * Whether the VM is running, paused, or not started.
-   */
-  state: 'Not started' | 'Running' | 'Paused';
-
-  /**
-   * The parent VM's ID, if present. If None, then this VM is a root VM.
-   */
-  parent_id?: string | null;
-}
-
-export namespace VmCreateBranchResponse {
-  /**
-   * The VM's network configuration
-   */
-  export interface NetworkInfo {
-    guest_ip: string;
-
-    guest_mac: string;
-
-    tap0_ip: string;
-
-    tap0_name: string;
-
-    vm_namespace: string;
-  }
-}
+export type VmListResponse = Array<Vm>;
 
 export interface VmExecuteResponse {
   id: string;
@@ -307,12 +154,10 @@ export interface VmExecuteParams {
   command: string;
 }
 
-export declare namespace Vm {
+export declare namespace VmResource {
   export {
-    type VmRetrieveResponse as VmRetrieveResponse,
-    type VmUpdateResponse as VmUpdateResponse,
+    type Vm as Vm,
     type VmListResponse as VmListResponse,
-    type VmCreateBranchResponse as VmCreateBranchResponse,
     type VmExecuteResponse as VmExecuteResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
