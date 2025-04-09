@@ -17,8 +17,9 @@ export class VmResource extends APIResource {
   /**
    * Update VM state (pause/resume)
    */
-  update(vmID: string, body: VmUpdateParams, options?: RequestOptions): APIPromise<Vm> {
-    return this._client.patch(path`/api/vm/${vmID}`, { body, ...options });
+  update(vmID: string, params: VmUpdateParams, options?: RequestOptions): APIPromise<Vm> {
+    const { body } = params;
+    return this._client.patch(path`/api/vm/${vmID}`, { body: body, ...options });
   }
 
   /**
@@ -127,16 +128,8 @@ export namespace VmExecuteResponse {
   }
 }
 
-export type VmUpdateParams = VmUpdateParams.Variant0 | VmUpdateParams.Variant1;
-
-export declare namespace VmUpdateParams {
-  export interface Variant0 {
-    action: 'pause';
-  }
-
-  export interface Variant1 {
-    action: 'resume';
-  }
+export interface VmUpdateParams {
+  body: 'pause' | 'resume';
 }
 
 export interface VmDeleteParams {
