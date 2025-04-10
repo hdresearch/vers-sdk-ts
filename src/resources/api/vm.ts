@@ -102,6 +102,8 @@ export namespace Vm {
 
     guest_mac: string;
 
+    ssh_port: number;
+
     tap0_ip: string;
 
     tap0_name: string;
