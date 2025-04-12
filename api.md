@@ -20,6 +20,7 @@ Types:
 
 - <code><a href="./src/resources/api/vm.ts">Vm</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmListResponse</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmExecuteResponse</a></code>
 
 Methods:
@@ -28,5 +29,6 @@ Methods:
 - <code title="patch /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">update</a>(vmID, { ...params }) -> Vm</code>
 - <code title="get /api/vm">client.api.vm.<a href="./src/resources/api/vm.ts">list</a>() -> VmListResponse</code>
 - <code title="delete /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">delete</a>(vmID, { ...params }) -> void</code>
+- <code title="post /api/vm/{vm_id}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmID, { ...params }) -> VmCommitResponse</code>
 - <code title="post /api/vm/{vm_id}/branch">client.api.vm.<a href="./src/resources/api/vm.ts">createBranch</a>(vmID, { ...params }) -> Vm</code>
 - <code title="post /api/vm/{vm_id}/execute">client.api.vm.<a href="./src/resources/api/vm.ts">execute</a>(vmID, { ...params }) -> VmExecuteResponse</code>
