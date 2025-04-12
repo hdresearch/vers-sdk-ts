@@ -45,6 +45,11 @@ export class VmResource extends APIResource {
     });
   }
 
+  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<VmCommitResponse> {
+    const { body } = params;
+    return this._client.post(path`/api/vm/${vmID}/commit`, { body: body, ...options });
+  }
+
   /**
    * Creates a branch of the specified VM.
    */
@@ -114,6 +119,22 @@ export namespace Vm {
 
 export type VmListResponse = Array<Vm>;
 
+export interface VmCommitResponse {
+  id: string;
+
+  command_result: VmCommitResponse.CommandResult;
+}
+
+export namespace VmCommitResponse {
+  export interface CommandResult {
+    exit_code: number;
+
+    stderr: string;
+
+    stdout: string;
+  }
+}
+
 export interface VmExecuteResponse {
   id: string;
 
@@ -141,6 +162,10 @@ export interface VmDeleteParams {
   recursive?: boolean;
 }
 
+export interface VmCommitParams {
+  body: unknown;
+}
+
 export interface VmCreateBranchParams {
   body: unknown;
 }
@@ -153,9 +178,11 @@ export declare namespace VmResource {
   export {
     type Vm as Vm,
     type VmListResponse as VmListResponse,
+    type VmCommitResponse as VmCommitResponse,
     type VmExecuteResponse as VmExecuteResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
+    type VmCommitParams as VmCommitParams,
     type VmCreateBranchParams as VmCreateBranchParams,
     type VmExecuteParams as VmExecuteParams,
   };

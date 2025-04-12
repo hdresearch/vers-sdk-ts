@@ -6,6 +6,8 @@ import { Cluster, ClusterCreateParams, ClusterListResponse, ClusterResource } fr
 import * as VmAPI from './vm';
 import {
   Vm,
+  VmCommitParams,
+  VmCommitResponse,
   VmCreateBranchParams,
   VmDeleteParams,
   VmExecuteParams,
@@ -35,9 +37,11 @@ export declare namespace API {
     VmResource as VmResource,
     type Vm as Vm,
     type VmListResponse as VmListResponse,
+    type VmCommitResponse as VmCommitResponse,
     type VmExecuteResponse as VmExecuteResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
+    type VmCommitParams as VmCommitParams,
     type VmCreateBranchParams as VmCreateBranchParams,
     type VmExecuteParams as VmExecuteParams,
   };
