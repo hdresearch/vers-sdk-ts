@@ -10,9 +10,8 @@ export class ClusterResource extends APIResource {
   /**
    * Create a new cluster.
    */
-  create(params: ClusterCreateParams, options?: RequestOptions): APIPromise<Cluster> {
-    const { body } = params;
-    return this._client.post('/api/cluster', { body: body, ...options });
+  create(body: ClusterCreateParams, options?: RequestOptions): APIPromise<Cluster> {
+    return this._client.post('/api/cluster', { body, ...options });
   }
 
   /**
@@ -62,7 +61,13 @@ export interface Cluster {
 export type ClusterListResponse = Array<Cluster>;
 
 export interface ClusterCreateParams {
-  body: unknown;
+  kernel_name?: string | null;
+
+  mem_size_mib?: number | null;
+
+  rootfs_name?: string | null;
+
+  vcpu_count?: number | null;
 }
 
 export declare namespace ClusterResource {
