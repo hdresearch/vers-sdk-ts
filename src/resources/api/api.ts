@@ -2,7 +2,13 @@
 
 import { APIResource } from '../../core/resource';
 import * as ClusterAPI from './cluster';
-import { Cluster, ClusterCreateParams, ClusterListResponse, ClusterResource } from './cluster';
+import {
+  Cluster,
+  ClusterCreateParams,
+  ClusterGetSSHKeyResponse,
+  ClusterListResponse,
+  ClusterResource,
+} from './cluster';
 import * as VmAPI from './vm';
 import {
   Vm,
@@ -30,6 +36,7 @@ export declare namespace API {
     ClusterResource as ClusterResource,
     type Cluster as Cluster,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
   };
 
