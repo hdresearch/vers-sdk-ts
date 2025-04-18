@@ -6,6 +6,7 @@ Types:
 
 - <code><a href="./src/resources/api/cluster.ts">Cluster</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterListResponse</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterGetSSHKeyResponse</a></code>
 
 Methods:
 
@@ -13,6 +14,7 @@ Methods:
 - <code title="get /api/cluster/{cluster_id}">client.api.cluster.<a href="./src/resources/api/cluster.ts">retrieve</a>(clusterID) -> Cluster</code>
 - <code title="get /api/cluster">client.api.cluster.<a href="./src/resources/api/cluster.ts">list</a>() -> ClusterListResponse</code>
 - <code title="delete /api/cluster/{cluster_id}">client.api.cluster.<a href="./src/resources/api/cluster.ts">delete</a>(clusterID) -> Cluster</code>
+- <code title="get /api/cluster/{cluster_id}/ssh_key">client.api.cluster.<a href="./src/resources/api/cluster.ts">getSSHKey</a>(clusterID) -> string</code>
 
 ## Vm
 
