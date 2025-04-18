@@ -1,13 +1,20 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export { API } from './api';
-export { ClusterResource, type Cluster, type ClusterListResponse, type ClusterCreateParams } from './cluster';
+export {
+  ClusterResource,
+  type Cluster,
+  type ClusterListResponse,
+  type ClusterGetSSHKeyResponse,
+  type ClusterCreateParams,
+} from './cluster';
 export {
   VmResource,
   type Vm,
   type VmListResponse,
   type VmCommitResponse,
   type VmExecuteResponse,
+  type VmGetSSHKeyResponse,
   type VmUpdateParams,
   type VmDeleteParams,
   type VmCommitParams,

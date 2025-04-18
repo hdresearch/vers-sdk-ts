@@ -2,7 +2,13 @@
 
 import { APIResource } from '../../core/resource';
 import * as ClusterAPI from './cluster';
-import { Cluster, ClusterCreateParams, ClusterListResponse, ClusterResource } from './cluster';
+import {
+  Cluster,
+  ClusterCreateParams,
+  ClusterGetSSHKeyResponse,
+  ClusterListResponse,
+  ClusterResource,
+} from './cluster';
 import * as VmAPI from './vm';
 import {
   Vm,
@@ -12,6 +18,7 @@ import {
   VmDeleteParams,
   VmExecuteParams,
   VmExecuteResponse,
+  VmGetSSHKeyResponse,
   VmListResponse,
   VmResource,
   VmUpdateParams,
@@ -30,6 +37,7 @@ export declare namespace API {
     ClusterResource as ClusterResource,
     type Cluster as Cluster,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
   };
 
@@ -39,6 +47,7 @@ export declare namespace API {
     type VmListResponse as VmListResponse,
     type VmCommitResponse as VmCommitResponse,
     type VmExecuteResponse as VmExecuteResponse,
+    type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
     type VmCommitParams as VmCommitParams,

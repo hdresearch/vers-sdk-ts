@@ -119,4 +119,16 @@ describe('resource vm', () => {
   test.skip('execute: required and optional params', async () => {
     const response = await client.api.vm.execute('vm_id', { command: 'command' });
   });
+
+  // skipped: tests are disabled for the time being
+  test.skip('getSSHKey', async () => {
+    const responsePromise = client.api.vm.getSSHKey('vm_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
 });
