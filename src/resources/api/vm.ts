@@ -64,6 +64,16 @@ export class VmResource extends APIResource {
   execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
     return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
   }
+
+  /**
+   * Get the SSH private key for VM access
+   */
+  getSSHKey(vmID: string, options?: RequestOptions): APIPromise<string> {
+    return this._client.get(path`/api/vm/${vmID}/ssh_key`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
+  }
 }
 
 export interface Vm {
@@ -151,6 +161,8 @@ export namespace VmExecuteResponse {
   }
 }
 
+export type VmGetSSHKeyResponse = string;
+
 export interface VmUpdateParams {
   body: 'pause' | 'resume';
 }
@@ -180,6 +192,7 @@ export declare namespace VmResource {
     type VmListResponse as VmListResponse,
     type VmCommitResponse as VmCommitResponse,
     type VmExecuteResponse as VmExecuteResponse,
+    type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
     type VmCommitParams as VmCommitParams,
