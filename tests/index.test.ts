@@ -306,6 +306,19 @@ describe('instantiate client', () => {
       const client = new Vers({ apiKey: 'My API Key' });
       expect(client.baseURL).toEqual('http://13.219.19.157');
     });
+
+    test('env variable with environment', () => {
+      process.env['VERS_BASE_URL'] = 'https://example.com/from_env';
+
+      expect(
+        () => new Vers({ apiKey: 'My API Key', environment: 'production' }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Ambiguous URL; The \`baseURL\` option (or VERS_BASE_URL env var) and the \`environment\` option are given. If you want to use the environment you must pass baseURL: null"`,
+      );
+
+      const client = new Vers({ apiKey: 'My API Key', baseURL: null, environment: 'production' });
+      expect(client.baseURL).toEqual('http://13.219.19.157');
+    });
   });
 
   test('maxRetries option is correctly set', () => {

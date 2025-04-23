@@ -25,11 +25,26 @@ import { formatRequestDetails, loggerFor } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 import { API as ApiapiAPI } from './resources/api/api';
 
+const environments = {
+  production: 'http://13.219.19.157',
+  development: '${VERS_DEV_URL:-http://52.72.200.221}',
+};
+type Environment = keyof typeof environments;
+
 export interface ClientOptions {
   /**
    * Defaults to process.env['VERS_API_KEY'].
    */
   apiKey?: string | null | undefined;
+
+  /**
+   * Specifies the environment to use for the API.
+   *
+   * Each environment maps to a different base URL:
+   * - `production` corresponds to `http://13.219.19.157`
+   * - `development` corresponds to `${VERS_DEV_URL:-http://52.72.200.221}`
+   */
+  environment?: Environment | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -120,6 +135,7 @@ export class Vers {
    * API Client for interfacing with the Vers API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['VERS_API_KEY'] ?? null]
+   * @param {Environment} [opts.environment=production] - Specifies the environment URL to use for the API.
    * @param {string} [opts.baseURL=process.env['VERS_BASE_URL'] ?? http://13.219.19.157] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -136,10 +152,17 @@ export class Vers {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `http://13.219.19.157`,
+      baseURL,
+      environment: opts.environment ?? 'production',
     };
 
-    this.baseURL = options.baseURL!;
+    if (baseURL && opts.environment) {
+      throw new Errors.VersError(
+        'Ambiguous URL; The `baseURL` option (or VERS_BASE_URL env var) and the `environment` option are given. If you want to use the environment you must pass baseURL: null',
+      );
+    }
+
+    this.baseURL = options.baseURL || environments[options.environment || 'production'];
     this.timeout = options.timeout ?? Vers.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
