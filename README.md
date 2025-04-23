@@ -27,7 +27,6 @@ import Vers from 'vers';
 
 const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
-  environment: 'development', // defaults to 'production'
 });
 
 async function main() {
@@ -47,7 +46,6 @@ import Vers from 'vers';
 
 const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
-  environment: 'development', // defaults to 'production'
 });
 
 async function main() {
