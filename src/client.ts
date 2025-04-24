@@ -34,7 +34,7 @@ export interface ClientOptions {
   /**
    * The target host for the Vers API.
    */
-  versHost?: string | undefined;
+  versURL?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -108,7 +108,7 @@ export interface ClientOptions {
  */
 export class Vers {
   apiKey: string | null;
-  versHost: string;
+  versURL: string;
 
   baseURL: string;
   maxRetries: number;
@@ -126,7 +126,7 @@ export class Vers {
    * API Client for interfacing with the Vers API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['VERS_API_KEY'] ?? null]
-   * @param {string | undefined} [opts.versHost=process.env['VERS_URL'] ?? 13.219.19.157]
+   * @param {string | undefined} [opts.versURL=13.219.19.157]
    * @param {string} [opts.baseURL=process.env['VERS_BASE_URL'] ?? http://{vers_url}] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -138,14 +138,14 @@ export class Vers {
   constructor({
     baseURL = readEnv('VERS_BASE_URL'),
     apiKey = readEnv('VERS_API_KEY') ?? null,
-    versHost = readEnv('VERS_URL') ?? '13.219.19.157',
+    versURL = '13.219.19.157',
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       apiKey,
-      versHost,
+      versURL,
       ...opts,
-      baseURL: baseURL || `http://${versHost}`,
+      baseURL: baseURL || `http://${versURL}`,
     };
 
     this.baseURL = options.baseURL!;
@@ -166,7 +166,7 @@ export class Vers {
     this._options = options;
 
     this.apiKey = apiKey;
-    this.versHost = versHost;
+    this.versURL = versURL;
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
