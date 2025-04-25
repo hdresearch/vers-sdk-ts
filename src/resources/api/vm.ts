@@ -32,17 +32,15 @@ export class VmResource extends APIResource {
   /**
    * Branch a VM.
    */
-  branch(vmID: string, params: VmBranchParams, options?: RequestOptions): APIPromise<Vm> {
-    const { branch_param } = params;
-    return this._client.post(path`/api/vm/${vmID}/branch`, { body: branch_param, ...options });
+  branch(vmID: string, options?: RequestOptions): APIPromise<Vm> {
+    return this._client.post(path`/api/vm/${vmID}/branch`, options);
   }
 
   /**
    * Commit a VM.
    */
-  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<Vm> {
-    const { commit_param } = params;
-    return this._client.post(path`/api/vm/${vmID}/commit`, { body: commit_param, ...options });
+  commit(vmID: string, options?: RequestOptions): APIPromise<Vm> {
+    return this._client.post(path`/api/vm/${vmID}/commit`, options);
   }
 
   /**
@@ -61,11 +59,14 @@ export class VmResource extends APIResource {
       headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
     });
   }
+
+  /**
+   * Update VM state.
+   */
+  updateState(vmID: string, body: VmUpdateStateParams, options?: RequestOptions): APIPromise<Vm> {
+    return this._client.patch(path`/api/vm/${vmID}`, { body, ...options });
+  }
 }
-
-export type BranchParam = unknown;
-
-export type CommitParam = unknown;
 
 export interface ExecuteCommand {
   command: string;
@@ -158,22 +159,16 @@ export interface VmDeleteParams {
   recursive: boolean;
 }
 
-export interface VmBranchParams {
-  branch_param: BranchParam;
-}
-
-export interface VmCommitParams {
-  commit_param: CommitParam;
-}
-
 export interface VmExecuteParams {
   command: string;
 }
 
+export interface VmUpdateStateParams {
+  action: 'pause' | 'resume';
+}
+
 export declare namespace VmResource {
   export {
-    type BranchParam as BranchParam,
-    type CommitParam as CommitParam,
     type ExecuteCommand as ExecuteCommand,
     type ExecuteResponse as ExecuteResponse,
     type PatchRequest as PatchRequest,
@@ -181,8 +176,7 @@ export declare namespace VmResource {
     type VmListResponse as VmListResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmDeleteParams as VmDeleteParams,
-    type VmBranchParams as VmBranchParams,
-    type VmCommitParams as VmCommitParams,
     type VmExecuteParams as VmExecuteParams,
+    type VmUpdateStateParams as VmUpdateStateParams,
   };
 }

@@ -18,19 +18,16 @@ import * as RootfsAPI from './rootfs';
 import { DeleteResponse, ListResponse, Rootfs, UploadResponse } from './rootfs';
 import * as VmAPI from './vm';
 import {
-  BranchParam,
-  CommitParam,
   ExecuteCommand,
   ExecuteResponse,
   PatchRequest,
   Vm,
-  VmBranchParams,
-  VmCommitParams,
   VmDeleteParams,
   VmExecuteParams,
   VmGetSSHKeyResponse,
   VmListResponse,
   VmResource,
+  VmUpdateStateParams,
 } from './vm';
 
 export class API extends APIResource {
@@ -59,8 +56,6 @@ export declare namespace API {
 
   export {
     VmResource as VmResource,
-    type BranchParam as BranchParam,
-    type CommitParam as CommitParam,
     type ExecuteCommand as ExecuteCommand,
     type ExecuteResponse as ExecuteResponse,
     type PatchRequest as PatchRequest,
@@ -68,9 +63,8 @@ export declare namespace API {
     type VmListResponse as VmListResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmDeleteParams as VmDeleteParams,
-    type VmBranchParams as VmBranchParams,
-    type VmCommitParams as VmCommitParams,
     type VmExecuteParams as VmExecuteParams,
+    type VmUpdateStateParams as VmUpdateStateParams,
   };
 
   export {
