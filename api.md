@@ -36,7 +36,7 @@ Methods:
 - <code title="post /api/vm/{vm_id}/branch">client.api.vm.<a href="./src/resources/api/vm.ts">branch</a>(vmID) -> Vm</code>
 - <code title="post /api/vm/{vm_id}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmID) -> Vm</code>
 - <code title="post /api/vm/{vm_id}/execute">client.api.vm.<a href="./src/resources/api/vm.ts">execute</a>(vmID, { ...params }) -> ExecuteResponse</code>
-- <code title="get /api/vm/{vm_id}/ssh-key">client.api.vm.<a href="./src/resources/api/vm.ts">getSSHKey</a>(vmID) -> string</code>
+- <code title="get /api/vm/{vm_id}/ssh_key">client.api.vm.<a href="./src/resources/api/vm.ts">getSSHKey</a>(vmID) -> string</code>
 - <code title="patch /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">updateState</a>(vmID, { ...params }) -> Vm</code>
 
 ## Rootfs

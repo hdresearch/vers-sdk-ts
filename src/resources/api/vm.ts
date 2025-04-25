@@ -54,7 +54,7 @@ export class VmResource extends APIResource {
    * Get the SSH private key for VM access
    */
   getSSHKey(vmID: string, options?: RequestOptions): APIPromise<string> {
-    return this._client.get(path`/api/vm/${vmID}/ssh-key`, {
+    return this._client.get(path`/api/vm/${vmID}/ssh_key`, {
       ...options,
       headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
     });
