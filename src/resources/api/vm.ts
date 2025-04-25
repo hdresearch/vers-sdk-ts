@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -29,27 +30,65 @@ export class VmResource extends APIResource {
   }
 
   /**
-   * Commit a VM.
+   * Branch a VM.
    */
-  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<Vm> {
-    const { body } = params;
-    return this._client.post(path`/api/vm/${vmID}/commit`, { body: body, ...options });
+  branch(vmID: string, params: VmBranchParams, options?: RequestOptions): APIPromise<Vm> {
+    const { branch } = params;
+    return this._client.post(path`/api/vm/${vmID}/branch`, { body: branch, ...options });
   }
 
   /**
-   * Branch a VM.
+   * Commit a VM.
    */
-  createBranch(vmID: string, params: VmCreateBranchParams, options?: RequestOptions): APIPromise<Vm> {
-    const { body } = params;
-    return this._client.post(path`/api/vm/${vmID}/branch`, { body: body, ...options });
+  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<Vm> {
+    const { commit } = params;
+    return this._client.post(path`/api/vm/${vmID}/commit`, { body: commit, ...options });
   }
 
   /**
    * Execute a command in a VM.
    */
-  execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
+  execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<ExecuteResponse> {
     return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
   }
+
+  /**
+   * Get the SSH private key for VM access
+   */
+  getSSHKey(vmID: string, options?: RequestOptions): APIPromise<string> {
+    return this._client.get(path`/api/vm/${vmID}/ssh-key`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
+  }
+}
+
+export type Branch = unknown;
+
+export type Commit = unknown;
+
+export interface ExecuteCommand {
+  command: string;
+}
+
+export interface ExecuteResponse {
+  id: string;
+
+  command_result: ExecuteResponse.CommandResult;
+}
+
+export namespace ExecuteResponse {
+  export interface CommandResult {
+    exit_code: number;
+
+    stderr: string;
+
+    stdout: string;
+  }
+}
+
+export interface PatchRequest {
+  action: 'pause' | 'resume';
 }
 
 export interface Vm {
@@ -110,21 +149,7 @@ export namespace Vm {
 
 export type VmListResponse = Array<Vm>;
 
-export interface VmExecuteResponse {
-  id: string;
-
-  command_result: VmExecuteResponse.CommandResult;
-}
-
-export namespace VmExecuteResponse {
-  export interface CommandResult {
-    exit_code: number;
-
-    stderr: string;
-
-    stdout: string;
-  }
-}
+export type VmGetSSHKeyResponse = string;
 
 export interface VmDeleteParams {
   /**
@@ -133,12 +158,12 @@ export interface VmDeleteParams {
   recursive: boolean;
 }
 
-export interface VmCommitParams {
-  body: unknown;
+export interface VmBranchParams {
+  branch: Branch;
 }
 
-export interface VmCreateBranchParams {
-  body: unknown;
+export interface VmCommitParams {
+  commit: Commit;
 }
 
 export interface VmExecuteParams {
@@ -147,12 +172,17 @@ export interface VmExecuteParams {
 
 export declare namespace VmResource {
   export {
+    type Branch as Branch,
+    type Commit as Commit,
+    type ExecuteCommand as ExecuteCommand,
+    type ExecuteResponse as ExecuteResponse,
+    type PatchRequest as PatchRequest,
     type Vm as Vm,
     type VmListResponse as VmListResponse,
-    type VmExecuteResponse as VmExecuteResponse,
+    type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmDeleteParams as VmDeleteParams,
+    type VmBranchParams as VmBranchParams,
     type VmCommitParams as VmCommitParams,
-    type VmCreateBranchParams as VmCreateBranchParams,
     type VmExecuteParams as VmExecuteParams,
   };
 }

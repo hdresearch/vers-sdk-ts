@@ -4,17 +4,26 @@ export { API } from './api';
 export {
   ClusterResource,
   type Cluster,
+  type Create,
   type ClusterListResponse,
   type ClusterGetSSHKeyResponse,
   type ClusterCreateParams,
 } from './cluster';
+export { Health, type HealthCheckResponse } from './health';
+export { Network, type Info } from './network';
+export { Rootfs, type DeleteResponse, type ListResponse, type UploadResponse } from './rootfs';
 export {
   VmResource,
+  type Branch,
+  type Commit,
+  type ExecuteCommand,
+  type ExecuteResponse,
+  type PatchRequest,
   type Vm,
   type VmListResponse,
-  type VmExecuteResponse,
+  type VmGetSSHKeyResponse,
   type VmDeleteParams,
+  type VmBranchParams,
   type VmCommitParams,
-  type VmCreateBranchParams,
   type VmExecuteParams,
 } from './vm';

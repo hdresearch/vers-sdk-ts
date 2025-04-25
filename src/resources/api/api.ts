@@ -8,15 +8,27 @@ import {
   ClusterGetSSHKeyResponse,
   ClusterListResponse,
   ClusterResource,
+  Create,
 } from './cluster';
+import * as HealthAPI from './health';
+import { Health, HealthCheckResponse } from './health';
+import * as NetworkAPI from './network';
+import { Info, Network } from './network';
+import * as RootfsAPI from './rootfs';
+import { DeleteResponse, ListResponse, Rootfs, UploadResponse } from './rootfs';
 import * as VmAPI from './vm';
 import {
+  Branch,
+  Commit,
+  ExecuteCommand,
+  ExecuteResponse,
+  PatchRequest,
   Vm,
+  VmBranchParams,
   VmCommitParams,
-  VmCreateBranchParams,
   VmDeleteParams,
   VmExecuteParams,
-  VmExecuteResponse,
+  VmGetSSHKeyResponse,
   VmListResponse,
   VmResource,
 } from './vm';
@@ -24,15 +36,22 @@ import {
 export class API extends APIResource {
   cluster: ClusterAPI.ClusterResource = new ClusterAPI.ClusterResource(this._client);
   vm: VmAPI.VmResource = new VmAPI.VmResource(this._client);
+  rootfs: RootfsAPI.Rootfs = new RootfsAPI.Rootfs(this._client);
+  health: HealthAPI.Health = new HealthAPI.Health(this._client);
+  network: NetworkAPI.Network = new NetworkAPI.Network(this._client);
 }
 
 API.ClusterResource = ClusterResource;
 API.VmResource = VmResource;
+API.Rootfs = Rootfs;
+API.Health = Health;
+API.Network = Network;
 
 export declare namespace API {
   export {
     ClusterResource as ClusterResource,
     type Cluster as Cluster,
+    type Create as Create,
     type ClusterListResponse as ClusterListResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
@@ -40,12 +59,28 @@ export declare namespace API {
 
   export {
     VmResource as VmResource,
+    type Branch as Branch,
+    type Commit as Commit,
+    type ExecuteCommand as ExecuteCommand,
+    type ExecuteResponse as ExecuteResponse,
+    type PatchRequest as PatchRequest,
     type Vm as Vm,
     type VmListResponse as VmListResponse,
-    type VmExecuteResponse as VmExecuteResponse,
+    type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmDeleteParams as VmDeleteParams,
+    type VmBranchParams as VmBranchParams,
     type VmCommitParams as VmCommitParams,
-    type VmCreateBranchParams as VmCreateBranchParams,
     type VmExecuteParams as VmExecuteParams,
   };
+
+  export {
+    Rootfs as Rootfs,
+    type DeleteResponse as DeleteResponse,
+    type ListResponse as ListResponse,
+    type UploadResponse as UploadResponse,
+  };
+
+  export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
+
+  export { Network as Network, type Info as Info };
 }
