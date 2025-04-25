@@ -21,8 +21,8 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/api/vm.ts">Branch</a></code>
-- <code><a href="./src/resources/api/vm.ts">Commit</a></code>
+- <code><a href="./src/resources/api/vm.ts">BranchParam</a></code>
+- <code><a href="./src/resources/api/vm.ts">CommitParam</a></code>
 - <code><a href="./src/resources/api/vm.ts">ExecuteCommand</a></code>
 - <code><a href="./src/resources/api/vm.ts">ExecuteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">PatchRequest</a></code>

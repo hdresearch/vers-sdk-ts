@@ -14,8 +14,8 @@ export { Network, type Info } from './network';
 export { Rootfs, type DeleteResponse, type ListResponse, type UploadResponse } from './rootfs';
 export {
   VmResource,
-  type Branch,
-  type Commit,
+  type BranchParam,
+  type CommitParam,
   type ExecuteCommand,
   type ExecuteResponse,
   type PatchRequest,

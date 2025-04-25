@@ -33,16 +33,16 @@ export class VmResource extends APIResource {
    * Branch a VM.
    */
   branch(vmID: string, params: VmBranchParams, options?: RequestOptions): APIPromise<Vm> {
-    const { branch } = params;
-    return this._client.post(path`/api/vm/${vmID}/branch`, { body: branch, ...options });
+    const { branch_param } = params;
+    return this._client.post(path`/api/vm/${vmID}/branch`, { body: branch_param, ...options });
   }
 
   /**
    * Commit a VM.
    */
   commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<Vm> {
-    const { commit } = params;
-    return this._client.post(path`/api/vm/${vmID}/commit`, { body: commit, ...options });
+    const { commit_param } = params;
+    return this._client.post(path`/api/vm/${vmID}/commit`, { body: commit_param, ...options });
   }
 
   /**
@@ -63,9 +63,9 @@ export class VmResource extends APIResource {
   }
 }
 
-export type Branch = unknown;
+export type BranchParam = unknown;
 
-export type Commit = unknown;
+export type CommitParam = unknown;
 
 export interface ExecuteCommand {
   command: string;
@@ -159,11 +159,11 @@ export interface VmDeleteParams {
 }
 
 export interface VmBranchParams {
-  branch: Branch;
+  branch_param: BranchParam;
 }
 
 export interface VmCommitParams {
-  commit: Commit;
+  commit_param: CommitParam;
 }
 
 export interface VmExecuteParams {
@@ -172,8 +172,8 @@ export interface VmExecuteParams {
 
 export declare namespace VmResource {
   export {
-    type Branch as Branch,
-    type Commit as Commit,
+    type BranchParam as BranchParam,
+    type CommitParam as CommitParam,
     type ExecuteCommand as ExecuteCommand,
     type ExecuteResponse as ExecuteResponse,
     type PatchRequest as PatchRequest,
