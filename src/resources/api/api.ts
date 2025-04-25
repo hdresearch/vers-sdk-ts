@@ -18,8 +18,8 @@ import * as RootfsAPI from './rootfs';
 import { DeleteResponse, ListResponse, Rootfs, UploadResponse } from './rootfs';
 import * as VmAPI from './vm';
 import {
-  Branch,
-  Commit,
+  BranchParam,
+  CommitParam,
   ExecuteCommand,
   ExecuteResponse,
   PatchRequest,
@@ -59,8 +59,8 @@ export declare namespace API {
 
   export {
     VmResource as VmResource,
-    type Branch as Branch,
-    type Commit as Commit,
+    type BranchParam as BranchParam,
+    type CommitParam as CommitParam,
     type ExecuteCommand as ExecuteCommand,
     type ExecuteResponse as ExecuteResponse,
     type PatchRequest as PatchRequest,
