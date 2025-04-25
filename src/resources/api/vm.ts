@@ -2,7 +2,6 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -15,14 +14,6 @@ export class VmResource extends APIResource {
   }
 
   /**
-   * Update VM state (pause/resume)
-   */
-  update(vmID: string, params: VmUpdateParams, options?: RequestOptions): APIPromise<Vm> {
-    const { body } = params;
-    return this._client.patch(path`/api/vm/${vmID}`, { body: body, ...options });
-  }
-
-  /**
    * List all VMs.
    */
   list(options?: RequestOptions): APIPromise<VmListResponse> {
@@ -30,28 +21,23 @@ export class VmResource extends APIResource {
   }
 
   /**
-   * Delete the specified VM.
+   * Delete a VM.
    */
-  delete(
-    vmID: string,
-    params: VmDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { recursive } = params ?? {};
-    return this._client.delete(path`/api/vm/${vmID}`, {
-      query: { recursive },
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(vmID: string, params: VmDeleteParams, options?: RequestOptions): APIPromise<Vm> {
+    const { recursive } = params;
+    return this._client.delete(path`/api/vm/${vmID}`, { query: { recursive }, ...options });
   }
 
-  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<VmCommitResponse> {
+  /**
+   * Commit a VM.
+   */
+  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<Vm> {
     const { body } = params;
     return this._client.post(path`/api/vm/${vmID}/commit`, { body: body, ...options });
   }
 
   /**
-   * Creates a branch of the specified VM.
+   * Branch a VM.
    */
   createBranch(vmID: string, params: VmCreateBranchParams, options?: RequestOptions): APIPromise<Vm> {
     const { body } = params;
@@ -59,20 +45,10 @@ export class VmResource extends APIResource {
   }
 
   /**
-   * Execute a command on the specified VM.
+   * Execute a command in a VM.
    */
   execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
     return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
-  }
-
-  /**
-   * Get the SSH private key for VM access
-   */
-  getSSHKey(vmID: string, options?: RequestOptions): APIPromise<string> {
-    return this._client.get(path`/api/vm/${vmID}/ssh_key`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
-    });
   }
 }
 
@@ -86,6 +62,11 @@ export interface Vm {
    * The IDs of direct children branched from this VM.
    */
   children: Array<string>;
+
+  /**
+   * The VM's cluster ID
+   */
+  cluster_id: string;
 
   /**
    * The VM's local IP address on the VM subnet
@@ -129,22 +110,6 @@ export namespace Vm {
 
 export type VmListResponse = Array<Vm>;
 
-export interface VmCommitResponse {
-  id: string;
-
-  command_result: VmCommitResponse.CommandResult;
-}
-
-export namespace VmCommitResponse {
-  export interface CommandResult {
-    exit_code: number;
-
-    stderr: string;
-
-    stdout: string;
-  }
-}
-
 export interface VmExecuteResponse {
   id: string;
 
@@ -161,17 +126,11 @@ export namespace VmExecuteResponse {
   }
 }
 
-export type VmGetSSHKeyResponse = string;
-
-export interface VmUpdateParams {
-  body: 'pause' | 'resume';
-}
-
 export interface VmDeleteParams {
   /**
-   * Optionally delete all child VMs recursively
+   * Delete children recursively
    */
-  recursive?: boolean;
+  recursive: boolean;
 }
 
 export interface VmCommitParams {
@@ -190,10 +149,7 @@ export declare namespace VmResource {
   export {
     type Vm as Vm,
     type VmListResponse as VmListResponse,
-    type VmCommitResponse as VmCommitResponse,
     type VmExecuteResponse as VmExecuteResponse,
-    type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
-    type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateBranchParams as VmCreateBranchParams,

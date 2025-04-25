@@ -13,15 +13,12 @@ import * as VmAPI from './vm';
 import {
   Vm,
   VmCommitParams,
-  VmCommitResponse,
   VmCreateBranchParams,
   VmDeleteParams,
   VmExecuteParams,
   VmExecuteResponse,
-  VmGetSSHKeyResponse,
   VmListResponse,
   VmResource,
-  VmUpdateParams,
 } from './vm';
 
 export class API extends APIResource {
@@ -45,10 +42,7 @@ export declare namespace API {
     VmResource as VmResource,
     type Vm as Vm,
     type VmListResponse as VmListResponse,
-    type VmCommitResponse as VmCommitResponse,
     type VmExecuteResponse as VmExecuteResponse,
-    type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
-    type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateBranchParams as VmCreateBranchParams,
