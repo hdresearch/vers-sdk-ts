@@ -50,8 +50,8 @@ describe('resource vm', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('branch: only required params', async () => {
-    const responsePromise = client.api.vm.branch('vm_id', { branch_param: {} });
+  test.skip('branch', async () => {
+    const responsePromise = client.api.vm.branch('vm_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,13 +62,8 @@ describe('resource vm', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('branch: required and optional params', async () => {
-    const response = await client.api.vm.branch('vm_id', { branch_param: {} });
-  });
-
-  // skipped: tests are disabled for the time being
-  test.skip('commit: only required params', async () => {
-    const responsePromise = client.api.vm.commit('vm_id', { commit_param: {} });
+  test.skip('commit', async () => {
+    const responsePromise = client.api.vm.commit('vm_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -76,11 +71,6 @@ describe('resource vm', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // skipped: tests are disabled for the time being
-  test.skip('commit: required and optional params', async () => {
-    const response = await client.api.vm.commit('vm_id', { commit_param: {} });
   });
 
   // skipped: tests are disabled for the time being
@@ -110,5 +100,22 @@ describe('resource vm', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('updateState: only required params', async () => {
+    const responsePromise = client.api.vm.updateState('vm_id', { action: 'pause' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('updateState: required and optional params', async () => {
+    const response = await client.api.vm.updateState('vm_id', { action: 'pause' });
   });
 });

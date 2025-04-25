@@ -21,8 +21,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/api/vm.ts">BranchParam</a></code>
-- <code><a href="./src/resources/api/vm.ts">CommitParam</a></code>
 - <code><a href="./src/resources/api/vm.ts">ExecuteCommand</a></code>
 - <code><a href="./src/resources/api/vm.ts">ExecuteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">PatchRequest</a></code>
@@ -35,10 +33,11 @@ Methods:
 - <code title="get /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">retrieve</a>(vmID) -> Vm</code>
 - <code title="get /api/vm">client.api.vm.<a href="./src/resources/api/vm.ts">list</a>() -> VmListResponse</code>
 - <code title="delete /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">delete</a>(vmID, { ...params }) -> Vm</code>
-- <code title="post /api/vm/{vm_id}/branch">client.api.vm.<a href="./src/resources/api/vm.ts">branch</a>(vmID, { ...params }) -> Vm</code>
-- <code title="post /api/vm/{vm_id}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmID, { ...params }) -> Vm</code>
+- <code title="post /api/vm/{vm_id}/branch">client.api.vm.<a href="./src/resources/api/vm.ts">branch</a>(vmID) -> Vm</code>
+- <code title="post /api/vm/{vm_id}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmID) -> Vm</code>
 - <code title="post /api/vm/{vm_id}/execute">client.api.vm.<a href="./src/resources/api/vm.ts">execute</a>(vmID, { ...params }) -> ExecuteResponse</code>
 - <code title="get /api/vm/{vm_id}/ssh-key">client.api.vm.<a href="./src/resources/api/vm.ts">getSSHKey</a>(vmID) -> string</code>
+- <code title="patch /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">updateState</a>(vmID, { ...params }) -> Vm</code>
 
 ## Rootfs
 
