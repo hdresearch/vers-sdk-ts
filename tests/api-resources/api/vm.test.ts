@@ -21,23 +21,6 @@ describe('resource vm', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.api.vm.update('vm_id', { body: 'pause' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // skipped: tests are disabled for the time being
-  test.skip('update: required and optional params', async () => {
-    const response = await client.api.vm.update('vm_id', { body: 'pause' });
-  });
-
-  // skipped: tests are disabled for the time being
   test.skip('list', async () => {
     const responsePromise = client.api.vm.list();
     const rawResponse = await responsePromise.asResponse();
@@ -50,8 +33,8 @@ describe('resource vm', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('delete', async () => {
-    const responsePromise = client.api.vm.delete('vm_id');
+  test.skip('delete: only required params', async () => {
+    const responsePromise = client.api.vm.delete('vm_id', { recursive: true });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -62,11 +45,8 @@ describe('resource vm', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('delete: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.api.vm.delete('vm_id', { recursive: true }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Vers.NotFoundError);
+  test.skip('delete: required and optional params', async () => {
+    const response = await client.api.vm.delete('vm_id', { recursive: true });
   });
 
   // skipped: tests are disabled for the time being
@@ -118,17 +98,5 @@ describe('resource vm', () => {
   // skipped: tests are disabled for the time being
   test.skip('execute: required and optional params', async () => {
     const response = await client.api.vm.execute('vm_id', { command: 'command' });
-  });
-
-  // skipped: tests are disabled for the time being
-  test.skip('getSSHKey', async () => {
-    const responsePromise = client.api.vm.getSSHKey('vm_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });
