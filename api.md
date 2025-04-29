@@ -51,6 +51,7 @@ Methods:
 
 - <code title="get /api/rootfs">client.api.rootfs.<a href="./src/resources/api/rootfs.ts">list</a>() -> ListResponse</code>
 - <code title="delete /api/rootfs/{rootfs_id}">client.api.rootfs.<a href="./src/resources/api/rootfs.ts">delete</a>(rootfsID) -> DeleteResponse</code>
+- <code title="put /api/rootfs/{rootfs_id}">client.api.rootfs.<a href="./src/resources/api/rootfs.ts">upload</a>(rootfsID) -> UploadResponse</code>
 
 ## Health
 
