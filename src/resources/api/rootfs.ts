@@ -19,14 +19,6 @@ export class Rootfs extends APIResource {
   delete(rootfsID: string, options?: RequestOptions): APIPromise<DeleteResponse> {
     return this._client.delete(path`/api/rootfs/${rootfsID}`, options);
   }
-
-  /**
-   * Upload a rootfs tar archive to the server. The archive should contain the
-   * Dockerfile and any relevant dependencies.
-   */
-  upload(rootfsID: string, options?: RequestOptions): APIPromise<UploadResponse> {
-    return this._client.post(path`/api/rootfs/${rootfsID}`, options);
-  }
 }
 
 export interface DeleteResponse {
