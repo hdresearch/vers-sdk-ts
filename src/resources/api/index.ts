@@ -11,7 +11,13 @@ export {
 } from './cluster';
 export { Health, type HealthCheckResponse } from './health';
 export { Network, type Info } from './network';
-export { Rootfs, type DeleteResponse, type ListResponse, type UploadResponse } from './rootfs';
+export {
+  Rootfs,
+  type DeleteResponse,
+  type ListResponse,
+  type UploadResponse,
+  type RootfUploadParams,
+} from './rootfs';
 export {
   VmResource,
   type ExecuteCommand,

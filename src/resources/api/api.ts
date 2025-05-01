@@ -15,7 +15,7 @@ import { Health, HealthCheckResponse } from './health';
 import * as NetworkAPI from './network';
 import { Info, Network } from './network';
 import * as RootfsAPI from './rootfs';
-import { DeleteResponse, ListResponse, Rootfs, UploadResponse } from './rootfs';
+import { DeleteResponse, ListResponse, RootfUploadParams, Rootfs, UploadResponse } from './rootfs';
 import * as VmAPI from './vm';
 import {
   ExecuteCommand,
@@ -72,6 +72,7 @@ export declare namespace API {
     type DeleteResponse as DeleteResponse,
     type ListResponse as ListResponse,
     type UploadResponse as UploadResponse,
+    type RootfUploadParams as RootfUploadParams,
   };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };

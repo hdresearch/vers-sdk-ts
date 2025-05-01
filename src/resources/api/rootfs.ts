@@ -24,8 +24,13 @@ export class Rootfs extends APIResource {
    * Upload a rootfs tar archive to the server. The archive should contain the
    * Dockerfile and all necessary dependencies.
    */
-  upload(rootfsID: string, options?: RequestOptions): APIPromise<UploadResponse> {
-    return this._client.put(path`/api/rootfs/${rootfsID}`, options);
+  upload(
+    rootfsID: string,
+    params: RootfUploadParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<UploadResponse> {
+    const { dockerfile } = params ?? {};
+    return this._client.put(path`/api/rootfs/${rootfsID}`, { query: { dockerfile }, ...options });
   }
 }
 
@@ -41,10 +46,18 @@ export interface UploadResponse {
   rootfs_name: string;
 }
 
+export interface RootfUploadParams {
+  /**
+   * The path of the Dockerfile contained within the tar archive
+   */
+  dockerfile?: string;
+}
+
 export declare namespace Rootfs {
   export {
     type DeleteResponse as DeleteResponse,
     type ListResponse as ListResponse,
     type UploadResponse as UploadResponse,
+    type RootfUploadParams as RootfUploadParams,
   };
 }
