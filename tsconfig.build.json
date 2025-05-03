@@ -6,7 +6,7 @@
     "rootDir": "./dist/src",
     "paths": {
       "vers/*": ["dist/src/*"],
-      "vers": ["dist/src/index.ts"],
+      "vers": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
