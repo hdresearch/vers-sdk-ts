@@ -15,6 +15,14 @@ export class VmResource extends APIResource {
   }
 
   /**
+   * Update VM state (pause/resume)
+   */
+  update(vmID: string, params: VmUpdateParams, options?: RequestOptions): APIPromise<Vm> {
+    const { body } = params;
+    return this._client.patch(path`/api/vm/${vmID}`, { body: body, ...options });
+  }
+
+  /**
    * List all VMs.
    */
   list(options?: RequestOptions): APIPromise<VmListResponse> {
@@ -22,31 +30,38 @@ export class VmResource extends APIResource {
   }
 
   /**
-   * Delete a VM.
+   * Delete the specified VM.
    */
-  delete(vmID: string, params: VmDeleteParams, options?: RequestOptions): APIPromise<Vm> {
-    const { recursive } = params;
-    return this._client.delete(path`/api/vm/${vmID}`, { query: { recursive }, ...options });
+  delete(
+    vmID: string,
+    params: VmDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { recursive } = params ?? {};
+    return this._client.delete(path`/api/vm/${vmID}`, {
+      query: { recursive },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<VmCommitResponse> {
+    const { body } = params;
+    return this._client.post(path`/api/vm/${vmID}/commit`, { body: body, ...options });
   }
 
   /**
-   * Branch a VM.
+   * Creates a branch of the specified VM.
    */
-  branch(vmID: string, options?: RequestOptions): APIPromise<Vm> {
-    return this._client.post(path`/api/vm/${vmID}/branch`, options);
+  createBranch(vmID: string, params: VmCreateBranchParams, options?: RequestOptions): APIPromise<Vm> {
+    const { body } = params;
+    return this._client.post(path`/api/vm/${vmID}/branch`, { body: body, ...options });
   }
 
   /**
-   * Commit a VM.
+   * Execute a command on the specified VM.
    */
-  commit(vmID: string, options?: RequestOptions): APIPromise<Vm> {
-    return this._client.post(path`/api/vm/${vmID}/commit`, options);
-  }
-
-  /**
-   * Execute a command in a VM.
-   */
-  execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<ExecuteResponse> {
+  execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
     return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
   }
 
@@ -59,37 +74,6 @@ export class VmResource extends APIResource {
       headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
     });
   }
-
-  /**
-   * Update VM state.
-   */
-  updateState(vmID: string, body: VmUpdateStateParams, options?: RequestOptions): APIPromise<Vm> {
-    return this._client.patch(path`/api/vm/${vmID}`, { body, ...options });
-  }
-}
-
-export interface ExecuteCommand {
-  command: string;
-}
-
-export interface ExecuteResponse {
-  id: string;
-
-  command_result: ExecuteResponse.CommandResult;
-}
-
-export namespace ExecuteResponse {
-  export interface CommandResult {
-    exit_code: number;
-
-    stderr: string;
-
-    stdout: string;
-  }
-}
-
-export interface PatchRequest {
-  action: 'pause' | 'resume';
 }
 
 export interface Vm {
@@ -102,11 +86,6 @@ export interface Vm {
    * The IDs of direct children branched from this VM.
    */
   children: Array<string>;
-
-  /**
-   * The VM's cluster ID
-   */
-  cluster_id: string;
 
   /**
    * The VM's local IP address on the VM subnet
@@ -150,33 +129,74 @@ export namespace Vm {
 
 export type VmListResponse = Array<Vm>;
 
+export interface VmCommitResponse {
+  id: string;
+
+  command_result: VmCommitResponse.CommandResult;
+}
+
+export namespace VmCommitResponse {
+  export interface CommandResult {
+    exit_code: number;
+
+    stderr: string;
+
+    stdout: string;
+  }
+}
+
+export interface VmExecuteResponse {
+  id: string;
+
+  command_result: VmExecuteResponse.CommandResult;
+}
+
+export namespace VmExecuteResponse {
+  export interface CommandResult {
+    exit_code: number;
+
+    stderr: string;
+
+    stdout: string;
+  }
+}
+
 export type VmGetSSHKeyResponse = string;
+
+export interface VmUpdateParams {
+  body: 'pause' | 'resume';
+}
 
 export interface VmDeleteParams {
   /**
-   * Delete children recursively
+   * Optionally delete all child VMs recursively
    */
-  recursive: boolean;
+  recursive?: boolean;
+}
+
+export interface VmCommitParams {
+  body: unknown;
+}
+
+export interface VmCreateBranchParams {
+  body: unknown;
 }
 
 export interface VmExecuteParams {
   command: string;
 }
 
-export interface VmUpdateStateParams {
-  action: 'pause' | 'resume';
-}
-
 export declare namespace VmResource {
   export {
-    type ExecuteCommand as ExecuteCommand,
-    type ExecuteResponse as ExecuteResponse,
-    type PatchRequest as PatchRequest,
     type Vm as Vm,
     type VmListResponse as VmListResponse,
+    type VmCommitResponse as VmCommitResponse,
+    type VmExecuteResponse as VmExecuteResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
+    type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
+    type VmCommitParams as VmCommitParams,
+    type VmCreateBranchParams as VmCreateBranchParams,
     type VmExecuteParams as VmExecuteParams,
-    type VmUpdateStateParams as VmUpdateStateParams,
   };
 }
