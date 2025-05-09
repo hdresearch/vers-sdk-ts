@@ -69,6 +69,16 @@ export interface Cluster {
   root_vm_id?: string | null;
 }
 
+export interface Create {
+  kernel_name?: string | null;
+
+  mem_size_mib?: number | null;
+
+  rootfs_name?: string | null;
+
+  vcpu_count?: number | null;
+}
+
 export type ClusterListResponse = Array<Cluster>;
 
 export type ClusterGetSSHKeyResponse = string;
@@ -86,6 +96,7 @@ export interface ClusterCreateParams {
 export declare namespace ClusterResource {
   export {
     type Cluster as Cluster,
+    type Create as Create,
     type ClusterListResponse as ClusterListResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
