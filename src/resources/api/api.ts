@@ -5,9 +5,12 @@ import * as ClusterAPI from './cluster';
 import {
   Cluster,
   ClusterCreateParams,
+  ClusterCreateResponse,
+  ClusterDeleteResponse,
   ClusterGetSSHKeyResponse,
   ClusterListResponse,
   ClusterResource,
+  ClusterRetrieveResponse,
   Create,
 } from './cluster';
 import * as HealthAPI from './health';
@@ -15,19 +18,34 @@ import { Health, HealthCheckResponse } from './health';
 import * as NetworkAPI from './network';
 import { Info, Network } from './network';
 import * as RootfsAPI from './rootfs';
-import { DeleteResponse, ListResponse, RootfUploadParams, Rootfs, UploadResponse } from './rootfs';
+import {
+  DeleteResponse,
+  ListResponse,
+  RootfDeleteResponse,
+  RootfListResponse,
+  RootfUploadParams,
+  RootfUploadResponse,
+  Rootfs,
+  UploadResponse,
+} from './rootfs';
 import * as VmAPI from './vm';
 import {
   ExecuteCommand,
   ExecuteResponse,
   PatchRequest,
   Vm,
+  VmBranchResponse,
+  VmCommitResponse,
   VmDeleteParams,
+  VmDeleteResponse,
   VmExecuteParams,
+  VmExecuteResponse,
   VmGetSSHKeyResponse,
   VmListResponse,
   VmResource,
+  VmRetrieveResponse,
   VmUpdateStateParams,
+  VmUpdateStateResponse,
 } from './vm';
 
 export class API extends APIResource {
@@ -49,7 +67,10 @@ export declare namespace API {
     ClusterResource as ClusterResource,
     type Cluster as Cluster,
     type Create as Create,
+    type ClusterCreateResponse as ClusterCreateResponse,
+    type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
   };
@@ -60,8 +81,14 @@ export declare namespace API {
     type ExecuteResponse as ExecuteResponse,
     type PatchRequest as PatchRequest,
     type Vm as Vm,
+    type VmRetrieveResponse as VmRetrieveResponse,
     type VmListResponse as VmListResponse,
+    type VmDeleteResponse as VmDeleteResponse,
+    type VmBranchResponse as VmBranchResponse,
+    type VmCommitResponse as VmCommitResponse,
+    type VmExecuteResponse as VmExecuteResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
+    type VmUpdateStateResponse as VmUpdateStateResponse,
     type VmDeleteParams as VmDeleteParams,
     type VmExecuteParams as VmExecuteParams,
     type VmUpdateStateParams as VmUpdateStateParams,
@@ -72,6 +99,9 @@ export declare namespace API {
     type DeleteResponse as DeleteResponse,
     type ListResponse as ListResponse,
     type UploadResponse as UploadResponse,
+    type RootfListResponse as RootfListResponse,
+    type RootfDeleteResponse as RootfDeleteResponse,
+    type RootfUploadResponse as RootfUploadResponse,
     type RootfUploadParams as RootfUploadParams,
   };
 
