@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -9,8 +10,16 @@ export class VmResource extends APIResource {
   /**
    * Retrieve information on a particular VM.
    */
-  retrieve(vmID: string, options?: RequestOptions): APIPromise<VmRetrieveResponse> {
+  retrieve(vmID: string, options?: RequestOptions): APIPromise<Vm> {
     return this._client.get(path`/api/vm/${vmID}`, options);
+  }
+
+  /**
+   * Update VM state (pause/resume)
+   */
+  update(vmID: string, params: VmUpdateParams, options?: RequestOptions): APIPromise<Vm> {
+    const { body } = params;
+    return this._client.patch(path`/api/vm/${vmID}`, { body: body, ...options });
   }
 
   /**
@@ -21,29 +30,36 @@ export class VmResource extends APIResource {
   }
 
   /**
-   * Delete a VM.
+   * Delete the specified VM.
    */
-  delete(vmID: string, params: VmDeleteParams, options?: RequestOptions): APIPromise<VmDeleteResponse> {
-    const { recursive } = params;
-    return this._client.delete(path`/api/vm/${vmID}`, { query: { recursive }, ...options });
+  delete(
+    vmID: string,
+    params: VmDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { recursive } = params ?? {};
+    return this._client.delete(path`/api/vm/${vmID}`, {
+      query: { recursive },
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<VmCommitResponse> {
+    const { body } = params;
+    return this._client.post(path`/api/vm/${vmID}/commit`, { body: body, ...options });
   }
 
   /**
-   * Branch a VM.
+   * Creates a branch of the specified VM.
    */
-  branch(vmID: string, options?: RequestOptions): APIPromise<VmBranchResponse> {
-    return this._client.post(path`/api/vm/${vmID}/branch`, options);
+  createBranch(vmID: string, params: VmCreateBranchParams, options?: RequestOptions): APIPromise<Vm> {
+    const { body } = params;
+    return this._client.post(path`/api/vm/${vmID}/branch`, { body: body, ...options });
   }
 
   /**
-   * Commit a VM.
-   */
-  commit(vmID: string, options?: RequestOptions): APIPromise<VmCommitResponse> {
-    return this._client.post(path`/api/vm/${vmID}/commit`, options);
-  }
-
-  /**
-   * Execute a command in a VM.
+   * Execute a command on the specified VM.
    */
   execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
     return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
@@ -52,44 +68,12 @@ export class VmResource extends APIResource {
   /**
    * Get the SSH private key for VM access
    */
-  getSSHKey(vmID: string, options?: RequestOptions): APIPromise<VmGetSSHKeyResponse> {
-    return this._client.get(path`/api/vm/${vmID}/ssh_key`, options);
+  getSSHKey(vmID: string, options?: RequestOptions): APIPromise<string> {
+    return this._client.get(path`/api/vm/${vmID}/ssh_key`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
   }
-
-  /**
-   * Update VM state.
-   */
-  updateState(
-    vmID: string,
-    body: VmUpdateStateParams,
-    options?: RequestOptions,
-  ): APIPromise<VmUpdateStateResponse> {
-    return this._client.patch(path`/api/vm/${vmID}`, { body, ...options });
-  }
-}
-
-export interface ExecuteCommand {
-  command: string;
-}
-
-export interface ExecuteResponse {
-  id: string;
-
-  command_result: ExecuteResponse.CommandResult;
-}
-
-export namespace ExecuteResponse {
-  export interface CommandResult {
-    exit_code: number;
-
-    stderr: string;
-
-    stdout: string;
-  }
-}
-
-export interface PatchRequest {
-  action: 'pause' | 'resume';
 }
 
 export interface Vm {
@@ -102,11 +86,6 @@ export interface Vm {
    * The IDs of direct children branched from this VM.
    */
   children: Array<string>;
-
-  /**
-   * The VM's cluster ID
-   */
-  cluster_id: string;
 
   /**
    * The VM's local IP address on the VM subnet
@@ -148,507 +127,76 @@ export namespace Vm {
   }
 }
 
-export interface VmRetrieveResponse {
-  data: VmRetrieveResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace VmRetrieveResponse {
-  export interface Data {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
-
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
-  }
-}
-
-export interface VmListResponse {
-  data: Array<VmListResponse.Data>;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace VmListResponse {
-  export interface Data {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
-
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
-  }
-}
-
-export interface VmDeleteResponse {
-  data: VmDeleteResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace VmDeleteResponse {
-  export interface Data {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
-
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
-  }
-}
-
-export interface VmBranchResponse {
-  data: VmBranchResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace VmBranchResponse {
-  export interface Data {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
-
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
-  }
-}
+export type VmListResponse = Array<Vm>;
 
 export interface VmCommitResponse {
-  data: VmCommitResponse.Data;
+  id: string;
 
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
+  command_result: VmCommitResponse.CommandResult;
 }
 
 export namespace VmCommitResponse {
-  export interface Data {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
+  export interface CommandResult {
+    exit_code: number;
 
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
+    stderr: string;
 
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
+    stdout: string;
   }
 }
 
 export interface VmExecuteResponse {
-  data: VmExecuteResponse.Data;
+  id: string;
 
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
+  command_result: VmExecuteResponse.CommandResult;
 }
 
 export namespace VmExecuteResponse {
-  export interface Data {
-    id: string;
+  export interface CommandResult {
+    exit_code: number;
 
-    command_result: Data.CommandResult;
-  }
+    stderr: string;
 
-  export namespace Data {
-    export interface CommandResult {
-      exit_code: number;
-
-      stderr: string;
-
-      stdout: string;
-    }
+    stdout: string;
   }
 }
 
-export interface VmGetSSHKeyResponse {
-  data: string;
+export type VmGetSSHKeyResponse = string;
 
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export interface VmUpdateStateResponse {
-  data: VmUpdateStateResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace VmUpdateStateResponse {
-  export interface Data {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
-
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
-  }
+export interface VmUpdateParams {
+  body: 'pause' | 'resume';
 }
 
 export interface VmDeleteParams {
   /**
-   * Delete children recursively
+   * Optionally delete all child VMs recursively
    */
-  recursive: boolean;
+  recursive?: boolean;
+}
+
+export interface VmCommitParams {
+  body: unknown;
+}
+
+export interface VmCreateBranchParams {
+  body: unknown;
 }
 
 export interface VmExecuteParams {
   command: string;
 }
 
-export interface VmUpdateStateParams {
-  action: 'pause' | 'resume';
-}
-
 export declare namespace VmResource {
   export {
-    type ExecuteCommand as ExecuteCommand,
-    type ExecuteResponse as ExecuteResponse,
-    type PatchRequest as PatchRequest,
     type Vm as Vm,
-    type VmRetrieveResponse as VmRetrieveResponse,
     type VmListResponse as VmListResponse,
-    type VmDeleteResponse as VmDeleteResponse,
-    type VmBranchResponse as VmBranchResponse,
     type VmCommitResponse as VmCommitResponse,
     type VmExecuteResponse as VmExecuteResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
-    type VmUpdateStateResponse as VmUpdateStateResponse,
+    type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
+    type VmCommitParams as VmCommitParams,
+    type VmCreateBranchParams as VmCreateBranchParams,
     type VmExecuteParams as VmExecuteParams,
-    type VmUpdateStateParams as VmUpdateStateParams,
   };
 }
