@@ -26,10 +26,10 @@ export class Rootfs extends APIResource {
    */
   upload(
     rootfsID: string,
-    params: RootfUploadParams,
+    params: RootfUploadParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<RootfUploadResponse> {
-    const { dockerfile } = params;
+    const { dockerfile } = params ?? {};
     return this._client.put(path`/api/rootfs/${rootfsID}`, { query: { dockerfile }, ...options });
   }
 }
@@ -107,16 +107,7 @@ export interface RootfUploadParams {
   /**
    * The path of the Dockerfile contained within the tar archive
    */
-  dockerfile: RootfUploadParams.Dockerfile;
-}
-
-export namespace RootfUploadParams {
-  /**
-   * The path of the Dockerfile contained within the tar archive
-   */
-  export interface Dockerfile {
-    dockerfile?: string | null;
-  }
+  dockerfile?: string;
 }
 
 export declare namespace Rootfs {
