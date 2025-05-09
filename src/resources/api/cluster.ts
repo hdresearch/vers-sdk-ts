@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as VmAPI from './vm';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -10,14 +11,14 @@ export class ClusterResource extends APIResource {
   /**
    * Create a new cluster.
    */
-  create(body: ClusterCreateParams, options?: RequestOptions): APIPromise<ClusterCreateResponse> {
+  create(body: ClusterCreateParams, options?: RequestOptions): APIPromise<Cluster> {
     return this._client.post('/api/cluster', { body, ...options });
   }
 
   /**
    * Retrieve information on a particular cluster.
    */
-  retrieve(clusterID: string, options?: RequestOptions): APIPromise<ClusterRetrieveResponse> {
+  retrieve(clusterID: string, options?: RequestOptions): APIPromise<Cluster> {
     return this._client.get(path`/api/cluster/${clusterID}`, options);
   }
 
@@ -31,15 +32,18 @@ export class ClusterResource extends APIResource {
   /**
    * Delete a cluster.
    */
-  delete(clusterID: string, options?: RequestOptions): APIPromise<ClusterDeleteResponse> {
+  delete(clusterID: string, options?: RequestOptions): APIPromise<Cluster> {
     return this._client.delete(path`/api/cluster/${clusterID}`, options);
   }
 
   /**
    * Get the SSH private key for VM access
    */
-  getSSHKey(clusterID: string, options?: RequestOptions): APIPromise<ClusterGetSSHKeyResponse> {
-    return this._client.get(path`/api/cluster/${clusterID}/ssh_key`, options);
+  getSSHKey(clusterID: string, options?: RequestOptions): APIPromise<string> {
+    return this._client.get(path`/api/cluster/${clusterID}/ssh_key`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/plain' }, options?.headers]),
+    });
   }
 }
 
@@ -65,176 +69,9 @@ export interface Cluster {
   root_vm_id?: string | null;
 }
 
-export interface Create {
-  kernel_name?: string | null;
+export type ClusterListResponse = Array<Cluster>;
 
-  mem_size_mib?: number | null;
-
-  rootfs_name?: string | null;
-
-  vcpu_count?: number | null;
-}
-
-export interface ClusterCreateResponse {
-  data: ClusterCreateResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace ClusterCreateResponse {
-  export interface Data {
-    /**
-     * The cluster's ID.
-     */
-    id: string;
-
-    /**
-     * How many VMs are currently running on this cluster.
-     */
-    vm_count: number;
-
-    /**
-     * The VMs that are children of the cluster, including the root VM.
-     */
-    vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
-  }
-}
-
-export interface ClusterRetrieveResponse {
-  data: ClusterRetrieveResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace ClusterRetrieveResponse {
-  export interface Data {
-    /**
-     * The cluster's ID.
-     */
-    id: string;
-
-    /**
-     * How many VMs are currently running on this cluster.
-     */
-    vm_count: number;
-
-    /**
-     * The VMs that are children of the cluster, including the root VM.
-     */
-    vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
-  }
-}
-
-export interface ClusterListResponse {
-  data: Array<ClusterListResponse.Data>;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace ClusterListResponse {
-  export interface Data {
-    /**
-     * The cluster's ID.
-     */
-    id: string;
-
-    /**
-     * How many VMs are currently running on this cluster.
-     */
-    vm_count: number;
-
-    /**
-     * The VMs that are children of the cluster, including the root VM.
-     */
-    vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
-  }
-}
-
-export interface ClusterDeleteResponse {
-  data: ClusterDeleteResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace ClusterDeleteResponse {
-  export interface Data {
-    /**
-     * The cluster's ID.
-     */
-    id: string;
-
-    /**
-     * How many VMs are currently running on this cluster.
-     */
-    vm_count: number;
-
-    /**
-     * The VMs that are children of the cluster, including the root VM.
-     */
-    vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
-  }
-}
-
-export interface ClusterGetSSHKeyResponse {
-  data: string;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
+export type ClusterGetSSHKeyResponse = string;
 
 export interface ClusterCreateParams {
   kernel_name?: string | null;
@@ -249,11 +86,7 @@ export interface ClusterCreateParams {
 export declare namespace ClusterResource {
   export {
     type Cluster as Cluster,
-    type Create as Create,
-    type ClusterCreateResponse as ClusterCreateResponse,
-    type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,
-    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
   };
