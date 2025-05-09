@@ -12,6 +12,7 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
@@ -30,11 +31,6 @@ export interface ClientOptions {
    * Defaults to process.env['VERS_API_KEY'].
    */
   apiKey?: string | null | undefined;
-
-  /**
-   * The target host for the Vers API.
-   */
-  versURL?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -108,7 +104,6 @@ export interface ClientOptions {
  */
 export class Vers {
   apiKey: string | null;
-  versURL: string;
 
   baseURL: string;
   maxRetries: number;
@@ -126,8 +121,7 @@ export class Vers {
    * API Client for interfacing with the Vers API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['VERS_API_KEY'] ?? null]
-   * @param {string | undefined} [opts.versURL=13.219.19.157]
-   * @param {string} [opts.baseURL=process.env['VERS_BASE_URL'] ?? http://{vers_url}] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['VERS_BASE_URL'] ?? http://13.219.19.157] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -138,14 +132,12 @@ export class Vers {
   constructor({
     baseURL = readEnv('VERS_BASE_URL'),
     apiKey = readEnv('VERS_API_KEY') ?? null,
-    versURL = '13.219.19.157',
     ...opts
   }: ClientOptions = {}) {
     const options: ClientOptions = {
       apiKey,
-      versURL,
       ...opts,
-      baseURL: baseURL || `http://${versURL}`,
+      baseURL: baseURL || `http://13.219.19.157`,
     };
 
     this.baseURL = options.baseURL!;
@@ -166,7 +158,6 @@ export class Vers {
     this._options = options;
 
     this.apiKey = apiKey;
-    this.versURL = versURL;
   }
 
   /**
@@ -182,7 +173,6 @@ export class Vers {
       logLevel: this.logLevel,
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
-      versURL: this.versURL,
       ...options,
     });
   }
@@ -211,24 +201,8 @@ export class Vers {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
-  /**
-   * Basic re-implementation of `qs.stringify` for primitive types.
-   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.VersError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+    return qs.stringify(query, { arrayFormat: 'comma' });
   }
 
   private getUserAgent(): string {

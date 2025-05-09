@@ -1,4 +1,4 @@
-configured_endpoints: 13
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/hdr-parth-agrawal%2Ffirecracker-manager-87637bf6ef7a1a03b3ddaa1a876955bdc0107f081260ed85f30ced2ff0f6aa72.yml
-openapi_spec_hash: bb5340dcbc5f80713ab3416ae09dd305
-config_hash: 6620f49b6a6bf82d4c7b1fde8fef99b9
+configured_endpoints: 18
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/hdr-parth-agrawal%2Ffirecracker-manager-bda81e3efb7c48d0a55c6173f125090e2b282594a4cf2e8a2136a3a54607bf5c.yml
+openapi_spec_hash: c4155daa0c9c7c193c45dee690dbef84
+config_hash: 6109d5e13336dd24c9518e3ad2d70476
