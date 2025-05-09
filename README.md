@@ -31,6 +31,8 @@ const client = new Vers({
 
 async function main() {
   const clusters = await client.api.cluster.list();
+
+  console.log(clusters.operation_id);
 }
 
 main();
@@ -155,7 +157,7 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: clusters, response: raw } = await client.api.cluster.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(clusters);
+console.log(clusters.operation_id);
 ```
 
 ### Logging

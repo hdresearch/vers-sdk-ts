@@ -46,6 +46,8 @@ describe('resource rootfs', () => {
 
   // skipped: tests are disabled for the time being
   test.skip('upload: required and optional params', async () => {
-    const response = await client.api.rootfs.upload('rootfs_id', { dockerfile: {} });
+    const response = await client.api.rootfs.upload('rootfs_id', {
+      dockerfile: { dockerfile: 'dockerfile' },
+    });
   });
 });
