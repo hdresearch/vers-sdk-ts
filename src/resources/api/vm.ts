@@ -43,13 +43,6 @@ export class VmResource extends APIResource {
   }
 
   /**
-   * Execute a command in a VM.
-   */
-  execute(vmID: string, body: VmExecuteParams, options?: RequestOptions): APIPromise<VmExecuteResponse> {
-    return this._client.post(path`/api/vm/${vmID}/execute`, { body, ...options });
-  }
-
-  /**
    * Get the SSH private key for VM access
    */
   getSSHKey(vmID: string, options?: RequestOptions): APIPromise<VmGetSSHKeyResponse> {
@@ -65,26 +58,6 @@ export class VmResource extends APIResource {
     options?: RequestOptions,
   ): APIPromise<VmUpdateStateResponse> {
     return this._client.patch(path`/api/vm/${vmID}`, { body, ...options });
-  }
-}
-
-export interface ExecuteCommand {
-  command: string;
-}
-
-export interface ExecuteResponse {
-  id: string;
-
-  command_result: ExecuteResponse.CommandResult;
-}
-
-export namespace ExecuteResponse {
-  export interface CommandResult {
-    exit_code: number;
-
-    stderr: string;
-
-    stdout: string;
   }
 }
 
@@ -503,37 +476,6 @@ export namespace VmCommitResponse {
   }
 }
 
-export interface VmExecuteResponse {
-  data: VmExecuteResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace VmExecuteResponse {
-  export interface Data {
-    id: string;
-
-    command_result: Data.CommandResult;
-  }
-
-  export namespace Data {
-    export interface CommandResult {
-      exit_code: number;
-
-      stderr: string;
-
-      stdout: string;
-    }
-  }
-}
-
 export interface VmGetSSHKeyResponse {
   data: string;
 
@@ -625,18 +567,12 @@ export interface VmDeleteParams {
   recursive: boolean;
 }
 
-export interface VmExecuteParams {
-  command: string;
-}
-
 export interface VmUpdateStateParams {
   action: 'pause' | 'resume';
 }
 
 export declare namespace VmResource {
   export {
-    type ExecuteCommand as ExecuteCommand,
-    type ExecuteResponse as ExecuteResponse,
     type PatchRequest as PatchRequest,
     type Vm as Vm,
     type VmRetrieveResponse as VmRetrieveResponse,
@@ -644,11 +580,9 @@ export declare namespace VmResource {
     type VmDeleteResponse as VmDeleteResponse,
     type VmBranchResponse as VmBranchResponse,
     type VmCommitResponse as VmCommitResponse,
-    type VmExecuteResponse as VmExecuteResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateStateResponse as VmUpdateStateResponse,
     type VmDeleteParams as VmDeleteParams,
-    type VmExecuteParams as VmExecuteParams,
     type VmUpdateStateParams as VmUpdateStateParams,
   };
 }

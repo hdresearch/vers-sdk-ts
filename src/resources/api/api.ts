@@ -30,16 +30,12 @@ import {
 } from './rootfs';
 import * as VmAPI from './vm';
 import {
-  ExecuteCommand,
-  ExecuteResponse,
   PatchRequest,
   Vm,
   VmBranchResponse,
   VmCommitResponse,
   VmDeleteParams,
   VmDeleteResponse,
-  VmExecuteParams,
-  VmExecuteResponse,
   VmGetSSHKeyResponse,
   VmListResponse,
   VmResource,
@@ -77,8 +73,6 @@ export declare namespace API {
 
   export {
     VmResource as VmResource,
-    type ExecuteCommand as ExecuteCommand,
-    type ExecuteResponse as ExecuteResponse,
     type PatchRequest as PatchRequest,
     type Vm as Vm,
     type VmRetrieveResponse as VmRetrieveResponse,
@@ -86,11 +80,9 @@ export declare namespace API {
     type VmDeleteResponse as VmDeleteResponse,
     type VmBranchResponse as VmBranchResponse,
     type VmCommitResponse as VmCommitResponse,
-    type VmExecuteResponse as VmExecuteResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateStateResponse as VmUpdateStateResponse,
     type VmDeleteParams as VmDeleteParams,
-    type VmExecuteParams as VmExecuteParams,
     type VmUpdateStateParams as VmUpdateStateParams,
   };
 

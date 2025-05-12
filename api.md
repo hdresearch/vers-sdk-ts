@@ -24,8 +24,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/api/vm.ts">ExecuteCommand</a></code>
-- <code><a href="./src/resources/api/vm.ts">ExecuteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">PatchRequest</a></code>
 - <code><a href="./src/resources/api/vm.ts">Vm</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmRetrieveResponse</a></code>
@@ -33,7 +31,6 @@ Types:
 - <code><a href="./src/resources/api/vm.ts">VmDeleteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmBranchResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmCommitResponse</a></code>
-- <code><a href="./src/resources/api/vm.ts">VmExecuteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmGetSSHKeyResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmUpdateStateResponse</a></code>
 
@@ -44,7 +41,6 @@ Methods:
 - <code title="delete /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">delete</a>(vmID, { ...params }) -> VmDeleteResponse</code>
 - <code title="post /api/vm/{vm_id}/branch">client.api.vm.<a href="./src/resources/api/vm.ts">branch</a>(vmID) -> VmBranchResponse</code>
 - <code title="post /api/vm/{vm_id}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmID) -> VmCommitResponse</code>
-- <code title="post /api/vm/{vm_id}/execute">client.api.vm.<a href="./src/resources/api/vm.ts">execute</a>(vmID, { ...params }) -> VmExecuteResponse</code>
 - <code title="get /api/vm/{vm_id}/ssh_key">client.api.vm.<a href="./src/resources/api/vm.ts">getSSHKey</a>(vmID) -> VmGetSSHKeyResponse</code>
 - <code title="patch /api/vm/{vm_id}">client.api.vm.<a href="./src/resources/api/vm.ts">updateState</a>(vmID, { ...params }) -> VmUpdateStateResponse</code>
 

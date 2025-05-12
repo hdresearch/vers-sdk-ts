@@ -26,8 +26,6 @@ export {
 } from './rootfs';
 export {
   VmResource,
-  type ExecuteCommand,
-  type ExecuteResponse,
   type PatchRequest,
   type Vm,
   type VmRetrieveResponse,
@@ -35,10 +33,8 @@ export {
   type VmDeleteResponse,
   type VmBranchResponse,
   type VmCommitResponse,
-  type VmExecuteResponse,
   type VmGetSSHKeyResponse,
   type VmUpdateStateResponse,
   type VmDeleteParams,
-  type VmExecuteParams,
   type VmUpdateStateParams,
 } from './vm';
