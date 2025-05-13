@@ -66,17 +66,6 @@ export interface Cluster {
 }
 
 export interface Create {
-  /**
-   * The amount of total space to allocate to the cluster
-   */
-  fs_size_cluster_mib?: number | null;
-
-  /**
-   * The size of the VM filesystem (if smaller than the base image + overhead, will
-   * cause an error)
-   */
-  fs_size_vm_mib?: number | null;
-
   kernel_name?: string | null;
 
   mem_size_mib?: number | null;
@@ -248,17 +237,6 @@ export interface ClusterGetSSHKeyResponse {
 }
 
 export interface ClusterCreateParams {
-  /**
-   * The amount of total space to allocate to the cluster
-   */
-  fs_size_cluster_mib?: number | null;
-
-  /**
-   * The size of the VM filesystem (if smaller than the base image + overhead, will
-   * cause an error)
-   */
-  fs_size_vm_mib?: number | null;
-
   kernel_name?: string | null;
 
   mem_size_mib?: number | null;
