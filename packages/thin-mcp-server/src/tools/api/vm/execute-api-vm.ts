@@ -66,7 +66,7 @@ export const handler = async (client: Vers, args: Record<string, unknown> | unde
       privateKeyPath: keyPath
     })
 
-    const prefixedCommand = `vers-claude -p --dangerously-skip-permissions "${command.replace(/"/g, '\\"')}"`
+    const prefixedCommand = `vers-claude -p "${command.replace(/"/g, '\\"')}"`
     console.error('command string is:', prefixedCommand);
 
     // Execute command with streaming support
