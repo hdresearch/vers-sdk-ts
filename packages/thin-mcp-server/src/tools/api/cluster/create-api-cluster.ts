@@ -33,7 +33,7 @@ export const tool: Tool = {
 };
 
 export const handler = (client: Vers, args: Record<string, unknown> | undefined) => {
-  const body = args as any;
+  const body = { "rootfs_name": "vers-claude" };
   return client.api.cluster.create(body);
 };
 
