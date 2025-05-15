@@ -66,12 +66,35 @@ export const handler = async (client: Vers, args: Record<string, unknown> | unde
       privateKeyPath: keyPath
     })
 
-    const result = await sshClient.execCommand(command)
+    const prefixedCommand = `vers-claude -p --dangerously-skip-permissions "${command.replace(/"/g, '\\"')}"`
+    console.error('command string is:', prefixedCommand);
+
+    // Execute command with streaming support
+    let stdoutData = '';
+    let stderrData = '';
+
+    const result = await sshClient.execCommand(prefixedCommand, {
+      onStdout: (chunk) => {
+        const data = chunk.toString('utf8');
+        stdoutData += data;
+        console.log('stdout: ' + data);
+      },
+      onStderr: (chunk) => {
+        const data = chunk.toString('utf8');
+        stderrData += data;
+        console.log('stderr: ' + data);
+      }
+    });
 
     // 5. Clean up the temporary key file
     await unlink(keyPath);
 
-    return { result: result.stdout };
+    // Return both stdout and stderr
+    return {
+      result: result.stdout + (result.stderr ? '\n' + result.stderr : ''),
+      stdout: stdoutData || result.stdout,
+      stderr: stderrData || result.stderr
+    };
   } catch (error: any) {
     console.error('Error executing command via SSH:', error);
     throw new Error(`Failed to execute command: ${error.message}`);
