@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-  name: 'execute_api_vm',
-  description: 'Execute a command on the specified VM.',
+  name: 'commit_api_vm',
+  description: '',
   inputSchema: {
     type: 'object',
     properties: {
       vm_id: {
         type: 'string',
       },
-      command: {
-        type: 'string',
+      body: {
+        type: 'object',
       },
     },
   },
@@ -28,8 +28,7 @@ export const tool: Tool = {
 
 export const handler = (client: Vers, args: Record<string, unknown> | undefined) => {
   const { vm_id, ...body } = args as any;
-  console.error('DEBUG: Sending JSON to API:', JSON.stringify(body, null, 2));
-  return client.api.vm.execute(vm_id, body);
+  return client.api.vm.commit(vm_id, body);
 };
 
 export default { metadata, tool, handler };

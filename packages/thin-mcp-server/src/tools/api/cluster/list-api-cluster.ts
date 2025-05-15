@@ -5,31 +5,22 @@ import type { Metadata } from '../../';
 import Vers from 'vers';
 
 export const metadata: Metadata = {
-  resource: 'api.vm',
-  operation: 'write',
+  resource: 'api.cluster',
+  operation: 'read',
   tags: [],
 };
 
 export const tool: Tool = {
-  name: 'execute_api_vm',
-  description: 'Execute a command on the specified VM.',
+  name: 'list_api_cluster',
+  description: 'List all clusters.',
   inputSchema: {
     type: 'object',
-    properties: {
-      vm_id: {
-        type: 'string',
-      },
-      command: {
-        type: 'string',
-      },
-    },
+    properties: {},
   },
 };
 
 export const handler = (client: Vers, args: Record<string, unknown> | undefined) => {
-  const { vm_id, ...body } = args as any;
-  console.error('DEBUG: Sending JSON to API:', JSON.stringify(body, null, 2));
-  return client.api.vm.execute(vm_id, body);
+  return client.api.cluster.list();
 };
 
 export default { metadata, tool, handler };

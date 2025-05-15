@@ -5,31 +5,36 @@ import type { Metadata } from '../../';
 import Vers from 'vers';
 
 export const metadata: Metadata = {
-  resource: 'api.vm',
+  resource: 'api.cluster',
   operation: 'write',
   tags: [],
 };
 
 export const tool: Tool = {
-  name: 'execute_api_vm',
-  description: 'Execute a command on the specified VM.',
+  name: 'create_api_cluster',
+  description: 'Create a new cluster.',
   inputSchema: {
     type: 'object',
     properties: {
-      vm_id: {
+      kernel_name: {
         type: 'string',
       },
-      command: {
+      mem_size_mib: {
+        type: 'integer',
+      },
+      rootfs_name: {
         type: 'string',
+      },
+      vcpu_count: {
+        type: 'integer',
       },
     },
   },
 };
 
 export const handler = (client: Vers, args: Record<string, unknown> | undefined) => {
-  const { vm_id, ...body } = args as any;
-  console.error('DEBUG: Sending JSON to API:', JSON.stringify(body, null, 2));
-  return client.api.vm.execute(vm_id, body);
+  const body = args as any;
+  return client.api.cluster.create(body);
 };
 
 export default { metadata, tool, handler };

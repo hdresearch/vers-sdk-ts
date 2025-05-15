@@ -6,30 +6,21 @@ import Vers from 'vers';
 
 export const metadata: Metadata = {
   resource: 'api.vm',
-  operation: 'write',
+  operation: 'read',
   tags: [],
 };
 
 export const tool: Tool = {
-  name: 'execute_api_vm',
-  description: 'Execute a command on the specified VM.',
+  name: 'list_api_vm',
+  description: 'List all VMs.',
   inputSchema: {
     type: 'object',
-    properties: {
-      vm_id: {
-        type: 'string',
-      },
-      command: {
-        type: 'string',
-      },
-    },
+    properties: {},
   },
 };
 
 export const handler = (client: Vers, args: Record<string, unknown> | undefined) => {
-  const { vm_id, ...body } = args as any;
-  console.error('DEBUG: Sending JSON to API:', JSON.stringify(body, null, 2));
-  return client.api.vm.execute(vm_id, body);
+  return client.api.vm.list();
 };
 
 export default { metadata, tool, handler };
