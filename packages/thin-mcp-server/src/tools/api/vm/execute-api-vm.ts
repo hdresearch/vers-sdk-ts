@@ -6,6 +6,7 @@ import Vers from 'vers';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { writeFile, unlink } from 'fs/promises';
+import { NodeSSH } from 'node-ssh';
 
 export const metadata: Metadata = {
   resource: 'api.vm',
@@ -56,69 +57,21 @@ export const handler = async (client: Vers, args: Record<string, unknown> | unde
     const hostIP = client.versURL; // Assuming versURL is the host IP
     const sshPort = vm.network_info.ssh_port;
 
-    // Construct the SSH command
-    const { spawn } = require('child_process');
+    const sshClient = new NodeSSH()
 
-    const sshArgs = [
-      `root@${hostIP}`,
-      '-p',
-      `${sshPort}`,
-      '-o',
-      'StrictHostKeyChecking=no',
-      '-o',
-      'UserKnownHostsFile=/dev/null',
-      '-o',
-      'IdentitiesOnly=yes',
-      '-o',
-      'PreferredAuthentications=publickey',
-      '-o',
-      'LogLevel=ERROR',
-      '-i',
-      keyPath,
-      command,
-    ];
+    await sshClient.connect({
+      host: hostIP,
+      port: sshPort,
+      username: 'root',
+      privateKeyPath: keyPath
+    })
 
-    console.error('temp key path is: ', keyPath)
-    console.error('ssh Key is: ', sshKey)
-    console.error('command string is:', command);
-    console.error('ssh command string is:', sshArgs.join(' '));
-
-    const result = await new Promise<string>((resolve, reject) => {
-      const child = spawn('ssh', sshArgs);
-      let stdoutData = '';
-      let stderrData = '';
-
-      child.stdout.on('data', (data: Buffer) => {
-        stdoutData += data.toString();
-      });
-
-      child.stderr.on('data', (data: Buffer) => {
-        stderrData += data.toString();
-      });
-
-      child.on('close', (code: number) => {
-        if (code !== 0) {
-          console.error(`SSH execution error: ${stderrData}`);
-          reject(
-            new Error(
-              `Failed to execute SSH command with code ${code}:\nStdout: ${stdoutData}\nStderr: ${stderrData}`
-            )
-          );
-        } else {
-          resolve(stdoutData);
-        }
-      });
-
-      child.on('error', (err: Error) => {
-        console.error(`SSH spawn error: ${err}`);
-        reject(new Error(`Failed to spawn SSH process: ${err.message}`));
-      });
-    });
+    const result = await sshClient.execCommand(command)
 
     // 5. Clean up the temporary key file
     await unlink(keyPath);
 
-    return { result };
+    return { result: result.stdout };
   } catch (error: any) {
     console.error('Error executing command via SSH:', error);
     throw new Error(`Failed to execute command: ${error.message}`);
