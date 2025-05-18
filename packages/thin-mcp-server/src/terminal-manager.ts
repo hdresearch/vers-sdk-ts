@@ -84,13 +84,6 @@ export class TerminalManager {
             let stdoutData = '';
             let stderrData = '';
 
-            // Create a timeout promise
-            const timeoutPromise = new Promise<void>((resolve) => {
-                setTimeout(() => {
-                    session.isBlocked = true;
-                    resolve();
-                });
-            });
 
             // Execute SSH command
             const sshPromise = sshClient.execCommand(prefixedCommand, {
@@ -99,22 +92,20 @@ export class TerminalManager {
                     stdoutData += data;
                     output += data;
                     session.lastOutput += data;
-                    console.log('stdout: ' + data);
+                    console.error('stdout: ' + data);
                 },
                 onStderr: (chunk) => {
                     const data = chunk.toString('utf8');
                     stderrData += data;
                     output += data;
                     session.lastOutput += data;
-                    console.log('stderr: ' + data);
+                    console.error('stderr: ' + data);
                 }
             });
 
-            // Wait for either timeout or completion
-            await Promise.race([timeoutPromise, sshPromise.then()]);
-
             // Get the result even if timeout occurred
             const result = await sshPromise;
+            console.error('result is:', result);
 
             // 6. Clean up
             await unlink(keyPath);
