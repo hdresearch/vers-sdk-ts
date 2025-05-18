@@ -12,6 +12,7 @@ import commit_api_vm from './api/vm/commit-api-vm';
 import create_branch_api_vm from './api/vm/create-branch-api-vm';
 import execute_api_vm from './api/vm/execute-api-vm';
 import list_sessions from './api/sessions/list-sessions';
+import get_new_output from './api/sessions/get-new-output';
 
 export type HandlerFunction = (client: Vers, args: Record<string, unknown> | undefined) => Promise<any>;
 
@@ -42,6 +43,7 @@ addEndpoint(commit_api_vm);
 addEndpoint(create_branch_api_vm);
 addEndpoint(execute_api_vm);
 addEndpoint(list_sessions);
+addEndpoint(get_new_output);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';
