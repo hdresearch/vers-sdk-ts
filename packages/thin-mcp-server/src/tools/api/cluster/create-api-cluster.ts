@@ -15,20 +15,7 @@ export const tool: Tool = {
   description: 'Create a new cluster.',
   inputSchema: {
     type: 'object',
-    properties: {
-      kernel_name: {
-        type: 'string',
-      },
-      mem_size_mib: {
-        type: 'integer',
-      },
-      rootfs_name: {
-        type: 'string',
-      },
-      vcpu_count: {
-        type: 'integer',
-      },
-    },
+    properties: {},
   },
 };
 
