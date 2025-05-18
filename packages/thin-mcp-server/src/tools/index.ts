@@ -13,6 +13,7 @@ import create_branch_api_vm from './api/vm/create-branch-api-vm';
 import execute_api_vm from './api/vm/execute-api-vm';
 import list_sessions from './api/sessions/list-sessions';
 import get_new_output from './api/sessions/get-new-output';
+import list_completed_sessions from './api/sessions/list-completed.sessions';
 
 export type HandlerFunction = (client: Vers, args: Record<string, unknown> | undefined) => Promise<any>;
 
@@ -44,6 +45,7 @@ addEndpoint(create_branch_api_vm);
 addEndpoint(execute_api_vm);
 addEndpoint(list_sessions);
 addEndpoint(get_new_output);
+addEndpoint(list_completed_sessions);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

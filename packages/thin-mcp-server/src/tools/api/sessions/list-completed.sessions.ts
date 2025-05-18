@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 export const tool: Tool = {
-    name: 'list_sessions',
-    description: 'List all running command sessions.',
+    name: 'list_completed_sessions',
+    description: 'List all completed command sessions.',
     inputSchema: {
         type: 'object',
         properties: {},
@@ -22,14 +22,14 @@ export const tool: Tool = {
 
 export const handler = async () => {
 
-    const sessions = terminalManager.listActiveSessions();
+    const sessions = terminalManager.listCompletedSessions();
     return {
         content: [{
             type: "text",
             text: sessions.length === 0
                 ? 'No active sessions. Check completed sessions with `list_completed_sessions`.'
                 : sessions.map(s =>
-                    `PID: ${s.pid}, Blocked: ${s.isBlocked}, Runtime: ${Math.round(s.runtime / 1000)}s`
+                    `PID: ${s.pid}, Output: ${s.output}, Exit Code: ${s.exitCode}, Runtime: ${Math.round(s.endTime.getTime() - s.startTime.getTime()) / 1000}s}`
                 ).join('\n')
         }],
     };
