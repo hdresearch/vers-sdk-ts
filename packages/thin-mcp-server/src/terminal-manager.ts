@@ -69,7 +69,6 @@ export class TerminalManager {
             const hostIP = client.versURL; // Assuming versURL is the host IP
             const sshPort = vm.network_info.ssh_port;
 
-
             await sshClient.connect({
                 host: hostIP,
                 port: sshPort,
@@ -84,9 +83,8 @@ export class TerminalManager {
             let stdoutData = '';
             let stderrData = '';
 
-
-            // Execute SSH command
-            const sshPromise = sshClient.execCommand(prefixedCommand, {
+            // Start command execution but don't await it
+            sshClient.execCommand(prefixedCommand, {
                 onStdout: (chunk) => {
                     const data = chunk.toString('utf8');
                     stdoutData += data;
@@ -101,38 +99,56 @@ export class TerminalManager {
                     session.lastOutput += data;
                     console.error('stderr: ' + data);
                 }
+            }).then(async (result) => {
+                console.error('result is:', result);
+
+                // Clean up
+                try {
+                    await unlink(keyPath);
+                } catch (error) {
+                    console.error('Error deleting SSH key file:', error);
+                }
+
+                // Mark session as completed
+                this.completedSessions.set(sessionId, {
+                    pid: sessionId,
+                    output: output,
+                    exitCode: result.code,
+                    startTime: session.startTime,
+                    endTime: new Date()
+                });
+
+                // Keep only last 100 completed sessions
+                if (this.completedSessions.size > 100) {
+                    const oldestKey = Array.from(this.completedSessions.keys())[0];
+                    if (oldestKey) this.completedSessions.delete(oldestKey);
+                }
+
+                this.sessions.delete(sessionId);
+            }).catch(error => {
+                console.error('Error during command execution:', error);
+
+                // Mark as completed but with error
+                this.completedSessions.set(sessionId, {
+                    pid: sessionId,
+                    output: session.lastOutput + `\nError: ${error.message}`,
+                    exitCode: 1,
+                    startTime: session.startTime,
+                    endTime: new Date()
+                });
+
+                this.sessions.delete(sessionId);
+
+                // Try to clean up
+                unlink(keyPath).catch(e => console.error('Error deleting key file:', e));
             });
 
-            // Get the result even if timeout occurred
-            const result = await sshPromise;
-            console.error('result is:', result);
-
-            // 6. Clean up
-            await unlink(keyPath);
-
-            // Mark session as completed
-            this.completedSessions.set(sessionId, {
-                pid: sessionId,
-                output: output,
-                exitCode: result.code,
-                startTime: session.startTime,
-                endTime: new Date()
-            });
-
-            // Keep only last 100 completed sessions
-            if (this.completedSessions.size > 100) {
-                const oldestKey = Array.from(this.completedSessions.keys())[0];
-                if (oldestKey) this.completedSessions.delete(oldestKey);
-            }
-
-            this.sessions.delete(sessionId);
-
-            // Return both stdout and stderr
+            // Return immediately with the PID
             return {
                 pid: sessionId,
                 isBlocked: session.isBlocked,
-                output: output,
-                error: stderrData || result.stderr
+                output: "Command started. Check progress with get_new_output.",
+                error: ""
             };
         } catch (error: any) {
             console.error('Error executing command via SSH:', error);

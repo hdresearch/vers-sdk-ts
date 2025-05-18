@@ -31,9 +31,9 @@ export const tool: Tool = {
 export const handler = async (client: Vers, args: Record<string, unknown> | undefined) => {
 
   // get the command's pid so it's easy to query, and return that to the user
-  const result = terminalManager.executeCommand(client, args);
+  const result = await terminalManager.executeCommand(client, args);
   return {
-    result: 'Command is executing. Run `list_active_sessions` to see progress.'
+    result
   }
 
 
