@@ -5,6 +5,7 @@
 Types:
 
 - <code><a href="./src/resources/api/cluster.ts">Cluster</a></code>
+- <code><a href="./src/resources/api/cluster.ts">Create</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterCreateResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterRetrieveResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterListResponse</a></code>

@@ -11,6 +11,7 @@ import {
   ClusterListResponse,
   ClusterResource,
   ClusterRetrieveResponse,
+  Create,
 } from './cluster';
 import * as HealthAPI from './health';
 import { Health, HealthCheckResponse } from './health';
@@ -61,6 +62,7 @@ export declare namespace API {
   export {
     ClusterResource as ClusterResource,
     type Cluster as Cluster,
+    type Create as Create,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,

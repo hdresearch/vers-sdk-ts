@@ -65,6 +65,53 @@ export interface Cluster {
   root_vm_id?: string | null;
 }
 
+export type Create = Create.UnionMember0 | Create.UnionMember1;
+
+export namespace Create {
+  export interface UnionMember0 {
+    cluster_type: 'new';
+
+    params: UnionMember0.Params;
+  }
+
+  export namespace UnionMember0 {
+    export interface Params {
+      /**
+       * The amount of total space to allocate to the cluster
+       */
+      fs_size_cluster_mib?: number | null;
+
+      /**
+       * The size of the VM filesystem (if smaller than the base image + overhead, will
+       * cause an error)
+       */
+      fs_size_vm_mib?: number | null;
+
+      kernel_name?: string | null;
+
+      mem_size_mib?: number | null;
+
+      rootfs_name?: string | null;
+
+      vcpu_count?: number | null;
+    }
+  }
+
+  export interface UnionMember1 {
+    cluster_type: 'from_commit';
+
+    params: UnionMember1.Params;
+  }
+
+  export namespace UnionMember1 {
+    export interface Params {
+      commit_key: string;
+
+      fs_size_cluster_mib?: number | null;
+    }
+  }
+}
+
 export interface ClusterCreateResponse {
   data: ClusterCreateResponse.Data;
 
@@ -276,6 +323,7 @@ export declare namespace ClusterCreateParams {
 export declare namespace ClusterResource {
   export {
     type Cluster as Cluster,
+    type Create as Create,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,
