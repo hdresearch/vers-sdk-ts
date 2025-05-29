@@ -232,32 +232,44 @@ export declare namespace ClusterCreateParams {
   export interface Variant0 {
     cluster_type: 'new';
 
-    /**
-     * The amount of total space to allocate to the cluster
-     */
-    fs_size_cluster_mib?: number | null;
+    params: Variant0.Params;
+  }
 
-    /**
-     * The size of the VM filesystem (if smaller than the base image + overhead, will
-     * cause an error)
-     */
-    fs_size_vm_mib?: number | null;
+  export namespace Variant0 {
+    export interface Params {
+      /**
+       * The amount of total space to allocate to the cluster
+       */
+      fs_size_cluster_mib?: number | null;
 
-    kernel_name?: string | null;
+      /**
+       * The size of the VM filesystem (if smaller than the base image + overhead, will
+       * cause an error)
+       */
+      fs_size_vm_mib?: number | null;
 
-    mem_size_mib?: number | null;
+      kernel_name?: string | null;
 
-    rootfs_name?: string | null;
+      mem_size_mib?: number | null;
 
-    vcpu_count?: number | null;
+      rootfs_name?: string | null;
+
+      vcpu_count?: number | null;
+    }
   }
 
   export interface Variant1 {
     cluster_type: 'from_commit';
 
-    commit_key: string;
+    params: Variant1.Params;
+  }
 
-    size_cluster_mib?: number | null;
+  export namespace Variant1 {
+    export interface Params {
+      commit_key: string;
+
+      fs_size_cluster_mib?: number | null;
+    }
   }
 }
 
