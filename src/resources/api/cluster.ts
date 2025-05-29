@@ -65,27 +65,6 @@ export interface Cluster {
   root_vm_id?: string | null;
 }
 
-export interface Create {
-  /**
-   * The amount of total space to allocate to the cluster
-   */
-  fs_size_cluster_mib?: number | null;
-
-  /**
-   * The size of the VM filesystem (if smaller than the base image + overhead, will
-   * cause an error)
-   */
-  fs_size_vm_mib?: number | null;
-
-  kernel_name?: string | null;
-
-  mem_size_mib?: number | null;
-
-  rootfs_name?: string | null;
-
-  vcpu_count?: number | null;
-}
-
 export interface ClusterCreateResponse {
   data: ClusterCreateResponse.Data;
 
@@ -247,31 +226,44 @@ export interface ClusterGetSSHKeyResponse {
   time_start: number;
 }
 
-export interface ClusterCreateParams {
-  /**
-   * The amount of total space to allocate to the cluster
-   */
-  fs_size_cluster_mib?: number | null;
+export type ClusterCreateParams = ClusterCreateParams.Variant0 | ClusterCreateParams.Variant1;
 
-  /**
-   * The size of the VM filesystem (if smaller than the base image + overhead, will
-   * cause an error)
-   */
-  fs_size_vm_mib?: number | null;
+export declare namespace ClusterCreateParams {
+  export interface Variant0 {
+    cluster_type: 'new';
 
-  kernel_name?: string | null;
+    /**
+     * The amount of total space to allocate to the cluster
+     */
+    fs_size_cluster_mib?: number | null;
 
-  mem_size_mib?: number | null;
+    /**
+     * The size of the VM filesystem (if smaller than the base image + overhead, will
+     * cause an error)
+     */
+    fs_size_vm_mib?: number | null;
 
-  rootfs_name?: string | null;
+    kernel_name?: string | null;
 
-  vcpu_count?: number | null;
+    mem_size_mib?: number | null;
+
+    rootfs_name?: string | null;
+
+    vcpu_count?: number | null;
+  }
+
+  export interface Variant1 {
+    cluster_type: 'from_commit';
+
+    commit_key: string;
+
+    size_cluster_mib?: number | null;
+  }
 }
 
 export declare namespace ClusterResource {
   export {
     type Cluster as Cluster,
-    type Create as Create,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,

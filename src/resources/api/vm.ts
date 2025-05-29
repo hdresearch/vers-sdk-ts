@@ -420,59 +420,7 @@ export interface VmCommitResponse {
 
 export namespace VmCommitResponse {
   export interface Data {
-    /**
-     * The ID of the VM.
-     */
     id: string;
-
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
   }
 }
 

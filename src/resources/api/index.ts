@@ -4,7 +4,6 @@ export { API } from './api';
 export {
   ClusterResource,
   type Cluster,
-  type Create,
   type ClusterCreateResponse,
   type ClusterRetrieveResponse,
   type ClusterListResponse,
