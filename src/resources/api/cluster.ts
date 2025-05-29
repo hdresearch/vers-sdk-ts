@@ -65,16 +65,16 @@ export interface Cluster {
   root_vm_id?: string | null;
 }
 
-export type Create = Create.UnionMember0 | Create.UnionMember1;
+export type Create = Create.NewClusterParams | Create.ClusterFromCommitParams;
 
 export namespace Create {
-  export interface UnionMember0 {
+  export interface NewClusterParams {
     cluster_type: 'new';
 
-    params: UnionMember0.Params;
+    params: NewClusterParams.Params;
   }
 
-  export namespace UnionMember0 {
+  export namespace NewClusterParams {
     export interface Params {
       /**
        * The amount of total space to allocate to the cluster
@@ -97,13 +97,13 @@ export namespace Create {
     }
   }
 
-  export interface UnionMember1 {
+  export interface ClusterFromCommitParams {
     cluster_type: 'from_commit';
 
-    params: UnionMember1.Params;
+    params: ClusterFromCommitParams.Params;
   }
 
-  export namespace UnionMember1 {
+  export namespace ClusterFromCommitParams {
     export interface Params {
       commit_key: string;
 
@@ -273,16 +273,18 @@ export interface ClusterGetSSHKeyResponse {
   time_start: number;
 }
 
-export type ClusterCreateParams = ClusterCreateParams.Variant0 | ClusterCreateParams.Variant1;
+export type ClusterCreateParams =
+  | ClusterCreateParams.NewClusterParams
+  | ClusterCreateParams.ClusterFromCommitParams;
 
 export declare namespace ClusterCreateParams {
-  export interface Variant0 {
+  export interface NewClusterParams {
     cluster_type: 'new';
 
-    params: Variant0.Params;
+    params: NewClusterParams.Params;
   }
 
-  export namespace Variant0 {
+  export namespace NewClusterParams {
     export interface Params {
       /**
        * The amount of total space to allocate to the cluster
@@ -305,13 +307,13 @@ export declare namespace ClusterCreateParams {
     }
   }
 
-  export interface Variant1 {
+  export interface ClusterFromCommitParams {
     cluster_type: 'from_commit';
 
-    params: Variant1.Params;
+    params: ClusterFromCommitParams.Params;
   }
 
-  export namespace Variant1 {
+  export namespace ClusterFromCommitParams {
     export interface Params {
       commit_key: string;
 
