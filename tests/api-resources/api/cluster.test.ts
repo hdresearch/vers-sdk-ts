@@ -10,7 +10,7 @@ const client = new Vers({
 describe('resource cluster', () => {
   // skipped: tests are disabled for the time being
   test.skip('create: only required params', async () => {
-    const responsePromise = client.api.cluster.create({ cluster_type: 'new' });
+    const responsePromise = client.api.cluster.create({ cluster_type: 'new', params: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,12 +24,14 @@ describe('resource cluster', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.api.cluster.create({
       cluster_type: 'new',
-      fs_size_cluster_mib: 0,
-      fs_size_vm_mib: 0,
-      kernel_name: 'kernel_name',
-      mem_size_mib: 0,
-      rootfs_name: 'rootfs_name',
-      vcpu_count: 0,
+      params: {
+        fs_size_cluster_mib: 0,
+        fs_size_vm_mib: 0,
+        kernel_name: 'kernel_name',
+        mem_size_mib: 0,
+        rootfs_name: 'rootfs_name',
+        vcpu_count: 0,
+      },
     });
   });
 
