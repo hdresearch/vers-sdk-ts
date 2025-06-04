@@ -50,6 +50,11 @@ export interface Cluster {
   id: string;
 
   /**
+   * The ID of the cluster's root VM.
+   */
+  root_vm_id: string;
+
+  /**
    * How many VMs are currently running on this cluster.
    */
   vm_count: number;
@@ -58,11 +63,6 @@ export interface Cluster {
    * The VMs that are children of the cluster, including the root VM.
    */
   vms: Array<VmAPI.Vm>;
-
-  /**
-   * The ID of the cluster's root VM.
-   */
-  root_vm_id?: string | null;
 }
 
 export type Create = Create.NewClusterParams | Create.ClusterFromCommitParams;
@@ -133,6 +133,11 @@ export namespace ClusterCreateResponse {
     id: string;
 
     /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id: string;
+
+    /**
      * How many VMs are currently running on this cluster.
      */
     vm_count: number;
@@ -141,11 +146,6 @@ export namespace ClusterCreateResponse {
      * The VMs that are children of the cluster, including the root VM.
      */
     vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
   }
 }
 
@@ -170,6 +170,11 @@ export namespace ClusterRetrieveResponse {
     id: string;
 
     /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id: string;
+
+    /**
      * How many VMs are currently running on this cluster.
      */
     vm_count: number;
@@ -178,11 +183,6 @@ export namespace ClusterRetrieveResponse {
      * The VMs that are children of the cluster, including the root VM.
      */
     vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
   }
 }
 
@@ -207,6 +207,11 @@ export namespace ClusterListResponse {
     id: string;
 
     /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id: string;
+
+    /**
      * How many VMs are currently running on this cluster.
      */
     vm_count: number;
@@ -215,11 +220,6 @@ export namespace ClusterListResponse {
      * The VMs that are children of the cluster, including the root VM.
      */
     vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
   }
 }
 
@@ -244,6 +244,11 @@ export namespace ClusterDeleteResponse {
     id: string;
 
     /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id: string;
+
+    /**
      * How many VMs are currently running on this cluster.
      */
     vm_count: number;
@@ -252,11 +257,6 @@ export namespace ClusterDeleteResponse {
      * The VMs that are children of the cluster, including the root VM.
      */
     vms: Array<VmAPI.Vm>;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id?: string | null;
   }
 }
 
