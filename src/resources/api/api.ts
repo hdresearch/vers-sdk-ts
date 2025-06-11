@@ -45,8 +45,8 @@ import {
   VmListResponse,
   VmResource,
   VmRetrieveResponse,
-  VmUpdateStateParams,
-  VmUpdateStateResponse,
+  VmUpdateParams,
+  VmUpdateResponse,
 } from './vm';
 
 export class API extends APIResource {
@@ -85,15 +85,15 @@ export declare namespace API {
     type UpdateVm as UpdateVm,
     type Vm as Vm,
     type VmRetrieveResponse as VmRetrieveResponse,
+    type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmBranchResponse as VmBranchResponse,
     type VmCommitResponse as VmCommitResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
-    type VmUpdateStateResponse as VmUpdateStateResponse,
+    type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
     type VmBranchParams as VmBranchParams,
-    type VmUpdateStateParams as VmUpdateStateParams,
   };
 
   export {
