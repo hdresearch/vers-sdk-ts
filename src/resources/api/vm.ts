@@ -69,7 +69,7 @@ export interface BranchRequest {
   alias?: string | null;
 }
 
-export interface PatchRequest {
+export interface UpdateVm {
   alias?: string | null;
 
   state?: 'Running' | 'Paused' | null;
@@ -568,7 +568,7 @@ export interface VmUpdateStateParams {
 export declare namespace VmResource {
   export {
     type BranchRequest as BranchRequest,
-    type PatchRequest as PatchRequest,
+    type UpdateVm as UpdateVm,
     type Vm as Vm,
     type VmRetrieveResponse as VmRetrieveResponse,
     type VmListResponse as VmListResponse,

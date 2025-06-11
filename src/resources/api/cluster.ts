@@ -22,6 +22,17 @@ export class ClusterResource extends APIResource {
   }
 
   /**
+   * Update a cluster's configuration
+   */
+  update(
+    clusterIDOrAlias: string,
+    body: ClusterUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ClusterUpdateResponse> {
+    return this._client.patch(path`/api/cluster/${clusterIDOrAlias}`, { body, ...options });
+  }
+
+  /**
    * List all clusters.
    */
   list(options?: RequestOptions): APIPromise<ClusterListResponse> {
@@ -125,7 +136,7 @@ export namespace Create {
   }
 }
 
-export interface PatchRequest {
+export interface UpdateCluster {
   alias?: string | null;
 }
 
@@ -185,6 +196,48 @@ export interface ClusterRetrieveResponse {
 }
 
 export namespace ClusterRetrieveResponse {
+  export interface Data {
+    /**
+     * The cluster's ID.
+     */
+    id: string;
+
+    /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id: string;
+
+    /**
+     * How many VMs are currently running on this cluster.
+     */
+    vm_count: number;
+
+    /**
+     * The VMs that are children of the cluster, including the root VM.
+     */
+    vms: Array<VmAPI.Vm>;
+
+    /**
+     * Human-readable name assigned to the cluster.
+     */
+    alias?: string | null;
+  }
+}
+
+export interface ClusterUpdateResponse {
+  data: ClusterUpdateResponse.Data;
+
+  duration_ns: number;
+
+  operation_id: string;
+
+  /**
+   * Unix epoch time (secs)
+   */
+  time_start: number;
+}
+
+export namespace ClusterUpdateResponse {
   export interface Data {
     /**
      * The cluster's ID.
@@ -367,16 +420,22 @@ export declare namespace ClusterCreateParams {
   }
 }
 
+export interface ClusterUpdateParams {
+  alias?: string | null;
+}
+
 export declare namespace ClusterResource {
   export {
     type Cluster as Cluster,
     type Create as Create,
-    type PatchRequest as PatchRequest,
+    type UpdateCluster as UpdateCluster,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
+    type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
     type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
+    type ClusterUpdateParams as ClusterUpdateParams,
   };
 }
