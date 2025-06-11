@@ -31,22 +31,22 @@ Types:
 - <code><a href="./src/resources/api/vm.ts">UpdateVm</a></code>
 - <code><a href="./src/resources/api/vm.ts">Vm</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmRetrieveResponse</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmUpdateResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmListResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmDeleteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmBranchResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmGetSSHKeyResponse</a></code>
-- <code><a href="./src/resources/api/vm.ts">VmUpdateStateResponse</a></code>
 
 Methods:
 
 - <code title="get /api/vm/{vm_id_or_alias}">client.api.vm.<a href="./src/resources/api/vm.ts">retrieve</a>(vmIDOrAlias) -> VmRetrieveResponse</code>
+- <code title="patch /api/vm/{vm_id_or_alias}">client.api.vm.<a href="./src/resources/api/vm.ts">update</a>(vmIDOrAlias, { ...params }) -> VmUpdateResponse</code>
 - <code title="get /api/vm">client.api.vm.<a href="./src/resources/api/vm.ts">list</a>() -> VmListResponse</code>
 - <code title="delete /api/vm/{vm_id_or_alias}">client.api.vm.<a href="./src/resources/api/vm.ts">delete</a>(vmIDOrAlias, { ...params }) -> VmDeleteResponse</code>
 - <code title="post /api/vm/{vm_id_or_alias}/branch">client.api.vm.<a href="./src/resources/api/vm.ts">branch</a>(vmIDOrAlias, { ...params }) -> VmBranchResponse</code>
 - <code title="post /api/vm/{vm_id_or_alias}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmIDOrAlias) -> VmCommitResponse</code>
 - <code title="get /api/vm/{vm_id_or_alias}/ssh_key">client.api.vm.<a href="./src/resources/api/vm.ts">getSSHKey</a>(vmIDOrAlias) -> VmGetSSHKeyResponse</code>
-- <code title="patch /api/vm/{vm_id_or_alias}">client.api.vm.<a href="./src/resources/api/vm.ts">updateState</a>(vmIDOrAlias, { ...params }) -> VmUpdateStateResponse</code>
 
 ## Rootfs
 
