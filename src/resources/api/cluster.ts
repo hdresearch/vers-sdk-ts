@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as VmAPI from './vm';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class ClusterResource extends APIResource {
   /**
@@ -14,10 +15,31 @@ export class ClusterResource extends APIResource {
   }
 
   /**
+   * Retrieve information on a particular cluster.
+   */
+  retrieve(clusterIDOrAlias: string, options?: RequestOptions): APIPromise<ClusterRetrieveResponse> {
+    return this._client.get(path`/api/cluster/${clusterIDOrAlias}`, options);
+  }
+
+  /**
    * List all clusters.
    */
   list(options?: RequestOptions): APIPromise<ClusterListResponse> {
     return this._client.get('/api/cluster', options);
+  }
+
+  /**
+   * Delete a cluster.
+   */
+  delete(clusterIDOrAlias: string, options?: RequestOptions): APIPromise<ClusterDeleteResponse> {
+    return this._client.delete(path`/api/cluster/${clusterIDOrAlias}`, options);
+  }
+
+  /**
+   * Get the SSH private key for VM access
+   */
+  getSSHKey(clusterIDOrAlias: string, options?: RequestOptions): APIPromise<ClusterGetSSHKeyResponse> {
+    return this._client.get(path`/api/cluster/${clusterIDOrAlias}/ssh_key`, options);
   }
 }
 
@@ -103,6 +125,10 @@ export namespace Create {
   }
 }
 
+export interface PatchRequest {
+  alias?: string | null;
+}
+
 export interface ClusterCreateResponse {
   data: ClusterCreateResponse.Data;
 
@@ -117,6 +143,48 @@ export interface ClusterCreateResponse {
 }
 
 export namespace ClusterCreateResponse {
+  export interface Data {
+    /**
+     * The cluster's ID.
+     */
+    id: string;
+
+    /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id: string;
+
+    /**
+     * How many VMs are currently running on this cluster.
+     */
+    vm_count: number;
+
+    /**
+     * The VMs that are children of the cluster, including the root VM.
+     */
+    vms: Array<VmAPI.Vm>;
+
+    /**
+     * Human-readable name assigned to the cluster.
+     */
+    alias?: string | null;
+  }
+}
+
+export interface ClusterRetrieveResponse {
+  data: ClusterRetrieveResponse.Data;
+
+  duration_ns: number;
+
+  operation_id: string;
+
+  /**
+   * Unix epoch time (secs)
+   */
+  time_start: number;
+}
+
+export namespace ClusterRetrieveResponse {
   export interface Data {
     /**
      * The cluster's ID.
@@ -187,6 +255,61 @@ export namespace ClusterListResponse {
   }
 }
 
+export interface ClusterDeleteResponse {
+  data: ClusterDeleteResponse.Data;
+
+  duration_ns: number;
+
+  operation_id: string;
+
+  /**
+   * Unix epoch time (secs)
+   */
+  time_start: number;
+}
+
+export namespace ClusterDeleteResponse {
+  export interface Data {
+    /**
+     * The cluster's ID.
+     */
+    id: string;
+
+    /**
+     * The ID of the cluster's root VM.
+     */
+    root_vm_id: string;
+
+    /**
+     * How many VMs are currently running on this cluster.
+     */
+    vm_count: number;
+
+    /**
+     * The VMs that are children of the cluster, including the root VM.
+     */
+    vms: Array<VmAPI.Vm>;
+
+    /**
+     * Human-readable name assigned to the cluster.
+     */
+    alias?: string | null;
+  }
+}
+
+export interface ClusterGetSSHKeyResponse {
+  data: string;
+
+  duration_ns: number;
+
+  operation_id: string;
+
+  /**
+   * Unix epoch time (secs)
+   */
+  time_start: number;
+}
+
 export type ClusterCreateParams =
   | ClusterCreateParams.NewClusterParams
   | ClusterCreateParams.ClusterFromCommitParams;
@@ -248,8 +371,12 @@ export declare namespace ClusterResource {
   export {
     type Cluster as Cluster,
     type Create as Create,
+    type PatchRequest as PatchRequest,
     type ClusterCreateResponse as ClusterCreateResponse,
+    type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
+    type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
   };
 }
