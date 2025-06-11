@@ -6,14 +6,18 @@ import {
   Cluster,
   ClusterCreateParams,
   ClusterCreateResponse,
+  ClusterDeleteResponse,
+  ClusterGetSSHKeyResponse,
   ClusterListResponse,
   ClusterResource,
+  ClusterRetrieveResponse,
   Create,
+  PatchRequest,
 } from './cluster';
 import * as HealthAPI from './health';
 import { Health, HealthCheckResponse } from './health';
 import * as NetworkAPI from './network';
-import { Info, Network } from './network';
+import { Network } from './network';
 import * as RootfsAPI from './rootfs';
 import {
   DeleteResponse,
@@ -26,9 +30,24 @@ import {
   UploadResponse,
 } from './rootfs';
 import * as TelemetryAPI from './telemetry';
-import { Telemetry } from './telemetry';
+import { Info, Telemetry } from './telemetry';
 import * as VmAPI from './vm';
-import { BranchRequest, PatchRequest, Vm, VmListResponse, VmResource } from './vm';
+import {
+  BranchRequest,
+  PatchRequest as VmAPIPatchRequest,
+  Vm,
+  VmBranchParams,
+  VmBranchResponse,
+  VmCommitResponse,
+  VmDeleteParams,
+  VmDeleteResponse,
+  VmGetSSHKeyResponse,
+  VmListResponse,
+  VmResource,
+  VmRetrieveResponse,
+  VmUpdateStateParams,
+  VmUpdateStateResponse,
+} from './vm';
 
 export class API extends APIResource {
   cluster: ClusterAPI.ClusterResource = new ClusterAPI.ClusterResource(this._client);
@@ -51,17 +70,30 @@ export declare namespace API {
     ClusterResource as ClusterResource,
     type Cluster as Cluster,
     type Create as Create,
+    type PatchRequest as PatchRequest,
     type ClusterCreateResponse as ClusterCreateResponse,
+    type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
+    type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
   };
 
   export {
     VmResource as VmResource,
     type BranchRequest as BranchRequest,
-    type PatchRequest as PatchRequest,
+    type VmAPIPatchRequest as PatchRequest,
     type Vm as Vm,
+    type VmRetrieveResponse as VmRetrieveResponse,
     type VmListResponse as VmListResponse,
+    type VmDeleteResponse as VmDeleteResponse,
+    type VmBranchResponse as VmBranchResponse,
+    type VmCommitResponse as VmCommitResponse,
+    type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
+    type VmUpdateStateResponse as VmUpdateStateResponse,
+    type VmDeleteParams as VmDeleteParams,
+    type VmBranchParams as VmBranchParams,
+    type VmUpdateStateParams as VmUpdateStateParams,
   };
 
   export {
@@ -77,7 +109,7 @@ export declare namespace API {
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
-  export { Network as Network, type Info as Info };
+  export { Network as Network };
 
-  export { Telemetry as Telemetry };
+  export { Telemetry as Telemetry, type Info as Info };
 }
