@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as VmAPI from './vm';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -42,8 +43,11 @@ export class ClusterResource extends APIResource {
   /**
    * Delete a cluster.
    */
-  delete(clusterIDOrAlias: string, options?: RequestOptions): APIPromise<ClusterDeleteResponse> {
-    return this._client.delete(path`/api/cluster/${clusterIDOrAlias}`, options);
+  delete(clusterIDOrAlias: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/cluster/${clusterIDOrAlias}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -308,48 +312,6 @@ export namespace ClusterListResponse {
   }
 }
 
-export interface ClusterDeleteResponse {
-  data: ClusterDeleteResponse.Data;
-
-  duration_ns: number;
-
-  operation_id: string;
-
-  /**
-   * Unix epoch time (secs)
-   */
-  time_start: number;
-}
-
-export namespace ClusterDeleteResponse {
-  export interface Data {
-    /**
-     * The cluster's ID.
-     */
-    id: string;
-
-    /**
-     * The ID of the cluster's root VM.
-     */
-    root_vm_id: string;
-
-    /**
-     * How many VMs are currently running on this cluster.
-     */
-    vm_count: number;
-
-    /**
-     * The VMs that are children of the cluster, including the root VM.
-     */
-    vms: Array<VmAPI.Vm>;
-
-    /**
-     * Human-readable name assigned to the cluster.
-     */
-    alias?: string | null;
-  }
-}
-
 export interface ClusterGetSSHKeyResponse {
   data: string;
 
@@ -433,7 +395,6 @@ export declare namespace ClusterResource {
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
-    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
     type ClusterUpdateParams as ClusterUpdateParams,

@@ -10,7 +10,6 @@ export {
   type ClusterRetrieveResponse,
   type ClusterUpdateResponse,
   type ClusterListResponse,
-  type ClusterDeleteResponse,
   type ClusterGetSSHKeyResponse,
   type ClusterCreateParams,
   type ClusterUpdateParams,
