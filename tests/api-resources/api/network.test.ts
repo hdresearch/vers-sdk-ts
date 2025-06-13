@@ -7,10 +7,10 @@ const client = new Vers({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource telemetry', () => {
+describe('resource network', () => {
   // skipped: tests are disabled for the time being
   test.skip('getInfo', async () => {
-    const responsePromise = client.api.telemetry.getInfo();
+    const responsePromise = client.api.network.getInfo();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
