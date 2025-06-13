@@ -4,33 +4,23 @@ import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
-export class Telemetry extends APIResource {
+export class Network extends APIResource {
   /**
-   * Get telemetry information
+   * Get network information
    */
   getInfo(options?: RequestOptions): APIPromise<Info> {
-    return this._client.get('/api/telemetry', options);
+    return this._client.get('/api/network', options);
   }
 }
 
 export interface Info {
-  fs_mib_current: number;
+  num_networks: number;
 
-  fs_mib_max: number;
+  num_networks_available: number;
 
-  mem_mib_current: number;
-
-  mem_mib_max: number;
-
-  vcpu_current: number;
-
-  vcpu_max: number;
-
-  vm_network_count_in_use: number;
-
-  vm_network_count_total: number;
+  num_networks_in_use: number;
 }
 
-export declare namespace Telemetry {
+export declare namespace Network {
   export { type Info as Info };
 }
