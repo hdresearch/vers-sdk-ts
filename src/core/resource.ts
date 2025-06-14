@@ -2,7 +2,7 @@
 
 import type { Vers } from '../client';
 
-export class APIResource {
+export abstract class APIResource {
   protected _client: Vers;
 
   constructor(client: Vers) {
