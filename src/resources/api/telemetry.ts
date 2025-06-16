@@ -1,5 +1,36 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
 
-export class Telemetry extends APIResource {}
+export class Telemetry extends APIResource {
+  /**
+   * Get telemetry information
+   */
+  getInfo(options?: RequestOptions): APIPromise<Info> {
+    return this._client.get('/api/telemetry', options);
+  }
+}
+
+export interface Info {
+  fs_mib_current: number;
+
+  fs_mib_max: number;
+
+  mem_mib_current: number;
+
+  mem_mib_max: number;
+
+  vcpu_current: number;
+
+  vcpu_max: number;
+
+  vm_network_count_in_use: number;
+
+  vm_network_count_total: number;
+}
+
+export declare namespace Telemetry {
+  export { type Info as Info };
+}

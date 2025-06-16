@@ -5,15 +5,16 @@ export {
   ClusterResource,
   type Cluster,
   type Create,
+  type UpdateCluster,
   type ClusterCreateResponse,
   type ClusterRetrieveResponse,
+  type ClusterUpdateResponse,
   type ClusterListResponse,
-  type ClusterDeleteResponse,
   type ClusterGetSSHKeyResponse,
   type ClusterCreateParams,
+  type ClusterUpdateParams,
 } from './cluster';
 export { Health, type HealthCheckResponse } from './health';
-export { Network, type Info } from './network';
 export {
   Rootfs,
   type DeleteResponse,
@@ -24,18 +25,20 @@ export {
   type RootfUploadResponse,
   type RootfUploadParams,
 } from './rootfs';
-export { Telemetry } from './telemetry';
+export { Telemetry, type Info } from './telemetry';
 export {
   VmResource,
-  type PatchRequest,
+  type BranchRequest,
+  type UpdateVm,
   type Vm,
   type VmRetrieveResponse,
+  type VmUpdateResponse,
   type VmListResponse,
   type VmDeleteResponse,
   type VmBranchResponse,
   type VmCommitResponse,
   type VmGetSSHKeyResponse,
-  type VmUpdateStateResponse,
+  type VmUpdateParams,
   type VmDeleteParams,
-  type VmUpdateStateParams,
+  type VmBranchParams,
 } from './vm';
