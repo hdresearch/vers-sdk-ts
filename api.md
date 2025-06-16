@@ -80,3 +80,5 @@ Types:
 Methods:
 
 - <code title="get /api/network">client.api.network.<a href="./src/resources/api/network.ts">getInfo</a>() -> Info</code>
+
+## Telemetry
