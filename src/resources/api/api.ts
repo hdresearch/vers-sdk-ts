@@ -28,6 +28,8 @@ import {
   Rootfs,
   UploadResponse,
 } from './rootfs';
+import * as TelemetryAPI from './telemetry';
+import { Telemetry } from './telemetry';
 import * as VmAPI from './vm';
 import {
   PatchRequest,
@@ -50,6 +52,7 @@ export class API extends APIResource {
   rootfs: RootfsAPI.Rootfs = new RootfsAPI.Rootfs(this._client);
   health: HealthAPI.Health = new HealthAPI.Health(this._client);
   network: NetworkAPI.Network = new NetworkAPI.Network(this._client);
+  telemetry: TelemetryAPI.Telemetry = new TelemetryAPI.Telemetry(this._client);
 }
 
 API.ClusterResource = ClusterResource;
@@ -57,6 +60,7 @@ API.VmResource = VmResource;
 API.Rootfs = Rootfs;
 API.Health = Health;
 API.Network = Network;
+API.Telemetry = Telemetry;
 
 export declare namespace API {
   export {
@@ -100,4 +104,6 @@ export declare namespace API {
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
   export { Network as Network, type Info as Info };
+
+  export { Telemetry as Telemetry };
 }

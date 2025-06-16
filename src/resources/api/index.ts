@@ -24,6 +24,7 @@ export {
   type RootfUploadResponse,
   type RootfUploadParams,
 } from './rootfs';
+export { Telemetry } from './telemetry';
 export {
   VmResource,
   type PatchRequest,
