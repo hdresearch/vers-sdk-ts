@@ -1,6 +1,6 @@
 # Vers TypeScript API Library
 
-[![NPM version](https://img.shields.io/npm/v/vers.svg)](https://npmjs.org/package/vers) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vers)
+[![NPM version](<https://img.shields.io/npm/v/vers.svg?label=npm%20(stable)>)](https://npmjs.org/package/vers) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/vers)
 
 This library provides convenient access to the Vers REST API from server-side TypeScript or JavaScript.
 
