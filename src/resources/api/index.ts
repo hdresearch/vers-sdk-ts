@@ -2,44 +2,42 @@
 
 export { API } from './api';
 export {
-  ClusterResource,
-  type Cluster,
-  type Create,
-  type DeleteResponse,
-  type UpdateCluster,
+  Cluster,
+  type ClusterCreateParams,
+  type ClusterDeleteResponse,
+  type ClusterDto,
+  type ClusterPatchParams,
   type ClusterCreateResponse,
   type ClusterRetrieveResponse,
   type ClusterUpdateResponse,
   type ClusterListResponse,
-  type ClusterDeleteResponse,
   type ClusterGetSSHKeyResponse,
-  type ClusterCreateParams,
   type ClusterUpdateParams,
 } from './cluster';
 export { Health, type HealthCheckResponse } from './health';
 export {
   Rootfs,
-  type ListResponse,
-  type UploadResponse,
+  type RootfsDeleteResponse,
+  type RootfsListResponse,
+  type RootfsUploadResponse,
   type RootfListResponse,
   type RootfDeleteResponse,
   type RootfUploadResponse,
   type RootfUploadParams,
 } from './rootfs';
-export { Telemetry, type Info } from './telemetry';
+export { Telemetry, type TelemetryDto } from './telemetry';
 export {
-  VmResource,
-  type BranchRequest,
-  type UpdateVm,
-  type Vm,
+  Vm,
+  type VmBranchParams,
+  type VmDeleteResponse,
+  type VmDto,
+  type VmPatchParams,
   type VmRetrieveResponse,
   type VmUpdateResponse,
   type VmListResponse,
-  type VmDeleteResponse,
   type VmBranchResponse,
   type VmCommitResponse,
   type VmGetSSHKeyResponse,
   type VmUpdateParams,
   type VmDeleteParams,
-  type VmBranchParams,
 } from './vm';

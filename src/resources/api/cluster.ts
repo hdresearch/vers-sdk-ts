@@ -6,7 +6,7 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class ClusterResource extends APIResource {
+export class Cluster extends APIResource {
   /**
    * Create a new cluster.
    */
@@ -54,41 +54,11 @@ export class ClusterResource extends APIResource {
   }
 }
 
-export interface Cluster {
-  /**
-   * The cluster's ID.
-   */
-  id: string;
+export type ClusterCreateParams =
+  | ClusterCreateParams.NewClusterParams
+  | ClusterCreateParams.ClusterFromCommitParams;
 
-  /**
-   * The size of the cluster's backing file
-   */
-  fs_size_mib: number;
-
-  /**
-   * The ID of the cluster's root VM.
-   */
-  root_vm_id: string;
-
-  /**
-   * How many VMs are currently running on this cluster.
-   */
-  vm_count: number;
-
-  /**
-   * The VMs that are children of the cluster, including the root VM.
-   */
-  vms: Array<VmAPI.Vm>;
-
-  /**
-   * Human-readable name assigned to the cluster.
-   */
-  alias?: string | null;
-}
-
-export type Create = Create.NewClusterParams | Create.ClusterFromCommitParams;
-
-export namespace Create {
+export namespace ClusterCreateParams {
   export interface NewClusterParams {
     cluster_type: 'new';
 
@@ -146,7 +116,7 @@ export namespace Create {
  * Reports information in the event of a partial failure so billing can still be
  * udpated appropriately.
  */
-export interface DeleteResponse {
+export interface ClusterDeleteResponse {
   cluster_id: string;
 
   /**
@@ -154,12 +124,44 @@ export interface DeleteResponse {
    * information in the event of a partial failure so billing can still be udpated
    * appropriately.
    */
-  vms: VmAPI.DeleteResponse;
+  vms: VmAPI.VmDeleteResponse;
 
   fs_error?: string | null;
 }
 
-export interface UpdateCluster {
+export interface ClusterDto {
+  /**
+   * The cluster's ID.
+   */
+  id: string;
+
+  /**
+   * The size of the cluster's backing file
+   */
+  fs_size_mib: number;
+
+  /**
+   * The ID of the cluster's root VM.
+   */
+  root_vm_id: string;
+
+  /**
+   * How many VMs are currently running on this cluster.
+   */
+  vm_count: number;
+
+  /**
+   * The VMs that are children of the cluster, including the root VM.
+   */
+  vms: Array<VmAPI.VmDto>;
+
+  /**
+   * Human-readable name assigned to the cluster.
+   */
+  alias?: string | null;
+}
+
+export interface ClusterPatchParams {
   alias?: string | null;
 }
 
@@ -219,7 +221,7 @@ export namespace ClusterCreateResponse {
     /**
      * The VMs that are children of the cluster, including the root VM.
      */
-    vms: Array<VmAPI.Vm>;
+    vms: Array<VmAPI.VmDto>;
 
     /**
      * Human-readable name assigned to the cluster.
@@ -284,7 +286,7 @@ export namespace ClusterRetrieveResponse {
     /**
      * The VMs that are children of the cluster, including the root VM.
      */
-    vms: Array<VmAPI.Vm>;
+    vms: Array<VmAPI.VmDto>;
 
     /**
      * Human-readable name assigned to the cluster.
@@ -349,7 +351,7 @@ export namespace ClusterUpdateResponse {
     /**
      * The VMs that are children of the cluster, including the root VM.
      */
-    vms: Array<VmAPI.Vm>;
+    vms: Array<VmAPI.VmDto>;
 
     /**
      * Human-readable name assigned to the cluster.
@@ -414,7 +416,7 @@ export namespace ClusterListResponse {
     /**
      * The VMs that are children of the cluster, including the root VM.
      */
-    vms: Array<VmAPI.Vm>;
+    vms: Array<VmAPI.VmDto>;
 
     /**
      * Human-readable name assigned to the cluster.
@@ -473,7 +475,7 @@ export namespace ClusterDeleteResponse {
      * information in the event of a partial failure so billing can still be udpated
      * appropriately.
      */
-    vms: VmAPI.DeleteResponse;
+    vms: VmAPI.VmDeleteResponse;
 
     fs_error?: string | null;
   }
@@ -571,19 +573,17 @@ export interface ClusterUpdateParams {
   alias?: string | null;
 }
 
-export declare namespace ClusterResource {
+export declare namespace Cluster {
   export {
-    type Cluster as Cluster,
-    type Create as Create,
-    type DeleteResponse as DeleteResponse,
-    type UpdateCluster as UpdateCluster,
+    type ClusterCreateParams as ClusterCreateParams,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
+    type ClusterDto as ClusterDto,
+    type ClusterPatchParams as ClusterPatchParams,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
-    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
-    type ClusterCreateParams as ClusterCreateParams,
     type ClusterUpdateParams as ClusterUpdateParams,
   };
 }
