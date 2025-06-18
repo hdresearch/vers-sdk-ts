@@ -5,7 +5,7 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
-export class VmResource extends APIResource {
+export class Vm extends APIResource {
   /**
    * Retrieve information on a particular VM.
    */
@@ -61,7 +61,7 @@ export class VmResource extends APIResource {
   }
 }
 
-export interface BranchRequest {
+export interface VmBranchParams {
   alias?: string | null;
 }
 
@@ -70,13 +70,13 @@ export interface BranchRequest {
  * information in the event of a partial failure so billing can still be udpated
  * appropriately.
  */
-export interface DeleteResponse {
+export interface VmDeleteResponse {
   deleted_ids: Array<string>;
 
-  errors: Array<DeleteResponse.Error>;
+  errors: Array<VmDeleteResponse.Error>;
 }
 
-export namespace DeleteResponse {
+export namespace VmDeleteResponse {
   /**
    * Contains a VM ID and the reason that it could not be deleted.
    */
@@ -87,13 +87,7 @@ export namespace DeleteResponse {
   }
 }
 
-export interface UpdateVm {
-  alias?: string | null;
-
-  state?: 'Running' | 'Paused' | null;
-}
-
-export interface Vm {
+export interface VmDto {
   /**
    * The ID of the VM.
    */
@@ -127,7 +121,7 @@ export interface Vm {
   /**
    * The VM's network configuration
    */
-  network_info: Vm.NetworkInfo;
+  network_info: VmDto.NetworkInfo;
 
   /**
    * Whether the VM is running, paused, or not started.
@@ -150,7 +144,7 @@ export interface Vm {
   parent_id?: string | null;
 }
 
-export namespace Vm {
+export namespace VmDto {
   /**
    * The VM's network configuration
    */
@@ -167,6 +161,12 @@ export namespace Vm {
 
     vm_namespace: string;
   }
+}
+
+export interface VmPatchParams {
+  alias?: string | null;
+
+  state?: 'Running' | 'Paused' | null;
 }
 
 export interface VmRetrieveResponse {
@@ -750,21 +750,19 @@ export interface VmBranchParams {
   alias?: string | null;
 }
 
-export declare namespace VmResource {
+export declare namespace Vm {
   export {
-    type BranchRequest as BranchRequest,
-    type DeleteResponse as DeleteResponse,
-    type UpdateVm as UpdateVm,
-    type Vm as Vm,
+    type VmBranchParams as VmBranchParams,
+    type VmDeleteResponse as VmDeleteResponse,
+    type VmDto as VmDto,
+    type VmPatchParams as VmPatchParams,
     type VmRetrieveResponse as VmRetrieveResponse,
     type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
-    type VmDeleteResponse as VmDeleteResponse,
     type VmBranchResponse as VmBranchResponse,
     type VmCommitResponse as VmCommitResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
-    type VmBranchParams as VmBranchParams,
   };
 }

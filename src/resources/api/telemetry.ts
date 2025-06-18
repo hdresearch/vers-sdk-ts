@@ -8,12 +8,12 @@ export class Telemetry extends APIResource {
   /**
    * Get telemetry information
    */
-  getInfo(options?: RequestOptions): APIPromise<Info> {
+  getInfo(options?: RequestOptions): APIPromise<TelemetryDto> {
     return this._client.get('/api/telemetry', options);
   }
 }
 
-export interface Info {
+export interface TelemetryDto {
   fs_mib_current: number;
 
   fs_mib_max: number;
@@ -32,5 +32,5 @@ export interface Info {
 }
 
 export declare namespace Telemetry {
-  export { type Info as Info };
+  export { type TelemetryDto as TelemetryDto };
 }

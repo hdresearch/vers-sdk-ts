@@ -7,104 +7,96 @@ import {
   ClusterCreateParams,
   ClusterCreateResponse,
   ClusterDeleteResponse,
+  ClusterDto,
   ClusterGetSSHKeyResponse,
   ClusterListResponse,
-  ClusterResource,
+  ClusterPatchParams,
   ClusterRetrieveResponse,
   ClusterUpdateParams,
   ClusterUpdateResponse,
-  Create,
-  DeleteResponse,
-  UpdateCluster,
 } from './cluster';
 import * as HealthAPI from './health';
 import { Health, HealthCheckResponse } from './health';
 import * as RootfsAPI from './rootfs';
 import {
-  DeleteResponse as RootfsAPIDeleteResponse,
-  ListResponse,
   RootfDeleteResponse,
   RootfListResponse,
   RootfUploadParams,
   RootfUploadResponse,
   Rootfs,
-  UploadResponse,
+  RootfsDeleteResponse,
+  RootfsListResponse,
+  RootfsUploadResponse,
 } from './rootfs';
 import * as TelemetryAPI from './telemetry';
-import { Info, Telemetry } from './telemetry';
+import { Telemetry, TelemetryDto } from './telemetry';
 import * as VmAPI from './vm';
 import {
-  BranchRequest,
-  DeleteResponse as VmAPIDeleteResponse,
-  UpdateVm,
   Vm,
   VmBranchParams,
   VmBranchResponse,
   VmCommitResponse,
   VmDeleteParams,
   VmDeleteResponse,
+  VmDto,
   VmGetSSHKeyResponse,
   VmListResponse,
-  VmResource,
+  VmPatchParams,
   VmRetrieveResponse,
   VmUpdateParams,
   VmUpdateResponse,
 } from './vm';
 
 export class API extends APIResource {
-  cluster: ClusterAPI.ClusterResource = new ClusterAPI.ClusterResource(this._client);
-  vm: VmAPI.VmResource = new VmAPI.VmResource(this._client);
+  cluster: ClusterAPI.Cluster = new ClusterAPI.Cluster(this._client);
+  vm: VmAPI.Vm = new VmAPI.Vm(this._client);
   rootfs: RootfsAPI.Rootfs = new RootfsAPI.Rootfs(this._client);
   health: HealthAPI.Health = new HealthAPI.Health(this._client);
   telemetry: TelemetryAPI.Telemetry = new TelemetryAPI.Telemetry(this._client);
 }
 
-API.ClusterResource = ClusterResource;
-API.VmResource = VmResource;
+API.Cluster = Cluster;
+API.Vm = Vm;
 API.Rootfs = Rootfs;
 API.Health = Health;
 API.Telemetry = Telemetry;
 
 export declare namespace API {
   export {
-    ClusterResource as ClusterResource,
-    type Cluster as Cluster,
-    type Create as Create,
-    type DeleteResponse as DeleteResponse,
-    type UpdateCluster as UpdateCluster,
+    Cluster as Cluster,
+    type ClusterCreateParams as ClusterCreateParams,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
+    type ClusterDto as ClusterDto,
+    type ClusterPatchParams as ClusterPatchParams,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
-    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
-    type ClusterCreateParams as ClusterCreateParams,
     type ClusterUpdateParams as ClusterUpdateParams,
   };
 
   export {
-    VmResource as VmResource,
-    type BranchRequest as BranchRequest,
-    type VmAPIDeleteResponse as DeleteResponse,
-    type UpdateVm as UpdateVm,
-    type Vm as Vm,
+    Vm as Vm,
+    type VmBranchParams as VmBranchParams,
+    type VmDeleteResponse as VmDeleteResponse,
+    type VmDto as VmDto,
+    type VmPatchParams as VmPatchParams,
     type VmRetrieveResponse as VmRetrieveResponse,
     type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
-    type VmDeleteResponse as VmDeleteResponse,
     type VmBranchResponse as VmBranchResponse,
     type VmCommitResponse as VmCommitResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
-    type VmBranchParams as VmBranchParams,
   };
 
   export {
     Rootfs as Rootfs,
-    type RootfsAPIDeleteResponse as DeleteResponse,
-    type ListResponse as ListResponse,
-    type UploadResponse as UploadResponse,
+    type RootfsDeleteResponse as RootfsDeleteResponse,
+    type RootfsListResponse as RootfsListResponse,
+    type RootfsUploadResponse as RootfsUploadResponse,
     type RootfListResponse as RootfListResponse,
     type RootfDeleteResponse as RootfDeleteResponse,
     type RootfUploadResponse as RootfUploadResponse,
@@ -113,5 +105,5 @@ export declare namespace API {
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
-  export { Telemetry as Telemetry, type Info as Info };
+  export { Telemetry as Telemetry, type TelemetryDto as TelemetryDto };
 }

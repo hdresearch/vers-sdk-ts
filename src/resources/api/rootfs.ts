@@ -34,15 +34,15 @@ export class Rootfs extends APIResource {
   }
 }
 
-export interface DeleteResponse {
+export interface RootfsDeleteResponse {
   rootfs_name: string;
 }
 
-export interface ListResponse {
+export interface RootfsListResponse {
   rootfs_names: Array<string>;
 }
 
-export interface UploadResponse {
+export interface RootfsUploadResponse {
   rootfs_name: string;
 }
 
@@ -166,9 +166,9 @@ export interface RootfUploadParams {
 
 export declare namespace Rootfs {
   export {
-    type DeleteResponse as DeleteResponse,
-    type ListResponse as ListResponse,
-    type UploadResponse as UploadResponse,
+    type RootfsDeleteResponse as RootfsDeleteResponse,
+    type RootfsListResponse as RootfsListResponse,
+    type RootfsUploadResponse as RootfsUploadResponse,
     type RootfListResponse as RootfListResponse,
     type RootfDeleteResponse as RootfDeleteResponse,
     type RootfUploadResponse as RootfUploadResponse,

@@ -4,10 +4,10 @@
 
 Types:
 
-- <code><a href="./src/resources/api/cluster.ts">Cluster</a></code>
-- <code><a href="./src/resources/api/cluster.ts">Create</a></code>
-- <code><a href="./src/resources/api/cluster.ts">DeleteResponse</a></code>
-- <code><a href="./src/resources/api/cluster.ts">UpdateCluster</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterCreateParams</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterDeleteResponse</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterDto</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterPatchParams</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterCreateResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterRetrieveResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterUpdateResponse</a></code>
@@ -28,10 +28,10 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/api/vm.ts">BranchRequest</a></code>
-- <code><a href="./src/resources/api/vm.ts">DeleteResponse</a></code>
-- <code><a href="./src/resources/api/vm.ts">UpdateVm</a></code>
-- <code><a href="./src/resources/api/vm.ts">Vm</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmBranchParams</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmDeleteResponse</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmDto</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmPatchParams</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmRetrieveResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmUpdateResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmListResponse</a></code>
@@ -54,9 +54,9 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/api/rootfs.ts">DeleteResponse</a></code>
-- <code><a href="./src/resources/api/rootfs.ts">ListResponse</a></code>
-- <code><a href="./src/resources/api/rootfs.ts">UploadResponse</a></code>
+- <code><a href="./src/resources/api/rootfs.ts">RootfsDeleteResponse</a></code>
+- <code><a href="./src/resources/api/rootfs.ts">RootfsListResponse</a></code>
+- <code><a href="./src/resources/api/rootfs.ts">RootfsUploadResponse</a></code>
 - <code><a href="./src/resources/api/rootfs.ts">RootfListResponse</a></code>
 - <code><a href="./src/resources/api/rootfs.ts">RootfDeleteResponse</a></code>
 - <code><a href="./src/resources/api/rootfs.ts">RootfUploadResponse</a></code>
@@ -81,8 +81,8 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/api/telemetry.ts">Info</a></code>
+- <code><a href="./src/resources/api/telemetry.ts">TelemetryDto</a></code>
 
 Methods:
 
-- <code title="get /api/telemetry">client.api.telemetry.<a href="./src/resources/api/telemetry.ts">getInfo</a>() -> Info</code>
+- <code title="get /api/telemetry">client.api.telemetry.<a href="./src/resources/api/telemetry.ts">getInfo</a>() -> TelemetryDto</code>
