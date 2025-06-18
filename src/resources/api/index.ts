@@ -5,11 +5,13 @@ export {
   ClusterResource,
   type Cluster,
   type Create,
+  type DeleteResponse,
   type UpdateCluster,
   type ClusterCreateResponse,
   type ClusterRetrieveResponse,
   type ClusterUpdateResponse,
   type ClusterListResponse,
+  type ClusterDeleteResponse,
   type ClusterGetSSHKeyResponse,
   type ClusterCreateParams,
   type ClusterUpdateParams,
@@ -17,7 +19,6 @@ export {
 export { Health, type HealthCheckResponse } from './health';
 export {
   Rootfs,
-  type DeleteResponse,
   type ListResponse,
   type UploadResponse,
   type RootfListResponse,

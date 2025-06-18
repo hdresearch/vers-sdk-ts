@@ -6,6 +6,7 @@ import {
   Cluster,
   ClusterCreateParams,
   ClusterCreateResponse,
+  ClusterDeleteResponse,
   ClusterGetSSHKeyResponse,
   ClusterListResponse,
   ClusterResource,
@@ -13,13 +14,14 @@ import {
   ClusterUpdateParams,
   ClusterUpdateResponse,
   Create,
+  DeleteResponse,
   UpdateCluster,
 } from './cluster';
 import * as HealthAPI from './health';
 import { Health, HealthCheckResponse } from './health';
 import * as RootfsAPI from './rootfs';
 import {
-  DeleteResponse,
+  DeleteResponse as RootfsAPIDeleteResponse,
   ListResponse,
   RootfDeleteResponse,
   RootfListResponse,
@@ -33,6 +35,7 @@ import { Info, Telemetry } from './telemetry';
 import * as VmAPI from './vm';
 import {
   BranchRequest,
+  DeleteResponse as VmAPIDeleteResponse,
   UpdateVm,
   Vm,
   VmBranchParams,
@@ -67,11 +70,13 @@ export declare namespace API {
     ClusterResource as ClusterResource,
     type Cluster as Cluster,
     type Create as Create,
+    type DeleteResponse as DeleteResponse,
     type UpdateCluster as UpdateCluster,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
     type ClusterUpdateParams as ClusterUpdateParams,
@@ -80,6 +85,7 @@ export declare namespace API {
   export {
     VmResource as VmResource,
     type BranchRequest as BranchRequest,
+    type VmAPIDeleteResponse as DeleteResponse,
     type UpdateVm as UpdateVm,
     type Vm as Vm,
     type VmRetrieveResponse as VmRetrieveResponse,
@@ -96,7 +102,7 @@ export declare namespace API {
 
   export {
     Rootfs as Rootfs,
-    type DeleteResponse as DeleteResponse,
+    type RootfsAPIDeleteResponse as DeleteResponse,
     type ListResponse as ListResponse,
     type UploadResponse as UploadResponse,
     type RootfListResponse as RootfListResponse,

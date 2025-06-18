@@ -6,11 +6,13 @@ Types:
 
 - <code><a href="./src/resources/api/cluster.ts">Cluster</a></code>
 - <code><a href="./src/resources/api/cluster.ts">Create</a></code>
+- <code><a href="./src/resources/api/cluster.ts">DeleteResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">UpdateCluster</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterCreateResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterRetrieveResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterUpdateResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterListResponse</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterDeleteResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterGetSSHKeyResponse</a></code>
 
 Methods:
@@ -19,7 +21,7 @@ Methods:
 - <code title="get /api/cluster/{cluster_id_or_alias}">client.api.cluster.<a href="./src/resources/api/cluster.ts">retrieve</a>(clusterIDOrAlias) -> ClusterRetrieveResponse</code>
 - <code title="patch /api/cluster/{cluster_id_or_alias}">client.api.cluster.<a href="./src/resources/api/cluster.ts">update</a>(clusterIDOrAlias, { ...params }) -> ClusterUpdateResponse</code>
 - <code title="get /api/cluster">client.api.cluster.<a href="./src/resources/api/cluster.ts">list</a>() -> ClusterListResponse</code>
-- <code title="delete /api/cluster/{cluster_id_or_alias}">client.api.cluster.<a href="./src/resources/api/cluster.ts">delete</a>(clusterIDOrAlias) -> void</code>
+- <code title="delete /api/cluster/{cluster_id_or_alias}">client.api.cluster.<a href="./src/resources/api/cluster.ts">delete</a>(clusterIDOrAlias) -> ClusterDeleteResponse</code>
 - <code title="get /api/cluster/{cluster_id_or_alias}/ssh_key">client.api.cluster.<a href="./src/resources/api/cluster.ts">getSSHKey</a>(clusterIDOrAlias) -> ClusterGetSSHKeyResponse</code>
 
 ## Vm
@@ -27,6 +29,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/api/vm.ts">BranchRequest</a></code>
+- <code><a href="./src/resources/api/vm.ts">DeleteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">UpdateVm</a></code>
 - <code><a href="./src/resources/api/vm.ts">Vm</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmRetrieveResponse</a></code>

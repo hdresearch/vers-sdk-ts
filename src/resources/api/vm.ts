@@ -65,6 +65,28 @@ export interface BranchRequest {
   alias?: string | null;
 }
 
+/**
+ * A struct containing information about an attempted VM deletion request. Reports
+ * information in the event of a partial failure so billing can still be udpated
+ * appropriately.
+ */
+export interface DeleteResponse {
+  deleted_ids: Array<string>;
+
+  errors: Array<DeleteResponse.Error>;
+}
+
+export namespace DeleteResponse {
+  /**
+   * Contains a VM ID and the reason that it could not be deleted.
+   */
+  export interface Error {
+    id: string;
+
+    error: string;
+  }
+}
+
 export interface UpdateVm {
   alias?: string | null;
 
@@ -88,9 +110,19 @@ export interface Vm {
   cluster_id: string;
 
   /**
+   * What is the size of the "disk" allocated to this VM
+   */
+  fs_size_mib: number;
+
+  /**
    * The VM's local IP address on the VM subnet
    */
   ip_address: string;
+
+  /**
+   * How much RAM is allocated to this VM
+   */
+  mem_size_mib: number;
 
   /**
    * The VM's network configuration
@@ -101,6 +133,11 @@ export interface Vm {
    * Whether the VM is running, paused, or not started.
    */
   state: 'Not started' | 'Running' | 'Paused';
+
+  /**
+   * How many vCPUs were allocated to this VM
+   */
+  vcpu_count: number;
 
   /**
    * Human-readable name assigned to the VM.
@@ -137,6 +174,24 @@ export interface VmRetrieveResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -163,9 +218,19 @@ export namespace VmRetrieveResponse {
     cluster_id: string;
 
     /**
+     * What is the size of the "disk" allocated to this VM
+     */
+    fs_size_mib: number;
+
+    /**
      * The VM's local IP address on the VM subnet
      */
     ip_address: string;
+
+    /**
+     * How much RAM is allocated to this VM
+     */
+    mem_size_mib: number;
 
     /**
      * The VM's network configuration
@@ -176,6 +241,11 @@ export namespace VmRetrieveResponse {
      * Whether the VM is running, paused, or not started.
      */
     state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * How many vCPUs were allocated to this VM
+     */
+    vcpu_count: number;
 
     /**
      * Human-readable name assigned to the VM.
@@ -213,6 +283,24 @@ export interface VmUpdateResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -239,9 +327,19 @@ export namespace VmUpdateResponse {
     cluster_id: string;
 
     /**
+     * What is the size of the "disk" allocated to this VM
+     */
+    fs_size_mib: number;
+
+    /**
      * The VM's local IP address on the VM subnet
      */
     ip_address: string;
+
+    /**
+     * How much RAM is allocated to this VM
+     */
+    mem_size_mib: number;
 
     /**
      * The VM's network configuration
@@ -252,6 +350,11 @@ export namespace VmUpdateResponse {
      * Whether the VM is running, paused, or not started.
      */
     state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * How many vCPUs were allocated to this VM
+     */
+    vcpu_count: number;
 
     /**
      * Human-readable name assigned to the VM.
@@ -289,6 +392,24 @@ export interface VmListResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -315,9 +436,19 @@ export namespace VmListResponse {
     cluster_id: string;
 
     /**
+     * What is the size of the "disk" allocated to this VM
+     */
+    fs_size_mib: number;
+
+    /**
      * The VM's local IP address on the VM subnet
      */
     ip_address: string;
+
+    /**
+     * How much RAM is allocated to this VM
+     */
+    mem_size_mib: number;
 
     /**
      * The VM's network configuration
@@ -328,6 +459,11 @@ export namespace VmListResponse {
      * Whether the VM is running, paused, or not started.
      */
     state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * How many vCPUs were allocated to this VM
+     */
+    vcpu_count: number;
 
     /**
      * Human-readable name assigned to the VM.
@@ -361,9 +497,32 @@ export namespace VmListResponse {
 }
 
 export interface VmDeleteResponse {
+  /**
+   * A struct containing information about an attempted VM deletion request. Reports
+   * information in the event of a partial failure so billing can still be udpated
+   * appropriately.
+   */
   data: VmDeleteResponse.Data;
 
   duration_ns: number;
+
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
 
   operation_id: string;
 
@@ -374,64 +533,25 @@ export interface VmDeleteResponse {
 }
 
 export namespace VmDeleteResponse {
+  /**
+   * A struct containing information about an attempted VM deletion request. Reports
+   * information in the event of a partial failure so billing can still be udpated
+   * appropriately.
+   */
   export interface Data {
-    /**
-     * The ID of the VM.
-     */
-    id: string;
+    deleted_ids: Array<string>;
 
-    /**
-     * The IDs of direct children branched from this VM.
-     */
-    children: Array<string>;
-
-    /**
-     * The VM's cluster ID
-     */
-    cluster_id: string;
-
-    /**
-     * The VM's local IP address on the VM subnet
-     */
-    ip_address: string;
-
-    /**
-     * The VM's network configuration
-     */
-    network_info: Data.NetworkInfo;
-
-    /**
-     * Whether the VM is running, paused, or not started.
-     */
-    state: 'Not started' | 'Running' | 'Paused';
-
-    /**
-     * Human-readable name assigned to the VM.
-     */
-    alias?: string | null;
-
-    /**
-     * The parent VM's ID, if present. If None, then this VM is a root VM.
-     */
-    parent_id?: string | null;
+    errors: Array<Data.Error>;
   }
 
   export namespace Data {
     /**
-     * The VM's network configuration
+     * Contains a VM ID and the reason that it could not be deleted.
      */
-    export interface NetworkInfo {
-      guest_ip: string;
+    export interface Error {
+      id: string;
 
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
+      error: string;
     }
   }
 }
@@ -440,6 +560,24 @@ export interface VmBranchResponse {
   data: VmBranchResponse.Data;
 
   duration_ns: number;
+
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
 
   operation_id: string;
 
@@ -467,9 +605,19 @@ export namespace VmBranchResponse {
     cluster_id: string;
 
     /**
+     * What is the size of the "disk" allocated to this VM
+     */
+    fs_size_mib: number;
+
+    /**
      * The VM's local IP address on the VM subnet
      */
     ip_address: string;
+
+    /**
+     * How much RAM is allocated to this VM
+     */
+    mem_size_mib: number;
 
     /**
      * The VM's network configuration
@@ -480,6 +628,11 @@ export namespace VmBranchResponse {
      * Whether the VM is running, paused, or not started.
      */
     state: 'Not started' | 'Running' | 'Paused';
+
+    /**
+     * How many vCPUs were allocated to this VM
+     */
+    vcpu_count: number;
 
     /**
      * Human-readable name assigned to the VM.
@@ -517,6 +670,24 @@ export interface VmCommitResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -535,6 +706,24 @@ export interface VmGetSSHKeyResponse {
   data: string;
 
   duration_ns: number;
+
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
 
   operation_id: string;
 
@@ -564,6 +753,7 @@ export interface VmBranchParams {
 export declare namespace VmResource {
   export {
     type BranchRequest as BranchRequest,
+    type DeleteResponse as DeleteResponse,
     type UpdateVm as UpdateVm,
     type Vm as Vm,
     type VmRetrieveResponse as VmRetrieveResponse,
