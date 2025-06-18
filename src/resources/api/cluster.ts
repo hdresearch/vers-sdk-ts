@@ -3,7 +3,6 @@
 import { APIResource } from '../../core/resource';
 import * as VmAPI from './vm';
 import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -43,11 +42,8 @@ export class ClusterResource extends APIResource {
   /**
    * Delete a cluster.
    */
-  delete(clusterIDOrAlias: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/cluster/${clusterIDOrAlias}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  delete(clusterIDOrAlias: string, options?: RequestOptions): APIPromise<ClusterDeleteResponse> {
+    return this._client.delete(path`/api/cluster/${clusterIDOrAlias}`, options);
   }
 
   /**
@@ -63,6 +59,11 @@ export interface Cluster {
    * The cluster's ID.
    */
   id: string;
+
+  /**
+   * The size of the cluster's backing file
+   */
+  fs_size_mib: number;
 
   /**
    * The ID of the cluster's root VM.
@@ -140,6 +141,24 @@ export namespace Create {
   }
 }
 
+/**
+ * A struct containing information about an attempted cluster deletion request.
+ * Reports information in the event of a partial failure so billing can still be
+ * udpated appropriately.
+ */
+export interface DeleteResponse {
+  cluster_id: string;
+
+  /**
+   * A struct containing information about an attempted VM deletion request. Reports
+   * information in the event of a partial failure so billing can still be udpated
+   * appropriately.
+   */
+  vms: VmAPI.DeleteResponse;
+
+  fs_error?: string | null;
+}
+
 export interface UpdateCluster {
   alias?: string | null;
 }
@@ -148,6 +167,24 @@ export interface ClusterCreateResponse {
   data: ClusterCreateResponse.Data;
 
   duration_ns: number;
+
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
 
   operation_id: string;
 
@@ -163,6 +200,11 @@ export namespace ClusterCreateResponse {
      * The cluster's ID.
      */
     id: string;
+
+    /**
+     * The size of the cluster's backing file
+     */
+    fs_size_mib: number;
 
     /**
      * The ID of the cluster's root VM.
@@ -191,6 +233,24 @@ export interface ClusterRetrieveResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -205,6 +265,11 @@ export namespace ClusterRetrieveResponse {
      * The cluster's ID.
      */
     id: string;
+
+    /**
+     * The size of the cluster's backing file
+     */
+    fs_size_mib: number;
 
     /**
      * The ID of the cluster's root VM.
@@ -233,6 +298,24 @@ export interface ClusterUpdateResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -247,6 +330,11 @@ export namespace ClusterUpdateResponse {
      * The cluster's ID.
      */
     id: string;
+
+    /**
+     * The size of the cluster's backing file
+     */
+    fs_size_mib: number;
 
     /**
      * The ID of the cluster's root VM.
@@ -275,6 +363,24 @@ export interface ClusterListResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -289,6 +395,11 @@ export namespace ClusterListResponse {
      * The cluster's ID.
      */
     id: string;
+
+    /**
+     * The size of the cluster's backing file
+     */
+    fs_size_mib: number;
 
     /**
      * The ID of the cluster's root VM.
@@ -312,10 +423,84 @@ export namespace ClusterListResponse {
   }
 }
 
+export interface ClusterDeleteResponse {
+  /**
+   * A struct containing information about an attempted cluster deletion request.
+   * Reports information in the event of a partial failure so billing can still be
+   * udpated appropriately.
+   */
+  data: ClusterDeleteResponse.Data;
+
+  duration_ns: number;
+
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
+  operation_id: string;
+
+  /**
+   * Unix epoch time (secs)
+   */
+  time_start: number;
+}
+
+export namespace ClusterDeleteResponse {
+  /**
+   * A struct containing information about an attempted cluster deletion request.
+   * Reports information in the event of a partial failure so billing can still be
+   * udpated appropriately.
+   */
+  export interface Data {
+    cluster_id: string;
+
+    /**
+     * A struct containing information about an attempted VM deletion request. Reports
+     * information in the event of a partial failure so billing can still be udpated
+     * appropriately.
+     */
+    vms: VmAPI.DeleteResponse;
+
+    fs_error?: string | null;
+  }
+}
+
 export interface ClusterGetSSHKeyResponse {
   data: string;
 
   duration_ns: number;
+
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
 
   operation_id: string;
 
@@ -390,11 +575,13 @@ export declare namespace ClusterResource {
   export {
     type Cluster as Cluster,
     type Create as Create,
+    type DeleteResponse as DeleteResponse,
     type UpdateCluster as UpdateCluster,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
+    type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
     type ClusterCreateParams as ClusterCreateParams,
     type ClusterUpdateParams as ClusterUpdateParams,

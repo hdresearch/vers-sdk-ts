@@ -51,6 +51,24 @@ export interface RootfListResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -70,6 +88,24 @@ export interface RootfDeleteResponse {
 
   duration_ns: number;
 
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
+
   operation_id: string;
 
   /**
@@ -88,6 +124,24 @@ export interface RootfUploadResponse {
   data: RootfUploadResponse.Data;
 
   duration_ns: number;
+
+  operation_code:
+    | 'list_clusters'
+    | 'get_cluster'
+    | 'create_cluster'
+    | 'delete_cluster'
+    | 'update_cluster'
+    | 'get_cluster_ssh_key'
+    | 'list_vms'
+    | 'get_vm'
+    | 'update_vm'
+    | 'branch_vm'
+    | 'commit_vm'
+    | 'delete_vm'
+    | 'get_vm_ssh_key'
+    | 'upload_rootfs'
+    | 'delete_rootfs'
+    | 'list_rootfs';
 
   operation_id: string;
 
