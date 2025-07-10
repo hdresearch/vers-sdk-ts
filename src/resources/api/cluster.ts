@@ -100,7 +100,7 @@ export namespace ClusterCreateParams {
 
   export namespace ClusterFromCommitParams {
     export interface Params {
-      commit_id: string;
+      commit_key: string;
 
       cluster_alias?: string | null;
 
@@ -558,7 +558,7 @@ export declare namespace ClusterCreateParams {
 
   export namespace ClusterFromCommitParams {
     export interface Params {
-      commit_id: string;
+      commit_key: string;
 
       cluster_alias?: string | null;
 

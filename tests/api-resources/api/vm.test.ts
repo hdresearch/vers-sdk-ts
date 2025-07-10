@@ -75,7 +75,7 @@ describe('resource vm', () => {
 
   // skipped: tests are disabled for the time being
   test.skip('commit', async () => {
-    const responsePromise = client.api.vm.commit('vm_id_or_alias');
+    const responsePromise = client.api.vm.commit('vm_id_or_alias', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
