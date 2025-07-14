@@ -75,8 +75,6 @@ export interface VmCommitResponse {
   commit_id: string;
 
   host_architecture: string;
-
-  vm_architecture: string;
 }
 
 /**
@@ -717,8 +715,6 @@ export namespace VmCommitResponse {
     commit_id: string;
 
     host_architecture: string;
-
-    vm_architecture: string;
   }
 }
 
