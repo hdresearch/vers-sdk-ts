@@ -29,8 +29,6 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/api/vm.ts">VmBranchParams</a></code>
-- <code><a href="./src/resources/api/vm.ts">VmCommitRequest</a></code>
-- <code><a href="./src/resources/api/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmDeleteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmDto</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmPatchParams</a></code>
@@ -49,7 +47,7 @@ Methods:
 - <code title="get /api/vm">client.api.vm.<a href="./src/resources/api/vm.ts">list</a>() -> VmListResponse</code>
 - <code title="delete /api/vm/{vm_id_or_alias}">client.api.vm.<a href="./src/resources/api/vm.ts">delete</a>(vmIDOrAlias, { ...params }) -> VmDeleteResponse</code>
 - <code title="post /api/vm/{vm_id_or_alias}/branch">client.api.vm.<a href="./src/resources/api/vm.ts">branch</a>(vmIDOrAlias, { ...params }) -> VmBranchResponse</code>
-- <code title="post /api/vm/{vm_id_or_alias}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmIDOrAlias, { ...params }) -> VmCommitResponse</code>
+- <code title="post /api/vm/{vm_id_or_alias}/commit">client.api.vm.<a href="./src/resources/api/vm.ts">commit</a>(vmIDOrAlias) -> VmCommitResponse</code>
 - <code title="get /api/vm/{vm_id_or_alias}/ssh_key">client.api.vm.<a href="./src/resources/api/vm.ts">getSSHKey</a>(vmIDOrAlias) -> VmGetSSHKeyResponse</code>
 
 ## Rootfs
