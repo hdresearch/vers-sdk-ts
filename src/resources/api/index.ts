@@ -29,6 +29,8 @@ export { Telemetry, type TelemetryDto } from './telemetry';
 export {
   Vm,
   type VmBranchParams,
+  type VmCommitRequest,
+  type VmCommitResponse,
   type VmDeleteResponse,
   type VmDto,
   type VmPatchParams,
@@ -36,8 +38,8 @@ export {
   type VmUpdateResponse,
   type VmListResponse,
   type VmBranchResponse,
-  type VmCommitResponse,
   type VmGetSSHKeyResponse,
   type VmUpdateParams,
   type VmDeleteParams,
+  type VmCommitParams,
 } from './vm';
