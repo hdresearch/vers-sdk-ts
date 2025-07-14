@@ -49,8 +49,8 @@ export class Vm extends APIResource {
   /**
    * Commit a VM.
    */
-  commit(vmIDOrAlias: string, options?: RequestOptions): APIPromise<VmCommitResponse> {
-    return this._client.post(path`/api/vm/${vmIDOrAlias}/commit`, options);
+  commit(vmIDOrAlias: string, body: VmCommitParams, options?: RequestOptions): APIPromise<VmCommitResponse> {
+    return this._client.post(path`/api/vm/${vmIDOrAlias}/commit`, { body, ...options });
   }
 
   /**
@@ -63,6 +63,18 @@ export class Vm extends APIResource {
 
 export interface VmBranchParams {
   alias?: string | null;
+}
+
+export interface VmCommitRequest {
+  tags?: Array<string> | null;
+}
+
+export interface VmCommitResponse {
+  cluster_id: string;
+
+  commit_id: string;
+
+  host_architecture: string;
 }
 
 /**
@@ -698,7 +710,11 @@ export interface VmCommitResponse {
 
 export namespace VmCommitResponse {
   export interface Data {
-    id: string;
+    cluster_id: string;
+
+    commit_id: string;
+
+    host_architecture: string;
   }
 }
 
@@ -750,9 +766,15 @@ export interface VmBranchParams {
   alias?: string | null;
 }
 
+export interface VmCommitParams {
+  tags?: Array<string> | null;
+}
+
 export declare namespace Vm {
   export {
     type VmBranchParams as VmBranchParams,
+    type VmCommitRequest as VmCommitRequest,
+    type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmDto as VmDto,
     type VmPatchParams as VmPatchParams,
@@ -760,9 +782,9 @@ export declare namespace Vm {
     type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
     type VmBranchResponse as VmBranchResponse,
-    type VmCommitResponse as VmCommitResponse,
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
+    type VmCommitParams as VmCommitParams,
   };
 }
