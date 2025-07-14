@@ -14,6 +14,8 @@ export class Telemetry extends APIResource {
 }
 
 export interface TelemetryDto {
+  id: string;
+
   fs_mib_current: number;
 
   fs_mib_max: number;
