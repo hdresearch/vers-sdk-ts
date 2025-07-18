@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as VmAPI from './vm';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -133,7 +134,7 @@ export interface VmDto {
   /**
    * The VM's network configuration
    */
-  network_info: VmDto.NetworkInfo;
+  network_info: VmNetworkInfoDto;
 
   /**
    * Whether the VM is running, paused, or not started.
@@ -156,23 +157,18 @@ export interface VmDto {
   parent_id?: string | null;
 }
 
-export namespace VmDto {
-  /**
-   * The VM's network configuration
-   */
-  export interface NetworkInfo {
-    guest_ip: string;
+export interface VmNetworkInfoDto {
+  guest_ip: string;
 
-    guest_mac: string;
+  guest_mac: string;
 
-    ssh_port: number;
+  ssh_port: number;
 
-    tap0_ip: string;
+  tap0_ip: string;
 
-    tap0_name: string;
+  tap0_name: string;
 
-    vm_namespace: string;
-  }
+  vm_namespace: string;
 }
 
 export interface VmPatchParams {
@@ -247,7 +243,7 @@ export namespace VmRetrieveResponse {
     /**
      * The VM's network configuration
      */
-    network_info: Data.NetworkInfo;
+    network_info: VmAPI.VmNetworkInfoDto;
 
     /**
      * Whether the VM is running, paused, or not started.
@@ -268,25 +264,6 @@ export namespace VmRetrieveResponse {
      * The parent VM's ID, if present. If None, then this VM is a root VM.
      */
     parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
   }
 }
 
@@ -356,7 +333,7 @@ export namespace VmUpdateResponse {
     /**
      * The VM's network configuration
      */
-    network_info: Data.NetworkInfo;
+    network_info: VmAPI.VmNetworkInfoDto;
 
     /**
      * Whether the VM is running, paused, or not started.
@@ -377,25 +354,6 @@ export namespace VmUpdateResponse {
      * The parent VM's ID, if present. If None, then this VM is a root VM.
      */
     parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
   }
 }
 
@@ -465,7 +423,7 @@ export namespace VmListResponse {
     /**
      * The VM's network configuration
      */
-    network_info: Data.NetworkInfo;
+    network_info: VmAPI.VmNetworkInfoDto;
 
     /**
      * Whether the VM is running, paused, or not started.
@@ -486,25 +444,6 @@ export namespace VmListResponse {
      * The parent VM's ID, if present. If None, then this VM is a root VM.
      */
     parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
   }
 }
 
@@ -634,7 +573,7 @@ export namespace VmBranchResponse {
     /**
      * The VM's network configuration
      */
-    network_info: Data.NetworkInfo;
+    network_info: VmAPI.VmNetworkInfoDto;
 
     /**
      * Whether the VM is running, paused, or not started.
@@ -655,25 +594,6 @@ export namespace VmBranchResponse {
      * The parent VM's ID, if present. If None, then this VM is a root VM.
      */
     parent_id?: string | null;
-  }
-
-  export namespace Data {
-    /**
-     * The VM's network configuration
-     */
-    export interface NetworkInfo {
-      guest_ip: string;
-
-      guest_mac: string;
-
-      ssh_port: number;
-
-      tap0_ip: string;
-
-      tap0_name: string;
-
-      vm_namespace: string;
-    }
   }
 }
 
@@ -777,6 +697,7 @@ export declare namespace Vm {
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmDto as VmDto,
+    type VmNetworkInfoDto as VmNetworkInfoDto,
     type VmPatchParams as VmPatchParams,
     type VmRetrieveResponse as VmRetrieveResponse,
     type VmUpdateResponse as VmUpdateResponse,

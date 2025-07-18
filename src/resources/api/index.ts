@@ -33,6 +33,7 @@ export {
   type VmCommitResponse,
   type VmDeleteResponse,
   type VmDto,
+  type VmNetworkInfoDto,
   type VmPatchParams,
   type VmRetrieveResponse,
   type VmUpdateResponse,
