@@ -33,7 +33,6 @@ Types:
 - <code><a href="./src/resources/api/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmDeleteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmDto</a></code>
-- <code><a href="./src/resources/api/vm.ts">VmNetworkInfoDto</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmPatchParams</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmRetrieveResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmUpdateResponse</a></code>
