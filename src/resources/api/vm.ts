@@ -61,7 +61,7 @@ export class Vm extends APIResource {
   }
 }
 
-export interface VmBranchParams {
+export interface VmBranchRequest {
   alias?: string | null;
 }
 
@@ -175,7 +175,7 @@ export namespace VmDto {
   }
 }
 
-export interface VmPatchParams {
+export interface VmPatchRequest {
   alias?: string | null;
 
   state?: 'Running' | 'Paused' | null;
@@ -772,12 +772,12 @@ export interface VmCommitParams {
 
 export declare namespace Vm {
   export {
-    type VmBranchParams as VmBranchParams,
+    type VmBranchRequest as VmBranchRequest,
     type VmCommitRequest as VmCommitRequest,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmDto as VmDto,
-    type VmPatchParams as VmPatchParams,
+    type VmPatchRequest as VmPatchRequest,
     type VmRetrieveResponse as VmRetrieveResponse,
     type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
@@ -785,6 +785,7 @@ export declare namespace Vm {
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
+    type VmBranchParams as VmBranchParams,
     type VmCommitParams as VmCommitParams,
   };
 }
