@@ -54,11 +54,11 @@ export class Cluster extends APIResource {
   }
 }
 
-export type ClusterCreateParams =
-  | ClusterCreateParams.NewClusterParams
-  | ClusterCreateParams.ClusterFromCommitParams;
+export type ClusterCreateRequest =
+  | ClusterCreateRequest.NewClusterParams
+  | ClusterCreateRequest.ClusterFromCommitParams;
 
-export namespace ClusterCreateParams {
+export namespace ClusterCreateRequest {
   export interface NewClusterParams {
     cluster_type: 'new';
 
@@ -161,7 +161,7 @@ export interface ClusterDto {
   alias?: string | null;
 }
 
-export interface ClusterPatchParams {
+export interface ClusterPatchRequest {
   alias?: string | null;
 }
 
@@ -575,15 +575,16 @@ export interface ClusterUpdateParams {
 
 export declare namespace Cluster {
   export {
-    type ClusterCreateParams as ClusterCreateParams,
+    type ClusterCreateRequest as ClusterCreateRequest,
     type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterDto as ClusterDto,
-    type ClusterPatchParams as ClusterPatchParams,
+    type ClusterPatchRequest as ClusterPatchRequest,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
+    type ClusterCreateParams as ClusterCreateParams,
     type ClusterUpdateParams as ClusterUpdateParams,
   };
 }

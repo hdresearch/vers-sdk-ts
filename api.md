@@ -4,10 +4,10 @@
 
 Types:
 
-- <code><a href="./src/resources/api/cluster.ts">ClusterCreateParams</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterCreateRequest</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterDeleteResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterDto</a></code>
-- <code><a href="./src/resources/api/cluster.ts">ClusterPatchParams</a></code>
+- <code><a href="./src/resources/api/cluster.ts">ClusterPatchRequest</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterCreateResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterRetrieveResponse</a></code>
 - <code><a href="./src/resources/api/cluster.ts">ClusterUpdateResponse</a></code>
