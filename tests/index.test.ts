@@ -298,13 +298,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['VERS_BASE_URL'] = ''; // empty
       const client = new Vers({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('http://13.219.19.157');
+      expect(client.baseURL).toEqual('https://api.vers.sh');
     });
 
     test('blank env variable', () => {
       process.env['VERS_BASE_URL'] = '  '; // blank
       const client = new Vers({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('http://13.219.19.157');
+      expect(client.baseURL).toEqual('https://api.vers.sh');
     });
 
     test('in request options', () => {
