@@ -5,12 +5,13 @@ import * as ClusterAPI from './cluster';
 import {
   Cluster,
   ClusterCreateParams,
+  ClusterCreateRequest,
   ClusterCreateResponse,
   ClusterDeleteResponse,
   ClusterDto,
   ClusterGetSSHKeyResponse,
   ClusterListResponse,
-  ClusterPatchParams,
+  ClusterPatchRequest,
   ClusterRetrieveResponse,
   ClusterUpdateParams,
   ClusterUpdateResponse,
@@ -67,15 +68,16 @@ API.Telemetry = Telemetry;
 export declare namespace API {
   export {
     Cluster as Cluster,
-    type ClusterCreateParams as ClusterCreateParams,
+    type ClusterCreateRequest as ClusterCreateRequest,
     type ClusterDeleteResponse as ClusterDeleteResponse,
     type ClusterDto as ClusterDto,
-    type ClusterPatchParams as ClusterPatchParams,
+    type ClusterPatchRequest as ClusterPatchRequest,
     type ClusterCreateResponse as ClusterCreateResponse,
     type ClusterRetrieveResponse as ClusterRetrieveResponse,
     type ClusterUpdateResponse as ClusterUpdateResponse,
     type ClusterListResponse as ClusterListResponse,
     type ClusterGetSSHKeyResponse as ClusterGetSSHKeyResponse,
+    type ClusterCreateParams as ClusterCreateParams,
     type ClusterUpdateParams as ClusterUpdateParams,
   };
 

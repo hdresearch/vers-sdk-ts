@@ -3,15 +3,16 @@
 export { API } from './api';
 export {
   Cluster,
-  type ClusterCreateParams,
+  type ClusterCreateRequest,
   type ClusterDeleteResponse,
   type ClusterDto,
-  type ClusterPatchParams,
+  type ClusterPatchRequest,
   type ClusterCreateResponse,
   type ClusterRetrieveResponse,
   type ClusterUpdateResponse,
   type ClusterListResponse,
   type ClusterGetSSHKeyResponse,
+  type ClusterCreateParams,
   type ClusterUpdateParams,
 } from './cluster';
 export { Health, type HealthCheckResponse } from './health';
