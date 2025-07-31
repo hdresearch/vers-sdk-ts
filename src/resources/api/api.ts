@@ -34,6 +34,7 @@ import * as VmAPI from './vm';
 import {
   Vm,
   VmBranchParams,
+  VmBranchRequest,
   VmBranchResponse,
   VmCommitParams,
   VmCommitRequest,
@@ -43,7 +44,7 @@ import {
   VmDto,
   VmGetSSHKeyResponse,
   VmListResponse,
-  VmPatchParams,
+  VmPatchRequest,
   VmRetrieveResponse,
   VmUpdateParams,
   VmUpdateResponse,
@@ -80,12 +81,12 @@ export declare namespace API {
 
   export {
     Vm as Vm,
-    type VmBranchParams as VmBranchParams,
+    type VmBranchRequest as VmBranchRequest,
     type VmCommitRequest as VmCommitRequest,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmDto as VmDto,
-    type VmPatchParams as VmPatchParams,
+    type VmPatchRequest as VmPatchRequest,
     type VmRetrieveResponse as VmRetrieveResponse,
     type VmUpdateResponse as VmUpdateResponse,
     type VmListResponse as VmListResponse,
@@ -93,6 +94,7 @@ export declare namespace API {
     type VmGetSSHKeyResponse as VmGetSSHKeyResponse,
     type VmUpdateParams as VmUpdateParams,
     type VmDeleteParams as VmDeleteParams,
+    type VmBranchParams as VmBranchParams,
     type VmCommitParams as VmCommitParams,
   };
 

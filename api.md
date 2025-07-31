@@ -28,12 +28,12 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/api/vm.ts">VmBranchParams</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmBranchRequest</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmCommitRequest</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmDeleteResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmDto</a></code>
-- <code><a href="./src/resources/api/vm.ts">VmPatchParams</a></code>
+- <code><a href="./src/resources/api/vm.ts">VmPatchRequest</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmRetrieveResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmUpdateResponse</a></code>
 - <code><a href="./src/resources/api/vm.ts">VmListResponse</a></code>
