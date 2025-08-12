@@ -8,7 +8,7 @@ const client = new Vers({
 });
 
 describe('resource cluster', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.api.cluster.create({ cluster_type: 'new', params: {} });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.api.cluster.create({
       cluster_type: 'new',
@@ -37,7 +37,7 @@ describe('resource cluster', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.api.cluster.retrieve('cluster_id_or_alias');
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +49,7 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.api.cluster.update('cluster_id_or_alias', {});
     const rawResponse = await responsePromise.asResponse();
@@ -61,7 +61,7 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.api.cluster.list();
     const rawResponse = await responsePromise.asResponse();
@@ -73,7 +73,7 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.api.cluster.delete('cluster_id_or_alias');
     const rawResponse = await responsePromise.asResponse();
@@ -85,7 +85,7 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getSSHKey', async () => {
     const responsePromise = client.api.cluster.getSSHKey('cluster_id_or_alias');
     const rawResponse = await responsePromise.asResponse();
