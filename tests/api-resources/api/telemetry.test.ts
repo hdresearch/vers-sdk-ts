@@ -8,7 +8,7 @@ const client = new Vers({
 });
 
 describe('resource telemetry', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getInfo', async () => {
     const responsePromise = client.api.telemetry.getInfo();
     const rawResponse = await responsePromise.asResponse();
