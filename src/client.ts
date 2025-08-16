@@ -722,7 +722,9 @@ export class Vers {
 
   api: API.API = new API.API(this);
 }
+
 Vers.API = ApiapiAPI;
+
 export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
 
