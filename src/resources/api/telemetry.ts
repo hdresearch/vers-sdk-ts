@@ -16,17 +16,29 @@ export class Telemetry extends APIResource {
 export interface TelemetryDto {
   id: string;
 
-  fs_mib_current: number;
+  cpu_cores_available: number;
 
-  fs_mib_max: number;
+  cpu_cores_margin: number;
 
-  mem_mib_current: number;
+  cpu_cores_total: number;
 
-  mem_mib_max: number;
+  cpu_cores_used: number;
 
-  vcpu_current: number;
+  disk_data_mib_available: number;
 
-  vcpu_max: number;
+  disk_data_mib_total: number;
+
+  disk_vm_mib_available: number;
+
+  disk_vm_mib_total: number;
+
+  memory_mib_available: number;
+
+  memory_mib_margin: number;
+
+  memory_mib_total: number;
+
+  memory_mib_used: number;
 
   vm_network_count_in_use: number;
 
