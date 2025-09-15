@@ -1,5 +1,5 @@
 import { multipartFormRequestOptions, createForm } from 'vers/internal/uploads';
-import { toFile } from 'vers/uploads';
+import { toFile } from 'vers/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

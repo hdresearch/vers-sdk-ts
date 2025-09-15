@@ -1,6 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from 'vers/internal/to-file';
-import { toFile } from 'vers/uploads';
+import { toFile } from 'vers/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,11 +97,11 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('vers/uploads');
+    const uploads = await import('vers/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(
-      `[Error: \`File\` is not defined as a global which is required for file uploads]`,
+      `[Error: \`File\` is not defined as a global, which is required for file uploads.]`,
     );
   });
 });

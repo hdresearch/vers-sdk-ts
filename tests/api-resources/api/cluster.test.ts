@@ -8,9 +8,9 @@ const client = new Vers({
 });
 
 describe('resource cluster', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.api.cluster.create({ body: {} });
+    const responsePromise = client.api.cluster.create({ cluster_type: 'new', params: {} });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,14 +20,26 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.api.cluster.create({ body: {} });
+    const response = await client.api.cluster.create({
+      cluster_type: 'new',
+      params: {
+        cluster_alias: 'cluster_alias',
+        fs_size_cluster_mib: 0,
+        fs_size_vm_mib: 0,
+        kernel_name: 'kernel_name',
+        mem_size_mib: 0,
+        rootfs_name: 'rootfs_name',
+        vcpu_count: 0,
+        vm_alias: 'vm_alias',
+      },
+    });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.api.cluster.retrieve('cluster_id');
+    const responsePromise = client.api.cluster.retrieve('cluster_id_or_alias');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -37,7 +49,19 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
+  test.skip('update', async () => {
+    const responsePromise = client.api.cluster.update('cluster_id_or_alias', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.api.cluster.list();
     const rawResponse = await responsePromise.asResponse();
@@ -49,9 +73,9 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.api.cluster.delete('cluster_id');
+    const responsePromise = client.api.cluster.delete('cluster_id_or_alias');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,11 +85,15 @@ describe('resource cluster', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('delete: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.api.cluster.delete('cluster_id', { force: true }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Vers.NotFoundError);
+  // Prism tests are disabled
+  test.skip('getSSHKey', async () => {
+    const responsePromise = client.api.cluster.getSSHKey('cluster_id_or_alias');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });

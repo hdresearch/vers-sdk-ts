@@ -8,9 +8,9 @@ const client = new Vers({
 });
 
 describe('resource vm', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
-    const responsePromise = client.api.vm.retrieve('vm_id');
+    const responsePromise = client.api.vm.retrieve('vm_id_or_alias');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,9 +20,9 @@ describe('resource vm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.api.vm.update('vm_id', { body: 'pause' });
+  // Prism tests are disabled
+  test.skip('update', async () => {
+    const responsePromise = client.api.vm.update('vm_id_or_alias', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -32,12 +32,7 @@ describe('resource vm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('update: required and optional params', async () => {
-    const response = await client.api.vm.update('vm_id', { body: 'pause' });
-  });
-
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.api.vm.list();
     const rawResponse = await responsePromise.asResponse();
@@ -49,9 +44,9 @@ describe('resource vm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('delete', async () => {
-    const responsePromise = client.api.vm.delete('vm_id');
+  // Prism tests are disabled
+  test.skip('delete: only required params', async () => {
+    const responsePromise = client.api.vm.delete('vm_id_or_alias', { recursive: true });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,17 +56,14 @@ describe('resource vm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('delete: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.api.vm.delete('vm_id', { recursive: true }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(Vers.NotFoundError);
+  // Prism tests are disabled
+  test.skip('delete: required and optional params', async () => {
+    const response = await client.api.vm.delete('vm_id_or_alias', { recursive: true });
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('createBranch: only required params', async () => {
-    const responsePromise = client.api.vm.createBranch('vm_id', { body: {} });
+  // Prism tests are disabled
+  test.skip('branch', async () => {
+    const responsePromise = client.api.vm.branch('vm_id_or_alias', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -81,8 +73,27 @@ describe('resource vm', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('createBranch: required and optional params', async () => {
-    const response = await client.api.vm.createBranch('vm_id', { body: {} });
+  // Prism tests are disabled
+  test.skip('commit', async () => {
+    const responsePromise = client.api.vm.commit('vm_id_or_alias', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('getSSHKey', async () => {
+    const responsePromise = client.api.vm.getSSHKey('vm_id_or_alias');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });
