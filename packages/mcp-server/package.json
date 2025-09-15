@@ -1,6 +1,6 @@
 {
   "name": "vers-mcp",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "description": "The official MCP Server for the Vers API",
   "author": "Vers <support@hdr.is>",
   "types": "dist/index.d.ts",

@@ -33,7 +33,7 @@ export const newMcpServer = () =>
   new McpServer(
     {
       name: 'vers_api',
-      version: '0.1.0-alpha.3',
+      version: '0.1.0-alpha.4',
     },
     { capabilities: { tools: {}, logging: {} } },
   );
