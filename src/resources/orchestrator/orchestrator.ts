@@ -2,10 +2,9 @@
 
 import { APIResource } from '../../core/resource';
 import * as NodeAPI from './node';
-import { ErrorResponse, Node, VmListAllResponse } from './node';
+import { Node, VmListAllResponse } from './node';
 import * as VmAPI from './vm';
 import {
-  ErrorResponse as VmAPIErrorResponse,
   NewRootRequest,
   NewVmResponse,
   Vm,
@@ -24,13 +23,26 @@ export class Orchestrator extends APIResource {
   node: NodeAPI.Node = new NodeAPI.Node(this._client);
 }
 
+export interface ErrorResponse {
+  /**
+   * Reason of error
+   */
+  error?: string;
+
+  /**
+   * Is always: false
+   */
+  success?: boolean;
+}
+
 Orchestrator.Vm = Vm;
 Orchestrator.Node = Node;
 
 export declare namespace Orchestrator {
+  export { type ErrorResponse as ErrorResponse };
+
   export {
     Vm as Vm,
-    type VmAPIErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
     type NewVmResponse as NewVmResponse,
     type VmBranchResponse as VmBranchResponse,
@@ -43,5 +55,5 @@ export declare namespace Orchestrator {
     type VmUpdateStateParams as VmUpdateStateParams,
   };
 
-  export { Node as Node, type ErrorResponse as ErrorResponse, type VmListAllResponse as VmListAllResponse };
+  export { Node as Node, type VmListAllResponse as VmListAllResponse };
 }

@@ -1,10 +1,13 @@
 # Orchestrator
 
+Types:
+
+- <code><a href="./src/resources/orchestrator/orchestrator.ts">ErrorResponse</a></code>
+
 ## Vm
 
 Types:
 
-- <code><a href="./src/resources/orchestrator/vm.ts">ErrorResponse</a></code>
 - <code><a href="./src/resources/orchestrator/vm.ts">NewRootRequest</a></code>
 - <code><a href="./src/resources/orchestrator/vm.ts">NewVmResponse</a></code>
 - <code><a href="./src/resources/orchestrator/vm.ts">VmBranchResponse</a></code>
@@ -26,7 +29,6 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/orchestrator/node.ts">ErrorResponse</a></code>
 - <code><a href="./src/resources/orchestrator/node.ts">VmListAllResponse</a></code>
 
 Methods:

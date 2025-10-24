@@ -25,7 +25,9 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Vers from 'vers';
 
-const client = new Vers();
+const client = new Vers({
+  apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
+});
 
 const newVmResponse = await client.orchestrator.vm.createRoot({ vm_config: {} });
 
@@ -40,7 +42,9 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Vers from 'vers';
 
-const client = new Vers();
+const client = new Vers({
+  apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
+});
 
 const params: Vers.Orchestrator.VmCreateRootParams = { vm_config: {} };
 const newVmResponse: Vers.Orchestrator.NewVmResponse = await client.orchestrator.vm.createRoot(params);

@@ -11,18 +11,6 @@ export class Node extends APIResource {
   }
 }
 
-export interface ErrorResponse {
-  /**
-   * Reason of error
-   */
-  error?: string;
-
-  /**
-   * Is always: false
-   */
-  success?: boolean;
-}
-
 /**
  * Response body for GET /api/vm
  */
@@ -51,5 +39,5 @@ export namespace VmListAllResponse {
 }
 
 export declare namespace Node {
-  export { type ErrorResponse as ErrorResponse, type VmListAllResponse as VmListAllResponse };
+  export { type VmListAllResponse as VmListAllResponse };
 }

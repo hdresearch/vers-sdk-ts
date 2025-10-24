@@ -36,18 +36,6 @@ export class Vm extends APIResource {
   }
 }
 
-export interface ErrorResponse {
-  /**
-   * Reason of error
-   */
-  error?: string;
-
-  /**
-   * Is always: false
-   */
-  success?: boolean;
-}
-
 export interface NewRootRequest {
   /**
    * Struct representing configuration options common to all VMs
@@ -195,7 +183,6 @@ export interface VmUpdateStateParams {
 
 export declare namespace Vm {
   export {
-    type ErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
     type NewVmResponse as NewVmResponse,
     type VmBranchResponse as VmBranchResponse,
