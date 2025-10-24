@@ -1,10 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export { Node, type VmListAllResponse } from './node';
-export { Orchestrator } from './orchestrator';
+export { Orchestrator, type ErrorResponse } from './orchestrator';
 export {
   Vm,
-  type ErrorResponse,
   type NewRootRequest,
   type NewVmResponse,
   type VmBranchResponse,
