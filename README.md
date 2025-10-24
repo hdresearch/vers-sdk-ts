@@ -25,13 +25,11 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Vers from 'vers';
 
-const client = new Vers({
-  apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
-});
+const client = new Vers();
 
-const clusters = await client.api.cluster.list();
+const newVmResponse = await client.orchestrator.vm.createRoot({ vm_config: {} });
 
-console.log(clusters.operation_id);
+console.log(newVmResponse.id);
 ```
 
 ### Request & Response types
@@ -42,11 +40,10 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Vers from 'vers';
 
-const client = new Vers({
-  apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
-});
+const client = new Vers();
 
-const clusters: Vers.API.ClusterListResponse = await client.api.cluster.list();
+const params: Vers.Orchestrator.VmCreateRootParams = { vm_config: {} };
+const newVmResponse: Vers.Orchestrator.NewVmResponse = await client.orchestrator.vm.createRoot(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -59,7 +56,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const clusters = await client.api.cluster.list().catch(async (err) => {
+const newVmResponse = await client.orchestrator.vm.createRoot({ vm_config: {} }).catch(async (err) => {
   if (err instanceof Vers.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -99,7 +96,7 @@ const client = new Vers({
 });
 
 // Or, configure per-request:
-await client.api.cluster.list({
+await client.orchestrator.vm.createRoot({ vm_config: {} }, {
   maxRetries: 5,
 });
 ```
@@ -116,7 +113,7 @@ const client = new Vers({
 });
 
 // Override per-request:
-await client.api.cluster.list({
+await client.orchestrator.vm.createRoot({ vm_config: {} }, {
   timeout: 5 * 1000,
 });
 ```
@@ -139,13 +136,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Vers();
 
-const response = await client.api.cluster.list().asResponse();
+const response = await client.orchestrator.vm.createRoot({ vm_config: {} }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: clusters, response: raw } = await client.api.cluster.list().withResponse();
+const { data: newVmResponse, response: raw } = await client.orchestrator.vm
+  .createRoot({ vm_config: {} })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(clusters.operation_id);
+console.log(newVmResponse.id);
 ```
 
 ### Logging
@@ -225,7 +224,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.api.cluster.list({
+client.orchestrator.vm.createRoot({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

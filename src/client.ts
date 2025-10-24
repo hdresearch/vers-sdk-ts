@@ -16,7 +16,7 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { API as ApiapiAPI } from './resources/api/api';
+import { Orchestrator } from './resources/orchestrator/orchestrator';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -720,13 +720,13 @@ export class Vers {
 
   static toFile = Uploads.toFile;
 
-  api: API.API = new API.API(this);
+  orchestrator: API.Orchestrator = new API.Orchestrator(this);
 }
 
-Vers.API = ApiapiAPI;
+Vers.Orchestrator = Orchestrator;
 
 export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
 
-  export { ApiapiAPI as API };
+  export { Orchestrator as Orchestrator };
 }
