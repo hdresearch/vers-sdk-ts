@@ -7,10 +7,10 @@ const client = new Vers({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource health', () => {
+describe('resource node', () => {
   // Prism tests are disabled
-  test.skip('check', async () => {
-    const responsePromise = client.api.health.check();
+  test.skip('listVms', async () => {
+    const responsePromise = client.orchestrator.node.listVms('node_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
