@@ -16,7 +16,21 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { ErrorResponse, Orchestrator } from './resources/orchestrator/orchestrator';
+import {
+  ErrorResponse,
+  NewRootRequest,
+  NewVmResponse,
+  Vm,
+  VmCommitResponse,
+  VmCreateRootParams,
+  VmDeleteResponse,
+  VmFromCommitRequest,
+  VmListResponse,
+  VmResource,
+  VmRestoreFromCommitParams,
+  VmUpdateStateParams,
+  VmUpdateStateRequest,
+} from './resources/vm';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -720,13 +734,27 @@ export class Vers {
 
   static toFile = Uploads.toFile;
 
-  orchestrator: API.Orchestrator = new API.Orchestrator(this);
+  vm: API.VmResource = new API.VmResource(this);
 }
 
-Vers.Orchestrator = Orchestrator;
+Vers.VmResource = VmResource;
 
 export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
 
-  export { Orchestrator as Orchestrator, type ErrorResponse as ErrorResponse };
+  export {
+    VmResource as VmResource,
+    type ErrorResponse as ErrorResponse,
+    type NewRootRequest as NewRootRequest,
+    type NewVmResponse as NewVmResponse,
+    type Vm as Vm,
+    type VmCommitResponse as VmCommitResponse,
+    type VmDeleteResponse as VmDeleteResponse,
+    type VmFromCommitRequest as VmFromCommitRequest,
+    type VmUpdateStateRequest as VmUpdateStateRequest,
+    type VmListResponse as VmListResponse,
+    type VmCreateRootParams as VmCreateRootParams,
+    type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
+    type VmUpdateStateParams as VmUpdateStateParams,
+  };
 }

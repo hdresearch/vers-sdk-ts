@@ -1,12 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
-import { APIPromise } from '../../core/api-promise';
-import { buildHeaders } from '../../internal/headers';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
-export class Vm extends APIResource {
+export class VmResource extends APIResource {
+  list(options?: RequestOptions): APIPromise<VmListResponse> {
+    return this._client.get('/vms', options);
+  }
+
   delete(vmID: string, options?: RequestOptions): APIPromise<VmDeleteResponse> {
     return this._client.delete(path`/vm/${vmID}`, options);
   }
@@ -34,6 +38,18 @@ export class Vm extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+}
+
+export interface ErrorResponse {
+  /**
+   * Reason of error
+   */
+  error?: string;
+
+  /**
+   * Is always: false
+   */
+  success?: boolean;
 }
 
 export interface NewRootRequest {
@@ -82,14 +98,16 @@ export interface NewVmResponse {
   id: string;
 }
 
-/**
- * Response body for POST /api/vm/{vm_id}/branch
- */
-export interface VmBranchResponse {
-  /**
-   * The ID of the newly-created VM, a (v4) UUID
-   */
+export interface Vm {
+  created_at: string;
+
+  ip: string;
+
+  owner_id: string;
+
   vm_id: string;
+
+  parent?: string | null;
 }
 
 /**
@@ -130,6 +148,8 @@ export interface VmUpdateStateRequest {
    */
   state: 'Paused' | 'Running';
 }
+
+export type VmListResponse = Array<Vm>;
 
 export interface VmCreateRootParams {
   /**
@@ -181,15 +201,17 @@ export interface VmUpdateStateParams {
   state: 'Paused' | 'Running';
 }
 
-export declare namespace Vm {
+export declare namespace VmResource {
   export {
+    type ErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
     type NewVmResponse as NewVmResponse,
-    type VmBranchResponse as VmBranchResponse,
+    type Vm as Vm,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmFromCommitRequest as VmFromCommitRequest,
     type VmUpdateStateRequest as VmUpdateStateRequest,
+    type VmListResponse as VmListResponse,
     type VmCreateRootParams as VmCreateRootParams,
     type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
     type VmUpdateStateParams as VmUpdateStateParams,

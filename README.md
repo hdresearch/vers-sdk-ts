@@ -29,7 +29,7 @@ const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
-const newVmResponse = await client.orchestrator.vm.createRoot({ vm_config: {} });
+const newVmResponse = await client.vm.createRoot({ vm_config: {} });
 
 console.log(newVmResponse.id);
 ```
@@ -46,8 +46,8 @@ const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Vers.Orchestrator.VmCreateRootParams = { vm_config: {} };
-const newVmResponse: Vers.Orchestrator.NewVmResponse = await client.orchestrator.vm.createRoot(params);
+const params: Vers.VmCreateRootParams = { vm_config: {} };
+const newVmResponse: Vers.NewVmResponse = await client.vm.createRoot(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -60,7 +60,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const newVmResponse = await client.orchestrator.vm.createRoot({ vm_config: {} }).catch(async (err) => {
+const newVmResponse = await client.vm.createRoot({ vm_config: {} }).catch(async (err) => {
   if (err instanceof Vers.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -100,7 +100,7 @@ const client = new Vers({
 });
 
 // Or, configure per-request:
-await client.orchestrator.vm.createRoot({ vm_config: {} }, {
+await client.vm.createRoot({ vm_config: {} }, {
   maxRetries: 5,
 });
 ```
@@ -117,7 +117,7 @@ const client = new Vers({
 });
 
 // Override per-request:
-await client.orchestrator.vm.createRoot({ vm_config: {} }, {
+await client.vm.createRoot({ vm_config: {} }, {
   timeout: 5 * 1000,
 });
 ```
@@ -140,13 +140,11 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Vers();
 
-const response = await client.orchestrator.vm.createRoot({ vm_config: {} }).asResponse();
+const response = await client.vm.createRoot({ vm_config: {} }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: newVmResponse, response: raw } = await client.orchestrator.vm
-  .createRoot({ vm_config: {} })
-  .withResponse();
+const { data: newVmResponse, response: raw } = await client.vm.createRoot({ vm_config: {} }).withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(newVmResponse.id);
 ```
@@ -228,7 +226,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.orchestrator.vm.createRoot({
+client.vm.createRoot({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
