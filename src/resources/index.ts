@@ -4,7 +4,6 @@ export {
   VmResource,
   type ErrorResponse,
   type NewRootRequest,
-  type NewVmResponse,
   type Vm,
   type VmCommitResponse,
   type VmDeleteResponse,

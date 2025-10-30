@@ -29,9 +29,7 @@ const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
-const newVmResponse = await client.vm.createRoot({ vm_config: {} });
-
-console.log(newVmResponse.id);
+await client.vm.createRoot({ vm_config: {} });
 ```
 
 ### Request & Response types
@@ -47,7 +45,7 @@ const client = new Vers({
 });
 
 const params: Vers.VmCreateRootParams = { vm_config: {} };
-const newVmResponse: Vers.NewVmResponse = await client.vm.createRoot(params);
+await client.vm.createRoot(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -60,7 +58,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const newVmResponse = await client.vm.createRoot({ vm_config: {} }).catch(async (err) => {
+const response = await client.vm.createRoot({ vm_config: {} }).catch(async (err) => {
   if (err instanceof Vers.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -144,9 +142,9 @@ const response = await client.vm.createRoot({ vm_config: {} }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: newVmResponse, response: raw } = await client.vm.createRoot({ vm_config: {} }).withResponse();
+const { data: result, response: raw } = await client.vm.createRoot({ vm_config: {} }).withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(newVmResponse.id);
+console.log(result);
 ```
 
 ### Logging

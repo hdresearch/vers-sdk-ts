@@ -19,7 +19,6 @@ import { APIPromise } from './core/api-promise';
 import {
   ErrorResponse,
   NewRootRequest,
-  NewVmResponse,
   Vm,
   VmCommitResponse,
   VmCreateRootParams,
@@ -746,7 +745,6 @@ export declare namespace Vers {
     VmResource as VmResource,
     type ErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
-    type NewVmResponse as NewVmResponse,
     type Vm as Vm,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
