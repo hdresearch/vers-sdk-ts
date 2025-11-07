@@ -15,31 +15,20 @@ export class VmResource extends APIResource {
     return this._client.delete(path`/vm/${vmID}`, options);
   }
 
-  branch(vmID: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(path`/vm/${vmID}/branch`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  branch(vmID: string, options?: RequestOptions): APIPromise<NewVmResponse> {
+    return this._client.post(path`/vm/${vmID}/branch`, options);
   }
 
   commit(vmID: string, options?: RequestOptions): APIPromise<VmCommitResponse> {
     return this._client.post(path`/vm/${vmID}/commit`, options);
   }
 
-  createRoot(body: VmCreateRootParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post('/vm/new_root', {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  createRoot(body: VmCreateRootParams, options?: RequestOptions): APIPromise<NewVmResponse> {
+    return this._client.post('/vm/new_root', { body, ...options });
   }
 
-  restoreFromCommit(body: VmRestoreFromCommitParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post('/vm/from_commit', {
-      body,
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+  restoreFromCommit(body: VmRestoreFromCommitParams, options?: RequestOptions): APIPromise<NewVmResponse> {
+    return this._client.post('/vm/from_commit', { body, ...options });
   }
 
   updateState(vmID: string, body: VmUpdateStateParams, options?: RequestOptions): APIPromise<void> {
@@ -100,6 +89,13 @@ export namespace NewRootRequest {
      */
     vcpu_count?: number | null;
   }
+}
+
+/**
+ * Response body for new VM requests (new_root, from_commit, branch)
+ */
+export interface NewVmResponse {
+  vm_id: string;
 }
 
 export interface Vm {
@@ -207,6 +203,7 @@ export declare namespace VmResource {
   export {
     type ErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
+    type NewVmResponse as NewVmResponse,
     type Vm as Vm,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
