@@ -27,10 +27,6 @@ export class VmResource extends APIResource {
     return this._client.post('/vm/new_root', { body, ...options });
   }
 
-  getSSHKey(vmID: string, options?: RequestOptions): APIPromise<VmSSHKeyResponse> {
-    return this._client.get(path`/vm/${vmID}/ssh_key`, options);
-  }
-
   restoreFromCommit(body: VmRestoreFromCommitParams, options?: RequestOptions): APIPromise<NewVmResponse> {
     return this._client.post('/vm/from_commit', { body, ...options });
   }
@@ -142,22 +138,6 @@ export interface VmFromCommitRequest {
 }
 
 /**
- * Response body for GET /api/vm/{vm_id}/ssh_key
- */
-export interface VmSSHKeyResponse {
-  /**
-   * The SSH port that will be DNAT'd to the VM's netns (and, in turn, to its TAP
-   * device)
-   */
-  ssh_port: number;
-
-  /**
-   * Private SSH key in stringified OpenSSH format
-   */
-  ssh_private_key: string;
-}
-
-/**
  * Request body for PATCH /api/vm/{vm_id}/state
  */
 export interface VmUpdateStateRequest {
@@ -228,7 +208,6 @@ export declare namespace VmResource {
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmFromCommitRequest as VmFromCommitRequest,
-    type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
     type VmCreateRootParams as VmCreateRootParams,
