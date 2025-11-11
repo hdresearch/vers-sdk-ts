@@ -28,7 +28,6 @@ import {
   VmListResponse,
   VmResource,
   VmRestoreFromCommitParams,
-  VmSSHKeyResponse,
   VmUpdateStateParams,
   VmUpdateStateRequest,
 } from './resources/vm';
@@ -752,7 +751,6 @@ export declare namespace Vers {
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmFromCommitRequest as VmFromCommitRequest,
-    type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
     type VmCreateRootParams as VmCreateRootParams,
