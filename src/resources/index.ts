@@ -9,7 +9,6 @@ export {
   type VmCommitResponse,
   type VmDeleteResponse,
   type VmFromCommitRequest,
-  type VmSSHKeyResponse,
   type VmUpdateStateRequest,
   type VmListResponse,
   type VmCreateRootParams,
