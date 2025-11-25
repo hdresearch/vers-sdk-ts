@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "vers/*": ["src/*"],
-      "vers": ["src/index.ts"]
+      "vers/*": ["./src/*"],
+      "vers": ["./src/index.ts"]
     },
     "noEmit": true,
 

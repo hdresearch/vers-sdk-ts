@@ -16,7 +16,22 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
-import { API as ApiapiAPI } from './resources/api/api';
+import {
+  ErrorResponse,
+  NewRootRequest,
+  NewVmResponse,
+  Vm,
+  VmCommitResponse,
+  VmCreateRootParams,
+  VmDeleteResponse,
+  VmFromCommitRequest,
+  VmListResponse,
+  VmResource,
+  VmRestoreFromCommitParams,
+  VmSSHKeyResponse,
+  VmUpdateStateParams,
+  VmUpdateStateRequest,
+} from './resources/vm';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -720,13 +735,28 @@ export class Vers {
 
   static toFile = Uploads.toFile;
 
-  api: API.API = new API.API(this);
+  vm: API.VmResource = new API.VmResource(this);
 }
 
-Vers.API = ApiapiAPI;
+Vers.VmResource = VmResource;
 
 export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
 
-  export { ApiapiAPI as API };
+  export {
+    VmResource as VmResource,
+    type ErrorResponse as ErrorResponse,
+    type NewRootRequest as NewRootRequest,
+    type NewVmResponse as NewVmResponse,
+    type Vm as Vm,
+    type VmCommitResponse as VmCommitResponse,
+    type VmDeleteResponse as VmDeleteResponse,
+    type VmFromCommitRequest as VmFromCommitRequest,
+    type VmSSHKeyResponse as VmSSHKeyResponse,
+    type VmUpdateStateRequest as VmUpdateStateRequest,
+    type VmListResponse as VmListResponse,
+    type VmCreateRootParams as VmCreateRootParams,
+    type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
+    type VmUpdateStateParams as VmUpdateStateParams,
+  };
 }

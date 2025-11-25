@@ -29,9 +29,9 @@ const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
-const clusters = await client.api.cluster.list();
+const newVmResponse = await client.vm.createRoot({ vm_config: {} });
 
-console.log(clusters.operation_id);
+console.log(newVmResponse.vm_id);
 ```
 
 ### Request & Response types
@@ -46,7 +46,8 @@ const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
-const clusters: Vers.API.ClusterListResponse = await client.api.cluster.list();
+const params: Vers.VmCreateRootParams = { vm_config: {} };
+const newVmResponse: Vers.NewVmResponse = await client.vm.createRoot(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -59,7 +60,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const clusters = await client.api.cluster.list().catch(async (err) => {
+const newVmResponse = await client.vm.createRoot({ vm_config: {} }).catch(async (err) => {
   if (err instanceof Vers.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -99,7 +100,7 @@ const client = new Vers({
 });
 
 // Or, configure per-request:
-await client.api.cluster.list({
+await client.vm.createRoot({ vm_config: {} }, {
   maxRetries: 5,
 });
 ```
@@ -116,7 +117,7 @@ const client = new Vers({
 });
 
 // Override per-request:
-await client.api.cluster.list({
+await client.vm.createRoot({ vm_config: {} }, {
   timeout: 5 * 1000,
 });
 ```
@@ -139,13 +140,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Vers();
 
-const response = await client.api.cluster.list().asResponse();
+const response = await client.vm.createRoot({ vm_config: {} }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: clusters, response: raw } = await client.api.cluster.list().withResponse();
+const { data: newVmResponse, response: raw } = await client.vm.createRoot({ vm_config: {} }).withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(clusters.operation_id);
+console.log(newVmResponse.vm_id);
 ```
 
 ### Logging
@@ -225,7 +226,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.api.cluster.list({
+client.vm.createRoot({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
