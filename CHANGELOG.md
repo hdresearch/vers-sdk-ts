@@ -1,5 +1,55 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2025-12-06)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/hdresearch/vers-sdk-ts/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Features
+
+* **api:** api update ([d539321](https://github.com/hdresearch/vers-sdk-ts/commit/d53932166819b88213564c9cdeba0a1fff91e573))
+* **api:** api update ([8fdd369](https://github.com/hdresearch/vers-sdk-ts/commit/8fdd369521076ca9ef30395e9c29849eefb44b78))
+* **api:** api update ([661334d](https://github.com/hdresearch/vers-sdk-ts/commit/661334ddf19798c0a70f01f7b31447cf10903c49))
+* **api:** api update ([834238f](https://github.com/hdresearch/vers-sdk-ts/commit/834238fd92832c121502ddf064d79111fad3c72e))
+* **api:** api update ([69a8249](https://github.com/hdresearch/vers-sdk-ts/commit/69a8249fa1d6fa95cc8a3e9fd53ec4bc8ed3a7fd))
+* **api:** api update ([ab7f9b3](https://github.com/hdresearch/vers-sdk-ts/commit/ab7f9b32d5bacfa5a49524b6956e9744385c05eb))
+* **api:** api update ([7ee640d](https://github.com/hdresearch/vers-sdk-ts/commit/7ee640d09b3579141653ba7b522e32e2c0b3faba))
+* **api:** api update ([ea7c9b3](https://github.com/hdresearch/vers-sdk-ts/commit/ea7c9b3e1ec5e90a6858f2dca47455636d7f892a))
+* **api:** api update ([937acd0](https://github.com/hdresearch/vers-sdk-ts/commit/937acd0d8343e18a9c8de6103c0e1d61871d04bb))
+* **api:** api update ([57cd638](https://github.com/hdresearch/vers-sdk-ts/commit/57cd638ed980ef3d76424fd7319a125366d1a7d7))
+* **api:** api update ([7c99121](https://github.com/hdresearch/vers-sdk-ts/commit/7c99121dcc914cfdbb008552e7084639e98f5b0f))
+* **api:** api update ([7fc5fd9](https://github.com/hdresearch/vers-sdk-ts/commit/7fc5fd987c7cc8ee908370765c2247bbdd561f33))
+* **api:** api update ([a317709](https://github.com/hdresearch/vers-sdk-ts/commit/a31770961dea71c8a5a5b5edd5aa92d7d5abdb95))
+* **api:** api update ([0c8637c](https://github.com/hdresearch/vers-sdk-ts/commit/0c8637c93e920cd92d10c9db383fc1d6de36063b))
+* **api:** api update ([8a6aa44](https://github.com/hdresearch/vers-sdk-ts/commit/8a6aa4405549aa28c97cb8d063f9e4625d85e8c8))
+* **api:** api update ([a5c0ea3](https://github.com/hdresearch/vers-sdk-ts/commit/a5c0ea34897e24d60de3a568f124bbe750fbb417))
+* **api:** api update ([3ec4cfc](https://github.com/hdresearch/vers-sdk-ts/commit/3ec4cfcabb6b083ed29dc8b9abb8efb2ad6543a1))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([8d5ec41](https://github.com/hdresearch/vers-sdk-ts/commit/8d5ec41a06bec497f662ae3c57ce83b6b6809b22))
+* **mcp:** return correct lines on typescript errors ([9ed0677](https://github.com/hdresearch/vers-sdk-ts/commit/9ed0677ac95201740bba5063991e5f21197f0c03))
+
+
+### Performance Improvements
+
+* faster formatting ([91c30de](https://github.com/hdresearch/vers-sdk-ts/commit/91c30de2a2cc7f21000eed1defa24c9762099e61))
+
+
+### Chores
+
+* **client:** fix logger property type ([d935ecb](https://github.com/hdresearch/vers-sdk-ts/commit/d935ecbf2f35ad2305828727390fe6ee112c413f))
+* do not install brew dependencies in ./scripts/bootstrap by default ([3c8429d](https://github.com/hdresearch/vers-sdk-ts/commit/3c8429d1302815349df7e4fa4c36e1679ccfe537))
+* **internal:** codegen related update ([8eadca2](https://github.com/hdresearch/vers-sdk-ts/commit/8eadca2ecdbf5e9c450c11024a974a7d59aefd4c))
+* **internal:** codegen related update ([9325d84](https://github.com/hdresearch/vers-sdk-ts/commit/9325d847070a810beaf467c307e758624095156c))
+* **internal:** codegen related update ([7143cc1](https://github.com/hdresearch/vers-sdk-ts/commit/7143cc1df6e1875b6162fa9a2c1839f6ebf14af3))
+* **internal:** fix incremental formatting in some cases ([342ba48](https://github.com/hdresearch/vers-sdk-ts/commit/342ba48b9896a0236138730cc1044edcc93ad0b1))
+* **internal:** ignore .eslintcache ([2374eb7](https://github.com/hdresearch/vers-sdk-ts/commit/2374eb7b9251e918538a31b262efd90e883d8c57))
+* **internal:** remove deprecated `compilerOptions.baseUrl` from tsconfig.json ([9f8ce08](https://github.com/hdresearch/vers-sdk-ts/commit/9f8ce08db5ffb922bc2bd824a9d25d4bd3db25ad))
+* **internal:** upgrade eslint ([d631f75](https://github.com/hdresearch/vers-sdk-ts/commit/d631f7549fa2adf2c1e3fe8e1a5f9613e065b4c7))
+* **internal:** use npm pack for build uploads ([2d8fbcc](https://github.com/hdresearch/vers-sdk-ts/commit/2d8fbcc0cc00dcd84075fc59b32648c027cb55f4))
+* **jsdoc:** fix [@link](https://github.com/link) annotations to refer only to parts of the package‘s public interface ([52d631d](https://github.com/hdresearch/vers-sdk-ts/commit/52d631d70d6903291230317b5385d337ac994a53))
+
 ## 0.1.0-alpha.4 (2025-09-15)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/hdresearch/vers-sdk-ts/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
