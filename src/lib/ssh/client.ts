@@ -53,7 +53,7 @@ export class SSHClient {
   }
 
   /**
-   * Establish SSH connection over TLS
+   * Establish SSH connection over TLS with retry logic
    */
   async connect(options: SSHOptions = {}): Promise<SSH2Client> {
     if (this.client) {
@@ -65,19 +65,35 @@ export class SSHClient {
       timeout = DEFAULT_TIMEOUT,
       keepAliveInterval = DEFAULT_KEEPALIVE_INTERVAL,
       keepAliveMaxCount = DEFAULT_KEEPALIVE_MAX_COUNT,
+      retries = 3,
+      retryDelay = 1000,
     } = mergedOptions;
 
-    // Establish TLS connection
-    const tlsSocket = await this.createTLSConnection(timeout);
+    let lastError: Error | undefined;
 
-    // SSH handshake over TLS
-    const sshClient = await this.performSSHHandshake(tlsSocket, timeout);
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        // Establish TLS connection
+        const tlsSocket = await this.createTLSConnection(timeout);
 
-    // Start keep-alive
-    this.startKeepAlive(sshClient, keepAliveInterval, keepAliveMaxCount);
+        // SSH handshake over TLS
+        const sshClient = await this.performSSHHandshake(tlsSocket, timeout);
 
-    this.client = sshClient;
-    return sshClient;
+        // Start keep-alive
+        this.startKeepAlive(sshClient, keepAliveInterval, keepAliveMaxCount);
+
+        this.client = sshClient;
+        return sshClient;
+      } catch (err) {
+        lastError = err as Error;
+        if (attempt < retries) {
+          // Wait before retrying
+          await new Promise((resolve) => setTimeout(resolve, retryDelay * attempt));
+        }
+      }
+    }
+
+    throw lastError;
   }
 
   /**

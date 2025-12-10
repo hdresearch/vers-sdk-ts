@@ -26,6 +26,11 @@ describeWithAuth('SSH Integration Tests', () => {
   // Increase timeout for VM operations
   jest.setTimeout(180000);
 
+  // Add delay between tests to avoid overwhelming the VM with rapid connections
+  afterEach(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  });
+
   beforeAll(async () => {
     client = new Vers({
       apiKey: API_KEY,
