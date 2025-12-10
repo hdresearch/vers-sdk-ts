@@ -51,11 +51,10 @@ async function main() {
     console.log('exit code:', exitCode);
 
     // ============================================
-    // Example 3: Upload and download files
+    // Example 3: Upload and download single files
     // ============================================
-    console.log('\n--- SFTP File Transfer ---');
+    console.log('\n--- SFTP Single File Transfer ---');
 
-    // Create a local test file
     const fs = await import('node:fs/promises');
     const os = await import('node:os');
     const path = await import('node:path');
@@ -63,10 +62,10 @@ async function main() {
     const testDir = path.join(os.tmpdir(), `vers-example-${Date.now()}`);
     await fs.mkdir(testDir, { recursive: true });
 
+    // Create and upload a single file
     const localFile = path.join(testDir, 'hello.txt');
     await fs.writeFile(localFile, 'Hello from Vers SDK!');
 
-    // Upload file
     const uploadResult = await vm.upload(vmId, localFile, '/tmp/hello.txt');
     console.log(`Uploaded ${uploadResult.filesTransferred} file(s), ${uploadResult.bytesTransferred} bytes`);
 
@@ -74,16 +73,61 @@ async function main() {
     const catResult = await vm.execute(vmId, 'cat /tmp/hello.txt');
     console.log('Remote content:', catResult.stdout);
 
-    // Download file
+    // Download the file back
     const downloadPath = path.join(testDir, 'downloaded.txt');
     const downloadResult = await vm.download(vmId, '/tmp/hello.txt', downloadPath);
     console.log(
       `Downloaded ${downloadResult.filesTransferred} file(s), ${downloadResult.bytesTransferred} bytes`,
     );
 
-    // Verify downloaded content
     const downloadedContent = await fs.readFile(downloadPath, 'utf8');
     console.log('Downloaded content:', downloadedContent);
+
+    // ============================================
+    // Example 3b: Upload and download directories
+    // ============================================
+    console.log('\n--- SFTP Directory Transfer ---');
+
+    // Create a local directory structure
+    const appDir = path.join(testDir, 'myapp');
+    await fs.mkdir(path.join(appDir, 'src'), { recursive: true });
+    await fs.mkdir(path.join(appDir, 'config'), { recursive: true });
+    await fs.writeFile(path.join(appDir, 'package.json'), '{"name": "myapp", "version": "1.0.0"}');
+    await fs.writeFile(path.join(appDir, 'src', 'index.js'), 'console.log("Hello!");');
+    await fs.writeFile(path.join(appDir, 'config', 'settings.json'), '{"debug": true}');
+
+    // Upload entire directory with progress callback
+    console.log('Uploading directory...');
+    const dirUploadResult = await vm.upload(vmId, appDir, '/opt/myapp', {
+      recursive: true,
+      onProgress: (transferred, total, filename) => {
+        console.log(`  Progress: ${filename} - ${transferred}/${total} bytes`);
+      },
+    });
+    console.log(
+      `Uploaded ${dirUploadResult.filesTransferred} files, ${dirUploadResult.bytesTransferred} bytes`,
+    );
+
+    // Verify directory structure on remote
+    const lsResult = await vm.execute(vmId, 'find /opt/myapp -type f');
+    console.log('Remote files:', lsResult.stdout);
+
+    // Download directory back
+    const downloadDir = path.join(testDir, 'downloaded-app');
+    console.log('Downloading directory...');
+    const dirDownloadResult = await vm.download(vmId, '/opt/myapp', downloadDir, {
+      recursive: true,
+      onProgress: (transferred, total, filename) => {
+        console.log(`  Progress: ${filename} - ${transferred}/${total} bytes`);
+      },
+    });
+    console.log(
+      `Downloaded ${dirDownloadResult.filesTransferred} files, ${dirDownloadResult.bytesTransferred} bytes`,
+    );
+
+    // Verify downloaded files
+    const localFiles = await fs.readdir(downloadDir, { recursive: true });
+    console.log('Downloaded files:', localFiles);
 
     // Cleanup
     await fs.rm(testDir, { recursive: true });
