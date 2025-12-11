@@ -6,19 +6,19 @@ Types:
 - <code><a href="./src/resources/vm.ts">NewRootRequest</a></code>
 - <code><a href="./src/resources/vm.ts">NewVmResponse</a></code>
 - <code><a href="./src/resources/vm.ts">Vm</a></code>
-- <code><a href="./src/resources/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmDeleteResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmFromCommitRequest</a></code>
 - <code><a href="./src/resources/vm.ts">VmSSHKeyResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmUpdateStateRequest</a></code>
 - <code><a href="./src/resources/vm.ts">VmListResponse</a></code>
+- <code><a href="./src/resources/vm.ts">VmCommitResponse</a></code>
 
 Methods:
 
 - <code title="get /vms">client.vm.<a href="./src/resources/vm.ts">list</a>() -> VmListResponse</code>
-- <code title="delete /vm/{vm_id}">client.vm.<a href="./src/resources/vm.ts">delete</a>(vmID) -> VmDeleteResponse</code>
+- <code title="delete /vm/{vm_id}">client.vm.<a href="./src/resources/vm.ts">delete</a>(vmID, { ...params }) -> VmDeleteResponse</code>
 - <code title="post /vm/{vm_id}/branch">client.vm.<a href="./src/resources/vm.ts">branch</a>(vmID) -> NewVmResponse</code>
-- <code title="post /vm/{vm_id}/commit">client.vm.<a href="./src/resources/vm.ts">commit</a>(vmID) -> VmCommitResponse</code>
+- <code title="post /vm/{vm_id}/commit">client.vm.<a href="./src/resources/vm.ts">commit</a>(vmID, { ...params }) -> VmCommitResponse</code>
 - <code title="post /vm/new_root">client.vm.<a href="./src/resources/vm.ts">createRoot</a>({ ...params }) -> NewVmResponse</code>
 - <code title="get /vm/{vm_id}/ssh_key">client.vm.<a href="./src/resources/vm.ts">getSSHKey</a>(vmID) -> VmSSHKeyResponse</code>
 - <code title="post /vm/from_commit">client.vm.<a href="./src/resources/vm.ts">restoreFromCommit</a>({ ...params }) -> NewVmResponse</code>
