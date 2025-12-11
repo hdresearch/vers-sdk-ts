@@ -10,6 +10,10 @@ export interface SSHOptions {
   keepAliveInterval?: number;
   /** Max missed keep-alives before disconnect (default: 6) */
   keepAliveMaxCount?: number;
+  /** Number of connection retries (default: 3) */
+  retries?: number;
+  /** Delay between retries in ms, multiplied by attempt number (default: 1000) */
+  retryDelay?: number;
 }
 
 /**
