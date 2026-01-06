@@ -132,6 +132,16 @@ export interface Vm {
 }
 
 /**
+ * The response body for POST /api/vm/{vm_id}/commit
+ */
+export interface VmCommitResponse {
+  /**
+   * The UUID of the newly-created commit
+   */
+  commit_id: string;
+}
+
+/**
  * Response body for DELETE /api/vm/{vm_id}
  */
 export interface VmDeleteResponse {
@@ -172,13 +182,6 @@ export interface VmUpdateStateRequest {
 }
 
 export type VmListResponse = Array<Vm>;
-
-/**
- * A summary of a commit, appropriate for displaying on the frontend
- */
-export interface VmCommitResponse {
-  commit_id: string;
-}
 
 export interface VmDeleteParams {
   /**
@@ -267,12 +270,12 @@ export declare namespace VmResource {
     type NewRootRequest as NewRootRequest,
     type NewVmResponse as NewVmResponse,
     type Vm as Vm,
+    type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmFromCommitRequest as VmFromCommitRequest,
     type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
-    type VmCommitResponse as VmCommitResponse,
     type VmDeleteParams as VmDeleteParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateRootParams as VmCreateRootParams,

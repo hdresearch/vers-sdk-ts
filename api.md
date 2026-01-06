@@ -6,12 +6,12 @@ Types:
 - <code><a href="./src/resources/vm.ts">NewRootRequest</a></code>
 - <code><a href="./src/resources/vm.ts">NewVmResponse</a></code>
 - <code><a href="./src/resources/vm.ts">Vm</a></code>
+- <code><a href="./src/resources/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmDeleteResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmFromCommitRequest</a></code>
 - <code><a href="./src/resources/vm.ts">VmSSHKeyResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmUpdateStateRequest</a></code>
 - <code><a href="./src/resources/vm.ts">VmListResponse</a></code>
-- <code><a href="./src/resources/vm.ts">VmCommitResponse</a></code>
 
 Methods:
 
