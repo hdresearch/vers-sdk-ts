@@ -1,0 +1,38 @@
+name: SSH Integration Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/lib/**'
+      - 'tests/lib/**'
+      - 'examples/ssh.ts'
+  pull_request:
+    paths:
+      - 'src/lib/**'
+      - 'tests/lib/**'
+      - 'examples/ssh.ts'
+  workflow_dispatch:
+
+jobs:
+  ssh-integration:
+    timeout-minutes: 10
+    name: SSH Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run SSH integration tests
+        env:
+          VERS_API_KEY: ${{ secrets.VERS_API_KEY }}
+        run: |
+          npx jest tests/lib/ssh/integration.test.ts --testTimeout=300000 --forceExit

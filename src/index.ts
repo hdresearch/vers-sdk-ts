@@ -20,3 +20,26 @@ export {
   PermissionDeniedError,
   UnprocessableEntityError,
 } from './core/error';
+
+// SSH functionality
+export { withSSH, type VmResourceWithSSH } from './lib/vm-ssh';
+export { SSHClient } from './lib/ssh';
+export {
+  SSHError,
+  SSHTLSError,
+  SSHHandshakeError,
+  SSHAuthenticationError,
+  SSHTimeoutError,
+  SSHExecError,
+  SFTPError,
+} from './lib/ssh';
+export type {
+  SSHOptions,
+  ExecuteOptions,
+  ExecuteResult,
+  ExecuteStreamOptions,
+  ConnectOptions,
+  ShellSession,
+  SFTPOptions,
+  TransferResult,
+} from './lib/ssh';
