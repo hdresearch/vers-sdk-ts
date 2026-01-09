@@ -29,9 +29,7 @@ const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
-const newVmResponse = await client.vm.createRoot({ vm_config: {} });
-
-console.log(newVmResponse.vm_id);
+const vms = await client.vm.list();
 ```
 
 ### Request & Response types
@@ -46,8 +44,7 @@ const client = new Vers({
   apiKey: process.env['VERS_API_KEY'], // This is the default and can be omitted
 });
 
-const params: Vers.VmCreateRootParams = { vm_config: {} };
-const newVmResponse: Vers.NewVmResponse = await client.vm.createRoot(params);
+const vms: Vers.VmListResponse = await client.vm.list();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -60,7 +57,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const newVmResponse = await client.vm.createRoot({ vm_config: {} }).catch(async (err) => {
+const vms = await client.vm.list().catch(async (err) => {
   if (err instanceof Vers.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -100,7 +97,7 @@ const client = new Vers({
 });
 
 // Or, configure per-request:
-await client.vm.createRoot({ vm_config: {} }, {
+await client.vm.list({
   maxRetries: 5,
 });
 ```
@@ -117,7 +114,7 @@ const client = new Vers({
 });
 
 // Override per-request:
-await client.vm.createRoot({ vm_config: {} }, {
+await client.vm.list({
   timeout: 5 * 1000,
 });
 ```
@@ -140,15 +137,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new Vers();
 
-const response = await client.vm.createRoot({ vm_config: {} }).asResponse();
+const response = await client.vm.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: newVmResponse, response: raw } = await client.vm
-  .createRoot({ vm_config: {} })
-  .withResponse();
+const { data: vms, response: raw } = await client.vm.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(newVmResponse.vm_id);
+console.log(vms);
 ```
 
 ### Logging
@@ -228,7 +223,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.vm.createRoot({
+client.vm.list({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

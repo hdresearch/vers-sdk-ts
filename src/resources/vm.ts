@@ -8,7 +8,7 @@ import { path } from '../internal/utils/path';
 
 export class VmResource extends APIResource {
   list(options?: RequestOptions): APIPromise<VmListResponse> {
-    return this._client.get('/vms', options);
+    return this._client.get('/api/v1/vms', options);
   }
 
   delete(
@@ -17,11 +17,11 @@ export class VmResource extends APIResource {
     options?: RequestOptions,
   ): APIPromise<VmDeleteResponse> {
     const { skip_wait_boot } = params ?? {};
-    return this._client.delete(path`/vm/${vmID}`, { query: { skip_wait_boot }, ...options });
+    return this._client.delete(path`/api/v1/vm/${vmID}`, { query: { skip_wait_boot }, ...options });
   }
 
   branch(vmID: string, options?: RequestOptions): APIPromise<NewVmResponse> {
-    return this._client.post(path`/vm/${vmID}/branch`, options);
+    return this._client.post(path`/api/v1/vm/${vmID}/branch`, options);
   }
 
   commit(
@@ -30,7 +30,7 @@ export class VmResource extends APIResource {
     options?: RequestOptions,
   ): APIPromise<VmCommitResponse> {
     const { keep_paused, skip_wait_boot } = params ?? {};
-    return this._client.post(path`/vm/${vmID}/commit`, {
+    return this._client.post(path`/api/v1/vm/${vmID}/commit`, {
       query: { keep_paused, skip_wait_boot },
       ...options,
     });
@@ -38,20 +38,24 @@ export class VmResource extends APIResource {
 
   createRoot(params: VmCreateRootParams, options?: RequestOptions): APIPromise<NewVmResponse> {
     const { wait_boot, ...body } = params;
-    return this._client.post('/vm/new_root', { query: { wait_boot }, body, ...options });
+    return this._client.post('/api/v1/vm/new_root', { query: { wait_boot }, body, ...options });
   }
 
   getSSHKey(vmID: string, options?: RequestOptions): APIPromise<VmSSHKeyResponse> {
-    return this._client.get(path`/vm/${vmID}/ssh_key`, options);
+    return this._client.get(path`/api/v1/vm/${vmID}/ssh_key`, options);
   }
 
   restoreFromCommit(body: VmRestoreFromCommitParams, options?: RequestOptions): APIPromise<NewVmResponse> {
-    return this._client.post('/vm/from_commit', { body, ...options });
+    return this._client.post('/api/v1/vm/from_commit', { body, ...options });
+  }
+
+  status(vmID: string, options?: RequestOptions): APIPromise<Vm> {
+    return this._client.get(path`/api/v1/vm/${vmID}/status`, options);
   }
 
   updateState(vmID: string, params: VmUpdateStateParams, options?: RequestOptions): APIPromise<void> {
     const { skip_wait_boot, ...body } = params;
-    return this._client.patch(path`/vm/${vmID}/state`, {
+    return this._client.patch(path`/api/v1/vm/${vmID}/state`, {
       query: { skip_wait_boot },
       body,
       ...options,
@@ -149,7 +153,7 @@ export interface VmDeleteResponse {
 }
 
 /**
- * Request body for POST /api/vm/from_commit
+ * Request body for POST /api/v1/vm/from_commit
  */
 export interface VmFromCommitRequest {
   commit_id: string;
