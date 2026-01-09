@@ -21,8 +21,10 @@ import {
   NewRootRequest,
   NewVmResponse,
   Vm,
+  VmCommitParams,
   VmCommitResponse,
   VmCreateRootParams,
+  VmDeleteParams,
   VmDeleteResponse,
   VmFromCommitRequest,
   VmListResponse,
@@ -129,7 +131,7 @@ export class Vers {
   baseURL: string;
   maxRetries: number;
   timeout: number;
-  logger: Logger | undefined;
+  logger: Logger;
   logLevel: LogLevel | undefined;
   fetchOptions: MergedRequestInit | undefined;
 
@@ -755,6 +757,8 @@ export declare namespace Vers {
     type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
+    type VmDeleteParams as VmDeleteParams,
+    type VmCommitParams as VmCommitParams,
     type VmCreateRootParams as VmCreateRootParams,
     type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
     type VmUpdateStateParams as VmUpdateStateParams,

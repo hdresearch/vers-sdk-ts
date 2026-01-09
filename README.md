@@ -144,7 +144,9 @@ const response = await client.vm.createRoot({ vm_config: {} }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: newVmResponse, response: raw } = await client.vm.createRoot({ vm_config: {} }).withResponse();
+const { data: newVmResponse, response: raw } = await client.vm
+  .createRoot({ vm_config: {} })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(newVmResponse.vm_id);
 ```

@@ -33,6 +33,14 @@ describe('resource vm', () => {
   });
 
   // Prism tests are disabled
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.vm.delete('vm_id', { skip_wait_boot: true }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Vers.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('branch', async () => {
     const responsePromise = client.vm.branch('vm_id');
     const rawResponse = await responsePromise.asResponse();
@@ -57,6 +65,18 @@ describe('resource vm', () => {
   });
 
   // Prism tests are disabled
+  test.skip('commit: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.vm.commit(
+        'vm_id',
+        { keep_paused: true, skip_wait_boot: true },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Vers.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('createRoot: only required params', async () => {
     const responsePromise = client.vm.createRoot({ vm_config: {} });
     const rawResponse = await responsePromise.asResponse();
@@ -78,6 +98,7 @@ describe('resource vm', () => {
         mem_size_mib: 0,
         vcpu_count: 0,
       },
+      wait_boot: true,
     });
   });
 
@@ -128,6 +149,9 @@ describe('resource vm', () => {
 
   // Prism tests are disabled
   test.skip('updateState: required and optional params', async () => {
-    const response = await client.vm.updateState('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { state: 'Paused' });
+    const response = await client.vm.updateState('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      state: 'Paused',
+      skip_wait_boot: true,
+    });
   });
 });
