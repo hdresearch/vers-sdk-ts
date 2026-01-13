@@ -64,6 +64,10 @@ export interface Vm {
     created_at: string;
     owner_id: string;
     /**
+     * The parent VM ID if this VM was branched
+     */
+    parent?: string | null;
+    /**
      * The state of a VM
      */
     state: 'booting' | 'running' | 'paused';
