@@ -1,0 +1,2 @@
+export { VmResource, type ErrorResponse, type NewRootRequest, type NewVmResponse, type Vm, type VmCommitResponse, type VmDeleteResponse, type VmFromCommitRequest, type VmSSHKeyResponse, type VmUpdateStateRequest, type VmListResponse, type VmDeleteParams, type VmCommitParams, type VmCreateRootParams, type VmRestoreFromCommitParams, type VmUpdateStateParams, } from "./vm.mjs";
+//# sourceMappingURL=index.d.mts.map
