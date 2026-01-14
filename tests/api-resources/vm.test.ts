@@ -42,7 +42,7 @@ describe('resource vm', () => {
 
   // Prism tests are disabled
   test.skip('branch', async () => {
-    const responsePromise = client.vm.branch('vm_id');
+    const responsePromise = client.vm.branch('vm_or_commit_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -50,6 +50,70 @@ describe('resource vm', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('branch: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.vm.branch(
+        'vm_or_commit_id',
+        {
+          count: 0,
+          keep_paused: true,
+          skip_wait_boot: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Vers.NotFoundError);
+  });
+
+  // Prism tests are disabled
+  test.skip('branchByCommit', async () => {
+    const responsePromise = client.vm.branchByCommit('commit_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('branchByCommit: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.vm.branchByCommit('commit_id', { count: 0 }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Vers.NotFoundError);
+  });
+
+  // Prism tests are disabled
+  test.skip('branchByVm', async () => {
+    const responsePromise = client.vm.branchByVm('vm_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('branchByVm: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.vm.branchByVm(
+        'vm_id',
+        {
+          count: 0,
+          keep_paused: true,
+          skip_wait_boot: true,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Vers.NotFoundError);
   });
 
   // Prism tests are disabled
