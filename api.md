@@ -18,7 +18,7 @@ Methods:
 
 - <code title="get /api/v1/vms">client.vm.<a href="./src/resources/vm.ts">list</a>() -> VmListResponse</code>
 - <code title="delete /api/v1/vm/{vm_id}">client.vm.<a href="./src/resources/vm.ts">delete</a>(vmID, { ...params }) -> VmDeleteResponse</code>
-- <code title="post /api/v1/vm/{vm_or_commit_id}/branch">client.vm.<a href="./src/resources/vm.ts">branch</a>(vmOrCommitID, { ...params }) -> NewVmResponse</code>
+- <code title="post /api/v1/vm/{vm_or_commit_id}/branch">client.vm.<a href="./src/resources/vm.ts">branch</a>(vmOrCommitID, { ...params }) -> NewVmsResponse</code>
 - <code title="post /api/v1/vm/branch/by_commit/{commit_id}">client.vm.<a href="./src/resources/vm.ts">branchByCommit</a>(commitID, { ...params }) -> NewVmsResponse</code>
 - <code title="post /api/v1/vm/branch/by_vm/{vm_id}">client.vm.<a href="./src/resources/vm.ts">branchByVm</a>(vmID, { ...params }) -> NewVmsResponse</code>
 - <code title="post /api/v1/vm/{vm_id}/commit">client.vm.<a href="./src/resources/vm.ts">commit</a>(vmID, { ...params }) -> VmCommitResponse</code>
