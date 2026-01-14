@@ -24,7 +24,7 @@ export class VmResource extends APIResource {
     vmOrCommitID: string,
     params: VmBranchParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<NewVmResponse> {
+  ): APIPromise<NewVmsResponse> {
     const { count, keep_paused, skip_wait_boot } = params ?? {};
     return this._client.post(path`/api/v1/vm/${vmOrCommitID}/branch`, {
       query: { count, keep_paused, skip_wait_boot },
