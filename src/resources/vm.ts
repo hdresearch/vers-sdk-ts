@@ -36,7 +36,7 @@ export class VmResource extends APIResource {
     commitID: string,
     params: VmBranchByCommitParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<VmBranchByCommitResponse> {
+  ): APIPromise<NewVmsResponse> {
     const { count } = params ?? {};
     return this._client.post(path`/api/v1/vm/branch/by_commit/${commitID}`, { query: { count }, ...options });
   }
@@ -45,7 +45,7 @@ export class VmResource extends APIResource {
     vmID: string,
     params: VmBranchByVmParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<VmBranchByVmResponse> {
+  ): APIPromise<NewVmsResponse> {
     const { count, keep_paused, skip_wait_boot } = params ?? {};
     return this._client.post(path`/api/v1/vm/branch/by_vm/${vmID}`, {
       query: { count, keep_paused, skip_wait_boot },
@@ -151,6 +151,10 @@ export interface NewVmResponse {
   vm_id: string;
 }
 
+export interface NewVmsResponse {
+  vms: Array<NewVmResponse>;
+}
+
 export interface Vm {
   created_at: string;
 
@@ -215,14 +219,6 @@ export interface VmUpdateStateRequest {
 }
 
 export type VmListResponse = Array<Vm>;
-
-export interface VmBranchByCommitResponse {
-  vms: Array<NewVmResponse>;
-}
-
-export interface VmBranchByVmResponse {
-  vms: Array<NewVmResponse>;
-}
 
 export interface VmDeleteParams {
   /**
@@ -352,6 +348,7 @@ export declare namespace VmResource {
     type ErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
     type NewVmResponse as NewVmResponse,
+    type NewVmsResponse as NewVmsResponse,
     type Vm as Vm,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
@@ -359,8 +356,6 @@ export declare namespace VmResource {
     type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
-    type VmBranchByCommitResponse as VmBranchByCommitResponse,
-    type VmBranchByVmResponse as VmBranchByVmResponse,
     type VmDeleteParams as VmDeleteParams,
     type VmBranchParams as VmBranchParams,
     type VmBranchByCommitParams as VmBranchByCommitParams,
