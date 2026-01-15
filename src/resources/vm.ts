@@ -20,39 +20,6 @@ export class VmResource extends APIResource {
     return this._client.delete(path`/api/v1/vm/${vmID}`, { query: { skip_wait_boot }, ...options });
   }
 
-  branch(
-    vmOrCommitID: string,
-    params: VmBranchParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<NewVmsResponse> {
-    const { count, keep_paused, skip_wait_boot } = params ?? {};
-    return this._client.post(path`/api/v1/vm/${vmOrCommitID}/branch`, {
-      query: { count, keep_paused, skip_wait_boot },
-      ...options,
-    });
-  }
-
-  branchByCommit(
-    commitID: string,
-    params: VmBranchByCommitParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<NewVmsResponse> {
-    const { count } = params ?? {};
-    return this._client.post(path`/api/v1/vm/branch/by_commit/${commitID}`, { query: { count }, ...options });
-  }
-
-  branchByVm(
-    vmID: string,
-    params: VmBranchByVmParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<NewVmsResponse> {
-    const { count, keep_paused, skip_wait_boot } = params ?? {};
-    return this._client.post(path`/api/v1/vm/branch/by_vm/${vmID}`, {
-      query: { count, keep_paused, skip_wait_boot },
-      ...options,
-    });
-  }
-
   commit(
     vmID: string,
     params: VmCommitParams | null | undefined = {},
@@ -151,10 +118,6 @@ export interface NewVmResponse {
   vm_id: string;
 }
 
-export interface NewVmsResponse {
-  vms: Array<NewVmResponse>;
-}
-
 export interface Vm {
   created_at: string;
 
@@ -223,48 +186,6 @@ export type VmListResponse = Array<Vm>;
 export interface VmDeleteParams {
   /**
    * If true, return an error immediately if the VM is still booting. Default: false
-   */
-  skip_wait_boot?: boolean;
-}
-
-export interface VmBranchParams {
-  /**
-   * Number of VMs to branch (optional; default 1)
-   */
-  count?: number;
-
-  /**
-   * If true, keep VM paused after commit. Only applicable when branching a VM ID.
-   */
-  keep_paused?: boolean;
-
-  /**
-   * If true, immediately return an error if VM is booting instead of waiting. Only
-   * applicable when branching a VM ID.
-   */
-  skip_wait_boot?: boolean;
-}
-
-export interface VmBranchByCommitParams {
-  /**
-   * Number of VMs to branch (optional; default 1)
-   */
-  count?: number;
-}
-
-export interface VmBranchByVmParams {
-  /**
-   * Number of VMs to branch (optional; default 1)
-   */
-  count?: number;
-
-  /**
-   * If true, keep VM paused after commit
-   */
-  keep_paused?: boolean;
-
-  /**
-   * If true, immediately return an error if VM is booting instead of waiting
    */
   skip_wait_boot?: boolean;
 }
@@ -348,7 +269,6 @@ export declare namespace VmResource {
     type ErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
     type NewVmResponse as NewVmResponse,
-    type NewVmsResponse as NewVmsResponse,
     type Vm as Vm,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
@@ -357,9 +277,6 @@ export declare namespace VmResource {
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
     type VmDeleteParams as VmDeleteParams,
-    type VmBranchParams as VmBranchParams,
-    type VmBranchByCommitParams as VmBranchByCommitParams,
-    type VmBranchByVmParams as VmBranchByVmParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateRootParams as VmCreateRootParams,
     type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
