@@ -5,6 +5,7 @@ Types:
 - <code><a href="./src/resources/vm.ts">ErrorResponse</a></code>
 - <code><a href="./src/resources/vm.ts">NewRootRequest</a></code>
 - <code><a href="./src/resources/vm.ts">NewVmResponse</a></code>
+- <code><a href="./src/resources/vm.ts">NewVmsResponse</a></code>
 - <code><a href="./src/resources/vm.ts">Vm</a></code>
 - <code><a href="./src/resources/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmDeleteResponse</a></code>
@@ -17,6 +18,9 @@ Methods:
 
 - <code title="get /api/v1/vms">client.vm.<a href="./src/resources/vm.ts">list</a>() -> VmListResponse</code>
 - <code title="delete /api/v1/vm/{vm_id}">client.vm.<a href="./src/resources/vm.ts">delete</a>(vmID, { ...params }) -> VmDeleteResponse</code>
+- <code title="post /api/v1/vm/{vm_or_commit_id}/branch">client.vm.<a href="./src/resources/vm.ts">branch</a>(vmOrCommitID, { ...params }) -> NewVmsResponse</code>
+- <code title="post /api/v1/vm/branch/by_commit/{commit_id}">client.vm.<a href="./src/resources/vm.ts">branchByCommit</a>(commitID, { ...params }) -> NewVmsResponse</code>
+- <code title="post /api/v1/vm/branch/by_vm/{vm_id}">client.vm.<a href="./src/resources/vm.ts">branchByVm</a>(vmID, { ...params }) -> NewVmsResponse</code>
 - <code title="post /api/v1/vm/{vm_id}/commit">client.vm.<a href="./src/resources/vm.ts">commit</a>(vmID, { ...params }) -> VmCommitResponse</code>
 - <code title="post /api/v1/vm/new_root">client.vm.<a href="./src/resources/vm.ts">createRoot</a>({ ...params }) -> NewVmResponse</code>
 - <code title="get /api/v1/vm/{vm_id}/ssh_key">client.vm.<a href="./src/resources/vm.ts">getSSHKey</a>(vmID) -> VmSSHKeyResponse</code>
