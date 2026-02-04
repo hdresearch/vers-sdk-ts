@@ -163,7 +163,7 @@ export interface Vm {
   /**
    * The state of a VM
    */
-  state: 'booting' | 'running' | 'paused';
+  state: 'booting' | 'running' | 'paused' | 'sleeping';
 
   vm_id: string;
 }
