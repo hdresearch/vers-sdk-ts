@@ -188,8 +188,32 @@ export interface VmDeleteResponse {
 /**
  * Request body for POST /api/v1/vm/from_commit
  */
-export interface VmFromCommitRequest {
-  commit_id: string;
+export type VmFromCommitRequest = VmFromCommitRequest.CommitID | VmFromCommitRequest.TagName;
+
+export namespace VmFromCommitRequest {
+  /**
+   * The commit ID to restore from (exactly one of commit_id or tag_name must be
+   * provided)
+   */
+  export interface CommitID {
+    /**
+     * The commit ID to restore from (exactly one of commit_id or tag_name must be
+     * provided)
+     */
+    commit_id: string;
+  }
+
+  /**
+   * The tag name to restore from (exactly one of commit_id or tag_name must be
+   * provided)
+   */
+  export interface TagName {
+    /**
+     * The tag name to restore from (exactly one of commit_id or tag_name must be
+     * provided)
+     */
+    tag_name: string;
+  }
 }
 
 /**
@@ -326,8 +350,26 @@ export namespace VmCreateRootParams {
   }
 }
 
-export interface VmRestoreFromCommitParams {
-  commit_id: string;
+export type VmRestoreFromCommitParams =
+  | VmRestoreFromCommitParams.Variant0
+  | VmRestoreFromCommitParams.Variant1;
+
+export declare namespace VmRestoreFromCommitParams {
+  export interface Variant0 {
+    /**
+     * The commit ID to restore from (exactly one of commit_id or tag_name must be
+     * provided)
+     */
+    commit_id: string;
+  }
+
+  export interface Variant1 {
+    /**
+     * The tag name to restore from (exactly one of commit_id or tag_name must be
+     * provided)
+     */
+    tag_name: string;
+  }
 }
 
 export interface VmUpdateStateParams {
