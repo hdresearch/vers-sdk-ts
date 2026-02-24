@@ -60,7 +60,7 @@ $ yarn link vers
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global vers
+$ pnpm link --global vers
 ```
 
 ## Running tests
