@@ -1,6 +1,24 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
+  CommitTags,
+  type CreateTagRequest,
+  type CreateTagResponse,
+  type ListTagsResponse,
+  type TagInfo,
+  type UpdateTagRequest,
+  type CommitTagCreateParams,
+  type CommitTagUpdateParams,
+} from './commit-tags';
+export {
+  Commits,
+  type CommitInfo,
+  type ListCommitsResponse,
+  type UpdateCommitRequest,
+  type CommitListParentsResponse,
+  type CommitUpdateParams,
+} from './commits';
+export {
   VmResource,
   type ErrorResponse,
   type NewRootRequest,
@@ -10,15 +28,19 @@ export {
   type VmCommitResponse,
   type VmDeleteResponse,
   type VmFromCommitRequest,
+  type VmMetadataResponse,
+  type VmResizeDiskRequest,
   type VmSSHKeyResponse,
   type VmUpdateStateRequest,
   type VmListResponse,
   type VmDeleteParams,
   type VmBranchParams,
   type VmBranchByCommitParams,
+  type VmBranchByTagParams,
   type VmBranchByVmParams,
   type VmCommitParams,
   type VmCreateRootParams,
+  type VmResizeDiskParams,
   type VmRestoreFromCommitParams,
   type VmUpdateStateParams,
 } from './vm';

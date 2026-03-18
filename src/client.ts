@@ -18,12 +18,31 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  CommitTagCreateParams,
+  CommitTagUpdateParams,
+  CommitTags,
+  CreateTagRequest,
+  CreateTagResponse,
+  ListTagsResponse,
+  TagInfo,
+  UpdateTagRequest,
+} from './resources/commit-tags';
+import {
+  CommitInfo,
+  CommitListParentsResponse,
+  CommitUpdateParams,
+  Commits,
+  ListCommitsResponse,
+  UpdateCommitRequest,
+} from './resources/commits';
+import {
   ErrorResponse,
   NewRootRequest,
   NewVmResponse,
   NewVmsResponse,
   Vm,
   VmBranchByCommitParams,
+  VmBranchByTagParams,
   VmBranchByVmParams,
   VmBranchParams,
   VmCommitParams,
@@ -33,6 +52,9 @@ import {
   VmDeleteResponse,
   VmFromCommitRequest,
   VmListResponse,
+  VmMetadataResponse,
+  VmResizeDiskParams,
+  VmResizeDiskRequest,
   VmResource,
   VmRestoreFromCommitParams,
   VmSSHKeyResponse,
@@ -746,9 +768,13 @@ export class Vers {
   static toFile = Uploads.toFile;
 
   vm: API.VmResource = new API.VmResource(this);
+  commits: API.Commits = new API.Commits(this);
+  commitTags: API.CommitTags = new API.CommitTags(this);
 }
 
 Vers.VmResource = VmResource;
+Vers.Commits = Commits;
+Vers.CommitTags = CommitTags;
 
 export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
@@ -763,16 +789,40 @@ export declare namespace Vers {
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmFromCommitRequest as VmFromCommitRequest,
+    type VmMetadataResponse as VmMetadataResponse,
+    type VmResizeDiskRequest as VmResizeDiskRequest,
     type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
     type VmDeleteParams as VmDeleteParams,
     type VmBranchParams as VmBranchParams,
     type VmBranchByCommitParams as VmBranchByCommitParams,
+    type VmBranchByTagParams as VmBranchByTagParams,
     type VmBranchByVmParams as VmBranchByVmParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateRootParams as VmCreateRootParams,
+    type VmResizeDiskParams as VmResizeDiskParams,
     type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
     type VmUpdateStateParams as VmUpdateStateParams,
+  };
+
+  export {
+    Commits as Commits,
+    type CommitInfo as CommitInfo,
+    type ListCommitsResponse as ListCommitsResponse,
+    type UpdateCommitRequest as UpdateCommitRequest,
+    type CommitListParentsResponse as CommitListParentsResponse,
+    type CommitUpdateParams as CommitUpdateParams,
+  };
+
+  export {
+    CommitTags as CommitTags,
+    type CreateTagRequest as CreateTagRequest,
+    type CreateTagResponse as CreateTagResponse,
+    type ListTagsResponse as ListTagsResponse,
+    type TagInfo as TagInfo,
+    type UpdateTagRequest as UpdateTagRequest,
+    type CommitTagCreateParams as CommitTagCreateParams,
+    type CommitTagUpdateParams as CommitTagUpdateParams,
   };
 }

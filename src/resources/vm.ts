@@ -41,6 +41,15 @@ export class VmResource extends APIResource {
     return this._client.post(path`/api/v1/vm/branch/by_commit/${commitID}`, { query: { count }, ...options });
   }
 
+  branchByTag(
+    tagName: string,
+    params: VmBranchByTagParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<NewVmsResponse> {
+    const { count } = params ?? {};
+    return this._client.post(path`/api/v1/vm/branch/by_tag/${tagName}`, { query: { count }, ...options });
+  }
+
   branchByVm(
     vmID: string,
     params: VmBranchByVmParams | null | undefined = {},
@@ -70,8 +79,22 @@ export class VmResource extends APIResource {
     return this._client.post('/api/v1/vm/new_root', { query: { wait_boot }, body, ...options });
   }
 
+  getMetadata(vmID: string, options?: RequestOptions): APIPromise<VmMetadataResponse> {
+    return this._client.get(path`/api/v1/vm/${vmID}/metadata`, options);
+  }
+
   getSSHKey(vmID: string, options?: RequestOptions): APIPromise<VmSSHKeyResponse> {
     return this._client.get(path`/api/v1/vm/${vmID}/ssh_key`, options);
+  }
+
+  resizeDisk(vmID: string, params: VmResizeDiskParams, options?: RequestOptions): APIPromise<void> {
+    const { skip_wait_boot, ...body } = params;
+    return this._client.patch(path`/api/v1/vm/${vmID}/disk`, {
+      query: { skip_wait_boot },
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   restoreFromCommit(body: VmRestoreFromCommitParams, options?: RequestOptions): APIPromise<NewVmResponse> {
@@ -217,6 +240,40 @@ export namespace VmFromCommitRequest {
 }
 
 /**
+ * Response for GET /api/v1/vm/{vm_id}/metadata
+ */
+export interface VmMetadataResponse {
+  created_at: string;
+
+  ip: string;
+
+  owner_id: string;
+
+  /**
+   * The state of a VM
+   */
+  state: 'booting' | 'running' | 'paused' | 'sleeping';
+
+  vm_id: string;
+
+  deleted_at?: string | null;
+
+  grandparent_vm_id?: string | null;
+
+  parent_commit_id?: string | null;
+}
+
+/**
+ * Request body for PATCH /api/vm/{vm_id}/disk
+ */
+export interface VmResizeDiskRequest {
+  /**
+   * The new disk size in MiB. Must be strictly greater than the current size.
+   */
+  fs_size_mib: number;
+}
+
+/**
  * Response body for GET /api/vm/{vm_id}/ssh_key
  */
 export interface VmSSHKeyResponse {
@@ -270,6 +327,13 @@ export interface VmBranchParams {
 }
 
 export interface VmBranchByCommitParams {
+  /**
+   * Number of VMs to branch (optional; default 1)
+   */
+  count?: number;
+}
+
+export interface VmBranchByTagParams {
   /**
    * Number of VMs to branch (optional; default 1)
    */
@@ -350,6 +414,20 @@ export namespace VmCreateRootParams {
   }
 }
 
+export interface VmResizeDiskParams {
+  /**
+   * Body param: The new disk size in MiB. Must be strictly greater than the current
+   * size.
+   */
+  fs_size_mib: number;
+
+  /**
+   * Query param: If true, return an error immediately if the VM is still booting.
+   * Default: false
+   */
+  skip_wait_boot?: boolean;
+}
+
 export type VmRestoreFromCommitParams =
   | VmRestoreFromCommitParams.Variant0
   | VmRestoreFromCommitParams.Variant1;
@@ -395,15 +473,19 @@ export declare namespace VmResource {
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
     type VmFromCommitRequest as VmFromCommitRequest,
+    type VmMetadataResponse as VmMetadataResponse,
+    type VmResizeDiskRequest as VmResizeDiskRequest,
     type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
     type VmDeleteParams as VmDeleteParams,
     type VmBranchParams as VmBranchParams,
     type VmBranchByCommitParams as VmBranchByCommitParams,
+    type VmBranchByTagParams as VmBranchByTagParams,
     type VmBranchByVmParams as VmBranchByVmParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateRootParams as VmCreateRootParams,
+    type VmResizeDiskParams as VmResizeDiskParams,
     type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
     type VmUpdateStateParams as VmUpdateStateParams,
   };
