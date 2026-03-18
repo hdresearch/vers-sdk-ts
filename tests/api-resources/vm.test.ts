@@ -89,6 +89,26 @@ describe('resource vm', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('branchByTag', async () => {
+    const responsePromise = client.vm.branchByTag('tag_name');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('branchByTag: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.vm.branchByTag('tag_name', { count: 0 }, { path: '/_stainless_unknown_path' }),
+    ).rejects.toThrow(Vers.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('branchByVm', async () => {
     const responsePromise = client.vm.branchByVm('vm_id');
     const rawResponse = await responsePromise.asResponse();
@@ -167,6 +187,18 @@ describe('resource vm', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getMetadata', async () => {
+    const responsePromise = client.vm.getMetadata('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
   test.skip('getSSHKey', async () => {
     const responsePromise = client.vm.getSSHKey('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
@@ -176,6 +208,26 @@ describe('resource vm', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('resizeDisk: only required params', async () => {
+    const responsePromise = client.vm.resizeDisk('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { fs_size_mib: 0 });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('resizeDisk: required and optional params', async () => {
+    const response = await client.vm.resizeDisk('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      fs_size_mib: 0,
+      skip_wait_boot: true,
+    });
   });
 
   // Mock server tests are disabled
