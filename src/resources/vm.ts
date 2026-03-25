@@ -211,31 +211,40 @@ export interface VmDeleteResponse {
 /**
  * Request body for POST /api/v1/vm/from_commit
  */
-export type VmFromCommitRequest = VmFromCommitRequest.CommitID | VmFromCommitRequest.TagName;
+export type VmFromCommitRequest =
+  | VmFromCommitRequest.CommitID
+  | VmFromCommitRequest.TagName
+  | VmFromCommitRequest.Ref;
 
 export namespace VmFromCommitRequest {
   /**
-   * The commit ID to restore from (exactly one of commit_id or tag_name must be
-   * provided)
+   * The commit ID to restore from
    */
   export interface CommitID {
     /**
-     * The commit ID to restore from (exactly one of commit_id or tag_name must be
-     * provided)
+     * The commit ID to restore from
      */
     commit_id: string;
   }
 
   /**
-   * The tag name to restore from (exactly one of commit_id or tag_name must be
-   * provided)
+   * The tag name to restore from (legacy org-scoped tag)
    */
   export interface TagName {
     /**
-     * The tag name to restore from (exactly one of commit_id or tag_name must be
-     * provided)
+     * The tag name to restore from (legacy org-scoped tag)
      */
     tag_name: string;
+  }
+
+  /**
+   * A repository reference in "repo_name:tag_name" format
+   */
+  export interface Ref {
+    /**
+     * A repository reference in "repo_name:tag_name" format
+     */
+    ref: string;
   }
 }
 
@@ -430,23 +439,29 @@ export interface VmResizeDiskParams {
 
 export type VmRestoreFromCommitParams =
   | VmRestoreFromCommitParams.Variant0
-  | VmRestoreFromCommitParams.Variant1;
+  | VmRestoreFromCommitParams.Variant1
+  | VmRestoreFromCommitParams.Variant2;
 
 export declare namespace VmRestoreFromCommitParams {
   export interface Variant0 {
     /**
-     * The commit ID to restore from (exactly one of commit_id or tag_name must be
-     * provided)
+     * The commit ID to restore from
      */
     commit_id: string;
   }
 
   export interface Variant1 {
     /**
-     * The tag name to restore from (exactly one of commit_id or tag_name must be
-     * provided)
+     * The tag name to restore from (legacy org-scoped tag)
      */
     tag_name: string;
+  }
+
+  export interface Variant2 {
+    /**
+     * A repository reference in "repo_name:tag_name" format
+     */
+    ref: string;
   }
 }
 
