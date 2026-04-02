@@ -186,7 +186,7 @@ export interface Vm {
   /**
    * The state of a VM
    */
-  state: 'booting' | 'running' | 'paused' | 'sleeping';
+  state: 'booting' | 'running' | 'paused' | 'sleeping' | 'dead';
 
   vm_id: string;
 }
@@ -261,7 +261,7 @@ export interface VmMetadataResponse {
   /**
    * The state of a VM
    */
-  state: 'booting' | 'running' | 'paused' | 'sleeping';
+  state: 'booting' | 'running' | 'paused' | 'sleeping' | 'dead';
 
   vm_id: string;
 
