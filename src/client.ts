@@ -36,6 +36,36 @@ import {
   UpdateCommitRequest,
 } from './resources/commits';
 import {
+  ListPublicRepositoriesResponse,
+  PublicRepositories,
+  PublicRepositoryGetParams,
+  PublicRepositoryGetTagParams,
+  PublicRepositoryInfo,
+  PublicRepositoryListTagsParams,
+} from './resources/public-repositories';
+import {
+  CreateRepoTagRequest,
+  CreateRepoTagResponse,
+  CreateRepositoryRequest,
+  CreateRepositoryResponse,
+  ForkRepositoryRequest,
+  ForkRepositoryResponse,
+  ListRepoTagsResponse,
+  ListRepositoriesResponse,
+  RepoTagInfo,
+  Repositories,
+  RepositoryCreateParams,
+  RepositoryCreateTagParams,
+  RepositoryDeleteTagParams,
+  RepositoryForkParams,
+  RepositoryGetTagParams,
+  RepositoryInfo,
+  RepositorySetVisibilityParams,
+  RepositoryUpdateTagParams,
+  SetRepositoryVisibilityRequest,
+  UpdateRepoTagRequest,
+} from './resources/repositories';
+import {
   ErrorResponse,
   NewRootRequest,
   NewVmResponse,
@@ -770,11 +800,15 @@ export class Vers {
   vm: API.VmResource = new API.VmResource(this);
   commits: API.Commits = new API.Commits(this);
   commitTags: API.CommitTags = new API.CommitTags(this);
+  repositories: API.Repositories = new API.Repositories(this);
+  publicRepositories: API.PublicRepositories = new API.PublicRepositories(this);
 }
 
 Vers.VmResource = VmResource;
 Vers.Commits = Commits;
 Vers.CommitTags = CommitTags;
+Vers.Repositories = Repositories;
+Vers.PublicRepositories = PublicRepositories;
 
 export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
@@ -824,5 +858,37 @@ export declare namespace Vers {
     type UpdateTagRequest as UpdateTagRequest,
     type CommitTagCreateParams as CommitTagCreateParams,
     type CommitTagUpdateParams as CommitTagUpdateParams,
+  };
+
+  export {
+    Repositories as Repositories,
+    type CreateRepoTagRequest as CreateRepoTagRequest,
+    type CreateRepoTagResponse as CreateRepoTagResponse,
+    type CreateRepositoryRequest as CreateRepositoryRequest,
+    type CreateRepositoryResponse as CreateRepositoryResponse,
+    type ForkRepositoryRequest as ForkRepositoryRequest,
+    type ForkRepositoryResponse as ForkRepositoryResponse,
+    type ListRepoTagsResponse as ListRepoTagsResponse,
+    type ListRepositoriesResponse as ListRepositoriesResponse,
+    type RepoTagInfo as RepoTagInfo,
+    type RepositoryInfo as RepositoryInfo,
+    type SetRepositoryVisibilityRequest as SetRepositoryVisibilityRequest,
+    type UpdateRepoTagRequest as UpdateRepoTagRequest,
+    type RepositoryCreateParams as RepositoryCreateParams,
+    type RepositoryCreateTagParams as RepositoryCreateTagParams,
+    type RepositoryDeleteTagParams as RepositoryDeleteTagParams,
+    type RepositoryForkParams as RepositoryForkParams,
+    type RepositoryGetTagParams as RepositoryGetTagParams,
+    type RepositorySetVisibilityParams as RepositorySetVisibilityParams,
+    type RepositoryUpdateTagParams as RepositoryUpdateTagParams,
+  };
+
+  export {
+    PublicRepositories as PublicRepositories,
+    type ListPublicRepositoriesResponse as ListPublicRepositoriesResponse,
+    type PublicRepositoryInfo as PublicRepositoryInfo,
+    type PublicRepositoryGetParams as PublicRepositoryGetParams,
+    type PublicRepositoryGetTagParams as PublicRepositoryGetTagParams,
+    type PublicRepositoryListTagsParams as PublicRepositoryListTagsParams,
   };
 }

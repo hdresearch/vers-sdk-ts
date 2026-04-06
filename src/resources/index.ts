@@ -19,6 +19,36 @@ export {
   type CommitUpdateParams,
 } from './commits';
 export {
+  PublicRepositories,
+  type ListPublicRepositoriesResponse,
+  type PublicRepositoryInfo,
+  type PublicRepositoryGetParams,
+  type PublicRepositoryGetTagParams,
+  type PublicRepositoryListTagsParams,
+} from './public-repositories';
+export {
+  Repositories,
+  type CreateRepoTagRequest,
+  type CreateRepoTagResponse,
+  type CreateRepositoryRequest,
+  type CreateRepositoryResponse,
+  type ForkRepositoryRequest,
+  type ForkRepositoryResponse,
+  type ListRepoTagsResponse,
+  type ListRepositoriesResponse,
+  type RepoTagInfo,
+  type RepositoryInfo,
+  type SetRepositoryVisibilityRequest,
+  type UpdateRepoTagRequest,
+  type RepositoryCreateParams,
+  type RepositoryCreateTagParams,
+  type RepositoryDeleteTagParams,
+  type RepositoryForkParams,
+  type RepositoryGetTagParams,
+  type RepositorySetVisibilityParams,
+  type RepositoryUpdateTagParams,
+} from './repositories';
+export {
   VmResource,
   type ErrorResponse,
   type NewRootRequest,
