@@ -67,3 +67,48 @@ Methods:
 - <code title="get /api/v1/commit_tags">client.commitTags.<a href="./src/resources/commit-tags.ts">list</a>() -> ListTagsResponse</code>
 - <code title="delete /api/v1/commit_tags/{tag_name}">client.commitTags.<a href="./src/resources/commit-tags.ts">delete</a>(tagName) -> void</code>
 - <code title="get /api/v1/commit_tags/{tag_name}">client.commitTags.<a href="./src/resources/commit-tags.ts">get</a>(tagName) -> TagInfo</code>
+
+# Repositories
+
+Types:
+
+- <code><a href="./src/resources/repositories.ts">CreateRepoTagRequest</a></code>
+- <code><a href="./src/resources/repositories.ts">CreateRepoTagResponse</a></code>
+- <code><a href="./src/resources/repositories.ts">CreateRepositoryRequest</a></code>
+- <code><a href="./src/resources/repositories.ts">CreateRepositoryResponse</a></code>
+- <code><a href="./src/resources/repositories.ts">ForkRepositoryRequest</a></code>
+- <code><a href="./src/resources/repositories.ts">ForkRepositoryResponse</a></code>
+- <code><a href="./src/resources/repositories.ts">ListRepoTagsResponse</a></code>
+- <code><a href="./src/resources/repositories.ts">ListRepositoriesResponse</a></code>
+- <code><a href="./src/resources/repositories.ts">RepoTagInfo</a></code>
+- <code><a href="./src/resources/repositories.ts">RepositoryInfo</a></code>
+- <code><a href="./src/resources/repositories.ts">SetRepositoryVisibilityRequest</a></code>
+- <code><a href="./src/resources/repositories.ts">UpdateRepoTagRequest</a></code>
+
+Methods:
+
+- <code title="post /api/v1/repositories">client.repositories.<a href="./src/resources/repositories.ts">create</a>({ ...params }) -> CreateRepositoryResponse</code>
+- <code title="get /api/v1/repositories">client.repositories.<a href="./src/resources/repositories.ts">list</a>() -> ListRepositoriesResponse</code>
+- <code title="delete /api/v1/repositories/{repo_name}">client.repositories.<a href="./src/resources/repositories.ts">delete</a>(repoName) -> void</code>
+- <code title="post /api/v1/repositories/{repo_name}/tags">client.repositories.<a href="./src/resources/repositories.ts">createTag</a>(repoName, { ...params }) -> CreateRepoTagResponse</code>
+- <code title="delete /api/v1/repositories/{repo_name}/tags/{tag_name}">client.repositories.<a href="./src/resources/repositories.ts">deleteTag</a>(tagName, { ...params }) -> void</code>
+- <code title="post /api/v1/repositories/fork">client.repositories.<a href="./src/resources/repositories.ts">fork</a>({ ...params }) -> ForkRepositoryResponse</code>
+- <code title="get /api/v1/repositories/{repo_name}">client.repositories.<a href="./src/resources/repositories.ts">get</a>(repoName) -> RepositoryInfo</code>
+- <code title="get /api/v1/repositories/{repo_name}/tags/{tag_name}">client.repositories.<a href="./src/resources/repositories.ts">getTag</a>(tagName, { ...params }) -> RepoTagInfo</code>
+- <code title="get /api/v1/repositories/{repo_name}/tags">client.repositories.<a href="./src/resources/repositories.ts">listTags</a>(repoName) -> ListRepoTagsResponse</code>
+- <code title="patch /api/v1/repositories/{repo_name}/visibility">client.repositories.<a href="./src/resources/repositories.ts">setVisibility</a>(repoName, { ...params }) -> void</code>
+- <code title="patch /api/v1/repositories/{repo_name}/tags/{tag_name}">client.repositories.<a href="./src/resources/repositories.ts">updateTag</a>(tagName, { ...params }) -> void</code>
+
+# PublicRepositories
+
+Types:
+
+- <code><a href="./src/resources/public-repositories.ts">ListPublicRepositoriesResponse</a></code>
+- <code><a href="./src/resources/public-repositories.ts">PublicRepositoryInfo</a></code>
+
+Methods:
+
+- <code title="get /api/v1/public/repositories">client.publicRepositories.<a href="./src/resources/public-repositories.ts">list</a>() -> ListPublicRepositoriesResponse</code>
+- <code title="get /api/v1/public/repositories/{org_name}/{repo_name}">client.publicRepositories.<a href="./src/resources/public-repositories.ts">get</a>(repoName, { ...params }) -> PublicRepositoryInfo</code>
+- <code title="get /api/v1/public/repositories/{org_name}/{repo_name}/tags/{tag_name}">client.publicRepositories.<a href="./src/resources/public-repositories.ts">getTag</a>(tagName, { ...params }) -> RepoTagInfo</code>
+- <code title="get /api/v1/public/repositories/{org_name}/{repo_name}/tags">client.publicRepositories.<a href="./src/resources/public-repositories.ts">listTags</a>(repoName, { ...params }) -> ListRepoTagsResponse</code>
