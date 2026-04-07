@@ -62,14 +62,11 @@ export class VmResource extends APIResource {
     });
   }
 
-  commit(
-    vmID: string,
-    params: VmCommitParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<VmCommitResponse> {
-    const { keep_paused, skip_wait_boot } = params ?? {};
+  commit(vmID: string, params: VmCommitParams, options?: RequestOptions): APIPromise<VmCommitResponse> {
+    const { keep_paused, skip_wait_boot, ...body } = params;
     return this._client.post(path`/api/v1/vm/${vmID}/commit`, {
       query: { keep_paused, skip_wait_boot },
+      body,
       ...options,
     });
   }
@@ -368,14 +365,32 @@ export interface VmBranchByVmParams {
 
 export interface VmCommitParams {
   /**
-   * If true, keep VM paused after commit
+   * Query param: If true, keep VM paused after commit
    */
   keep_paused?: boolean;
 
   /**
-   * If true, return an error immediately if the VM is still booting. Default: false
+   * Query param: If true, return an error immediately if the VM is still booting.
+   * Default: false
    */
   skip_wait_boot?: boolean;
+
+  /**
+   * Body param: If provided, chelsea will use the requested commit UUID. Otherwise,
+   * it will generate a UUID itself.
+   */
+  commit_id?: string | null;
+
+  /**
+   * Body param: Optional description for the commit.
+   */
+  description?: string | null;
+
+  /**
+   * Body param: Optional human-readable name for the commit. Defaults to
+   * auto-generated name if not provided.
+   */
+  name?: string | null;
 }
 
 export interface VmCreateRootParams {

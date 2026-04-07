@@ -24,7 +24,11 @@ describe('resource commits', () => {
 
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.commits.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { is_public: true });
+    const response = await client.commits.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      is_public: true,
+      description: 'description',
+      name: 'name',
+    });
   });
 
   // Mock server tests are disabled
