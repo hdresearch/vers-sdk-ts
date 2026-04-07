@@ -138,7 +138,7 @@ describe('resource vm', () => {
 
   // Mock server tests are disabled
   test.skip('commit', async () => {
-    const responsePromise = client.vm.commit('vm_id');
+    const responsePromise = client.vm.commit('vm_id', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -146,18 +146,6 @@ describe('resource vm', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('commit: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.vm.commit(
-        'vm_id',
-        { keep_paused: true, skip_wait_boot: true },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Vers.NotFoundError);
   });
 
   // Mock server tests are disabled

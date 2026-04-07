@@ -64,6 +64,16 @@ export interface ListCommitsResponse {
  */
 export interface UpdateCommitRequest {
   is_public: boolean;
+
+  /**
+   * Optional description for the commit.
+   */
+  description?: string | null;
+
+  /**
+   * Optional human-readable name for the commit.
+   */
+  name?: string | null;
 }
 
 export type CommitListParentsResponse = Array<CommitListParentsResponse.CommitListParentsResponseItem>;
@@ -103,6 +113,16 @@ export namespace CommitListParentsResponse {
 
 export interface CommitUpdateParams {
   is_public: boolean;
+
+  /**
+   * Optional description for the commit.
+   */
+  description?: string | null;
+
+  /**
+   * Optional human-readable name for the commit.
+   */
+  name?: string | null;
 }
 
 export declare namespace Commits {
