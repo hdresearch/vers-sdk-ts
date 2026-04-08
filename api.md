@@ -9,6 +9,11 @@ Types:
 - <code><a href="./src/resources/vm.ts">Vm</a></code>
 - <code><a href="./src/resources/vm.ts">VmCommitResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmDeleteResponse</a></code>
+- <code><a href="./src/resources/vm.ts">VmExecLogQuery</a></code>
+- <code><a href="./src/resources/vm.ts">VmExecLogResponse</a></code>
+- <code><a href="./src/resources/vm.ts">VmExecRequest</a></code>
+- <code><a href="./src/resources/vm.ts">VmExecResponse</a></code>
+- <code><a href="./src/resources/vm.ts">VmExecStreamAttachRequest</a></code>
 - <code><a href="./src/resources/vm.ts">VmFromCommitRequest</a></code>
 - <code><a href="./src/resources/vm.ts">VmMetadataResponse</a></code>
 - <code><a href="./src/resources/vm.ts">VmResizeDiskRequest</a></code>
@@ -26,6 +31,10 @@ Methods:
 - <code title="post /api/v1/vm/branch/by_vm/{vm_id}">client.vm.<a href="./src/resources/vm.ts">branchByVm</a>(vmID, { ...params }) -> NewVmsResponse</code>
 - <code title="post /api/v1/vm/{vm_id}/commit">client.vm.<a href="./src/resources/vm.ts">commit</a>(vmID, { ...params }) -> VmCommitResponse</code>
 - <code title="post /api/v1/vm/new_root">client.vm.<a href="./src/resources/vm.ts">createRoot</a>({ ...params }) -> NewVmResponse</code>
+- <code title="post /api/v1/vm/{vm_id}/exec">client.vm.<a href="./src/resources/vm.ts">exec</a>(vmID, { ...params }) -> VmExecResponse</code>
+- <code title="post /api/v1/vm/{vm_id}/exec/stream">client.vm.<a href="./src/resources/vm.ts">execStream</a>(vmID, { ...params }) -> void</code>
+- <code title="post /api/v1/vm/{vm_id}/exec/stream/attach">client.vm.<a href="./src/resources/vm.ts">execStreamAttach</a>(vmID, { ...params }) -> void</code>
+- <code title="get /api/v1/vm/{vm_id}/logs">client.vm.<a href="./src/resources/vm.ts">getLogs</a>(vmID, { ...params }) -> VmExecLogResponse</code>
 - <code title="get /api/v1/vm/{vm_id}/metadata">client.vm.<a href="./src/resources/vm.ts">getMetadata</a>(vmID) -> VmMetadataResponse</code>
 - <code title="get /api/v1/vm/{vm_id}/ssh_key">client.vm.<a href="./src/resources/vm.ts">getSSHKey</a>(vmID) -> VmSSHKeyResponse</code>
 - <code title="patch /api/v1/vm/{vm_id}/disk">client.vm.<a href="./src/resources/vm.ts">resizeDisk</a>(vmID, { ...params }) -> void</code>

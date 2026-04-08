@@ -175,6 +175,107 @@ describe('resource vm', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('exec: only required params', async () => {
+    const responsePromise = client.vm.exec('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', { command: ['string'] });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('exec: required and optional params', async () => {
+    const response = await client.vm.exec('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      command: ['string'],
+      env: { foo: 'string' },
+      exec_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      stdin: 'stdin',
+      timeout_secs: 0,
+      working_dir: 'working_dir',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('execStream: only required params', async () => {
+    const responsePromise = client.vm.execStream('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      command: ['string'],
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('execStream: required and optional params', async () => {
+    const response = await client.vm.execStream('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      command: ['string'],
+      env: { foo: 'string' },
+      exec_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      stdin: 'stdin',
+      timeout_secs: 0,
+      working_dir: 'working_dir',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('execStreamAttach: only required params', async () => {
+    const responsePromise = client.vm.execStreamAttach('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      exec_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('execStreamAttach: required and optional params', async () => {
+    const response = await client.vm.execStreamAttach('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      exec_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      cursor: 0,
+      from_latest: true,
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('getLogs', async () => {
+    const responsePromise = client.vm.getLogs('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('getLogs: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.vm.getLogs(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        {
+          max_entries: 0,
+          offset: 0,
+          stream: 'stream',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Vers.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('getMetadata', async () => {
     const responsePromise = client.vm.getMetadata('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
