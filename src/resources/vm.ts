@@ -76,6 +76,34 @@ export class VmResource extends APIResource {
     return this._client.post('/api/v1/vm/new_root', { query: { wait_boot }, body, ...options });
   }
 
+  exec(vmID: string, body: VmExecParams, options?: RequestOptions): APIPromise<VmExecResponse> {
+    return this._client.post(path`/api/v1/vm/${vmID}/exec`, { body, ...options });
+  }
+
+  execStream(vmID: string, body: VmExecStreamParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/api/v1/vm/${vmID}/exec/stream`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  execStreamAttach(vmID: string, body: VmExecStreamAttachParams, options?: RequestOptions): APIPromise<void> {
+    return this._client.post(path`/api/v1/vm/${vmID}/exec/stream/attach`, {
+      body,
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  getLogs(
+    vmID: string,
+    query: VmGetLogsParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<VmExecLogResponse> {
+    return this._client.get(path`/api/v1/vm/${vmID}/logs`, { query, ...options });
+  }
+
   getMetadata(vmID: string, options?: RequestOptions): APIPromise<VmMetadataResponse> {
     return this._client.get(path`/api/v1/vm/${vmID}/metadata`, options);
   }
@@ -203,6 +231,153 @@ export interface VmCommitResponse {
  */
 export interface VmDeleteResponse {
   vm_id: string;
+}
+
+/**
+ * Query params for GET /api/vm/{vm_id}/exec/logs
+ */
+export interface VmExecLogQuery {
+  /**
+   * Maximum number of entries to return (server applies caps).
+   */
+  max_entries?: number | null;
+
+  /**
+   * Byte offset into the log file to start reading from.
+   */
+  offset?: number | null;
+
+  /**
+   * Skip waiting for boot state (mirrors exec).
+   */
+  skip_wait_boot?: boolean | null;
+
+  /**
+   * Filter by stream (stdout/stderr). Default: all streams.
+   */
+  stream?: 'stdout' | 'stderr' | null;
+}
+
+/**
+ * Response for exec log tail requests.
+ */
+export interface VmExecLogResponse {
+  /**
+   * Returned log entries.
+   */
+  entries: Array<VmExecLogResponse.Entry>;
+
+  /**
+   * True when the end of file was reached.
+   */
+  eof: boolean;
+
+  /**
+   * Next byte offset to continue from.
+   */
+  next_offset: number;
+}
+
+export namespace VmExecLogResponse {
+  /**
+   * Individual log entry describing emitted stdout/stderr chunk.
+   */
+  export interface Entry {
+    /**
+     * Base64-encoded bytes from stdout/stderr chunk.
+     */
+    data_b64: string;
+
+    /**
+     * Streams available for exec logging.
+     */
+    stream: 'stdout' | 'stderr';
+
+    timestamp: string;
+
+    exec_id?: string | null;
+  }
+}
+
+/**
+ * Request body for POST /api/vm/{vm_id}/exec
+ */
+export interface VmExecRequest {
+  /**
+   * Command and arguments to execute.
+   */
+  command: Array<string>;
+
+  /**
+   * Optional environment variables to set for the process.
+   */
+  env?: { [key: string]: string } | null;
+
+  /**
+   * Optional exec identifier for tracking.
+   */
+  exec_id?: string | null;
+
+  /**
+   * Optional stdin payload passed to the command.
+   */
+  stdin?: string | null;
+
+  /**
+   * Timeout in seconds (0 = no timeout).
+   */
+  timeout_secs?: number | null;
+
+  /**
+   * Optional working directory for the command.
+   */
+  working_dir?: string | null;
+}
+
+/**
+ * Response body for POST /api/vm/{vm_id}/exec
+ */
+export interface VmExecResponse {
+  /**
+   * Exit code returned by the command.
+   */
+  exit_code: number;
+
+  /**
+   * UTF-8 decoded stderr (lossy).
+   */
+  stderr: string;
+
+  /**
+   * UTF-8 decoded stdout (lossy).
+   */
+  stdout: string;
+
+  /**
+   * Exec identifier associated with this run.
+   */
+  exec_id?: string | null;
+}
+
+/**
+ * Request body for POST /api/vm/{vm_id}/exec/stream/attach
+ */
+export interface VmExecStreamAttachRequest {
+  /**
+   * Identifier of the exec stream session to reattach to.
+   */
+  exec_id: string;
+
+  /**
+   * Optional cursor to resume from (exclusive). If omitted, the full retained
+   * backlog is replayed.
+   */
+  cursor?: number | null;
+
+  /**
+   * Start streaming after the latest retained chunk (ignores cursor).
+   */
+  from_latest?: boolean | null;
 }
 
 /**
@@ -438,6 +613,105 @@ export namespace VmCreateRootParams {
   }
 }
 
+export interface VmExecParams {
+  /**
+   * Command and arguments to execute.
+   */
+  command: Array<string>;
+
+  /**
+   * Optional environment variables to set for the process.
+   */
+  env?: { [key: string]: string } | null;
+
+  /**
+   * Optional exec identifier for tracking.
+   */
+  exec_id?: string | null;
+
+  /**
+   * Optional stdin payload passed to the command.
+   */
+  stdin?: string | null;
+
+  /**
+   * Timeout in seconds (0 = no timeout).
+   */
+  timeout_secs?: number | null;
+
+  /**
+   * Optional working directory for the command.
+   */
+  working_dir?: string | null;
+}
+
+export interface VmExecStreamParams {
+  /**
+   * Command and arguments to execute.
+   */
+  command: Array<string>;
+
+  /**
+   * Optional environment variables to set for the process.
+   */
+  env?: { [key: string]: string } | null;
+
+  /**
+   * Optional exec identifier for tracking.
+   */
+  exec_id?: string | null;
+
+  /**
+   * Optional stdin payload passed to the command.
+   */
+  stdin?: string | null;
+
+  /**
+   * Timeout in seconds (0 = no timeout).
+   */
+  timeout_secs?: number | null;
+
+  /**
+   * Optional working directory for the command.
+   */
+  working_dir?: string | null;
+}
+
+export interface VmExecStreamAttachParams {
+  /**
+   * Identifier of the exec stream session to reattach to.
+   */
+  exec_id: string;
+
+  /**
+   * Optional cursor to resume from (exclusive). If omitted, the full retained
+   * backlog is replayed.
+   */
+  cursor?: number | null;
+
+  /**
+   * Start streaming after the latest retained chunk (ignores cursor).
+   */
+  from_latest?: boolean | null;
+}
+
+export interface VmGetLogsParams {
+  /**
+   * Maximum number of log entries to return
+   */
+  max_entries?: number;
+
+  /**
+   * Byte offset into the log file (default: 0)
+   */
+  offset?: number;
+
+  /**
+   * Filter by 'stdout' or 'stderr'
+   */
+  stream?: string;
+}
+
 export interface VmResizeDiskParams {
   /**
    * Body param: The new disk size in MiB. Must be strictly greater than the current
@@ -502,6 +776,11 @@ export declare namespace VmResource {
     type Vm as Vm,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
+    type VmExecLogQuery as VmExecLogQuery,
+    type VmExecLogResponse as VmExecLogResponse,
+    type VmExecRequest as VmExecRequest,
+    type VmExecResponse as VmExecResponse,
+    type VmExecStreamAttachRequest as VmExecStreamAttachRequest,
     type VmFromCommitRequest as VmFromCommitRequest,
     type VmMetadataResponse as VmMetadataResponse,
     type VmResizeDiskRequest as VmResizeDiskRequest,
@@ -515,6 +794,10 @@ export declare namespace VmResource {
     type VmBranchByVmParams as VmBranchByVmParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateRootParams as VmCreateRootParams,
+    type VmExecParams as VmExecParams,
+    type VmExecStreamParams as VmExecStreamParams,
+    type VmExecStreamAttachParams as VmExecStreamAttachParams,
+    type VmGetLogsParams as VmGetLogsParams,
     type VmResizeDiskParams as VmResizeDiskParams,
     type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
     type VmUpdateStateParams as VmUpdateStateParams,
