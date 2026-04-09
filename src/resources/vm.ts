@@ -180,6 +180,8 @@ export namespace NewRootRequest {
      */
     kernel_name?: string | null;
 
+    labels?: { [key: string]: string } | null;
+
     /**
      * The RAM size, in MiB.
      */
@@ -214,6 +216,8 @@ export interface Vm {
   state: 'booting' | 'running' | 'paused' | 'sleeping' | 'dead';
 
   vm_id: string;
+
+  labels?: { [key: string]: string } | null;
 }
 
 /**
@@ -600,6 +604,8 @@ export namespace VmCreateRootParams {
      * The kernel name. Currently, must be 'default.bin'
      */
     kernel_name?: string | null;
+
+    labels?: { [key: string]: string } | null;
 
     /**
      * The RAM size, in MiB.

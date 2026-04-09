@@ -167,6 +167,7 @@ describe('resource vm', () => {
         fs_size_mib: 0,
         image_name: 'image_name',
         kernel_name: 'kernel_name',
+        labels: { foo: 'string' },
         mem_size_mib: 0,
         vcpu_count: 0,
       },
