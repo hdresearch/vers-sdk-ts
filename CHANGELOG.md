@@ -1,5 +1,61 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2026-04-12)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/hdresearch/vers-sdk-ts/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Features
+
+* **api:** api update ([f730631](https://github.com/hdresearch/vers-sdk-ts/commit/f730631537cbd7c9b7a725bcc119fdb7486cdc4f))
+* **api:** api update ([7bfa721](https://github.com/hdresearch/vers-sdk-ts/commit/7bfa7217a4f9ac56b37b960a74bf311d3a129da7))
+* **api:** api update ([0582a48](https://github.com/hdresearch/vers-sdk-ts/commit/0582a48f66217d5f00da9cd9c2a5fb2ed895f450))
+* **api:** api update ([797b0e0](https://github.com/hdresearch/vers-sdk-ts/commit/797b0e0da72c39516200db3c5ada5f90787e2885))
+* **api:** api update ([5c730b4](https://github.com/hdresearch/vers-sdk-ts/commit/5c730b4b99459ccdeb93bf2a89dec65d5029e2b0))
+* **api:** api update ([5aa7fad](https://github.com/hdresearch/vers-sdk-ts/commit/5aa7fad385cfea7f1159b55909d6d2417a3ae5b1))
+* **api:** api update ([56b6a9a](https://github.com/hdresearch/vers-sdk-ts/commit/56b6a9aea35c3bd57af8837df2888c4f3b55aa30))
+* **api:** api update ([0bd1858](https://github.com/hdresearch/vers-sdk-ts/commit/0bd185854c7790f8f56733ddd6c521ac50fe9d21))
+* **api:** api update ([1141df5](https://github.com/hdresearch/vers-sdk-ts/commit/1141df50768500153bed0fe78ccfb32f64e64c6b))
+* **api:** api update ([6bcf971](https://github.com/hdresearch/vers-sdk-ts/commit/6bcf9716f0c36e4c772872a581bec0e47e4d4404))
+* **api:** api update ([fc52490](https://github.com/hdresearch/vers-sdk-ts/commit/fc524900e16173d69017d34dfa5f10b5b3c06b44))
+* **api:** api update ([1ae8c01](https://github.com/hdresearch/vers-sdk-ts/commit/1ae8c012a57dce29cc151a625dd60931358e3a6e))
+* **api:** api update ([1f6de59](https://github.com/hdresearch/vers-sdk-ts/commit/1f6de59744d157303efedc36318c48e0764777aa))
+* **api:** api update ([b04e678](https://github.com/hdresearch/vers-sdk-ts/commit/b04e6788e634408d228be93932dcb45df32115d0))
+* **api:** api update ([9037d74](https://github.com/hdresearch/vers-sdk-ts/commit/9037d7413d5c8e331753db9c4f739c576c0cf7a2))
+* **api:** api update ([035cb3d](https://github.com/hdresearch/vers-sdk-ts/commit/035cb3d433eb2afe5c74b15c0af99086af224e7f))
+* **api:** api update ([1481058](https://github.com/hdresearch/vers-sdk-ts/commit/1481058c0b4caed9b19c46633fcc7fc7053b525f))
+* **api:** api update ([d9db4b2](https://github.com/hdresearch/vers-sdk-ts/commit/d9db4b25fa8d19c33b198ecba45291065b2e9dda))
+* **api:** api update ([008f340](https://github.com/hdresearch/vers-sdk-ts/commit/008f3402664bf3c5ed4fb845990e704b815d8c4a))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([0e00216](https://github.com/hdresearch/vers-sdk-ts/commit/0e002167a820d28385f6455402cb625ea6bdb082))
+* **client:** avoid removing abort listener too early ([58ab6ad](https://github.com/hdresearch/vers-sdk-ts/commit/58ab6adcd3ec5684d08f0aac9c627e7d95caa39e))
+* **client:** preserve URL params already embedded in path ([f81f529](https://github.com/hdresearch/vers-sdk-ts/commit/f81f529c86328c8a6894f32af54b3a7cd860e789))
+* **docs/contributing:** correct pnpm link command ([dc349d7](https://github.com/hdresearch/vers-sdk-ts/commit/dc349d7d70e89162644b3d27e22a84629da5e558))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([7c35aff](https://github.com/hdresearch/vers-sdk-ts/commit/7c35aff9c09f504f6d9d190d437eab1d90b74e82))
+* **ci:** skip uploading artifacts on stainless-internal branches ([40fcdee](https://github.com/hdresearch/vers-sdk-ts/commit/40fcdee33ebad820cefb69baef1544e40c4c72f8))
+* **ci:** upgrade `actions/github-script` ([8b6de9a](https://github.com/hdresearch/vers-sdk-ts/commit/8b6de9a2974612830279ff4cc6c4fbb1b6c20c8f))
+* **client:** do not parse responses with empty content-length ([3ba5cf2](https://github.com/hdresearch/vers-sdk-ts/commit/3ba5cf284ccbae102241f5c8c2638a24b8269f28))
+* **client:** restructure abort controller binding ([c751e55](https://github.com/hdresearch/vers-sdk-ts/commit/c751e553c49d30f838771063313ef7ec3c30a400))
+* **internal/client:** fix form-urlencoded requests ([ae1a42d](https://github.com/hdresearch/vers-sdk-ts/commit/ae1a42d5751522ebde53ffea7400889acfe9bf1a))
+* **internal:** avoid type checking errors with ts-reset ([ca98f1f](https://github.com/hdresearch/vers-sdk-ts/commit/ca98f1fb50b8bffb41215f06ea91a4b2a4b19a93))
+* **internal:** codegen related update ([2d0e260](https://github.com/hdresearch/vers-sdk-ts/commit/2d0e260ec70627fc156579ed8ba0ff6fea191644))
+* **internal:** codegen related update ([dac2e8b](https://github.com/hdresearch/vers-sdk-ts/commit/dac2e8b6ee9dff13b3878e56053c89b2328e89bb))
+* **internal:** codegen related update ([c701182](https://github.com/hdresearch/vers-sdk-ts/commit/c7011825abbfb9e5eee35a799e1ab3e9fc7331f1))
+* **internal:** move stringifyQuery implementation to internal function ([681db71](https://github.com/hdresearch/vers-sdk-ts/commit/681db713079a9338ca6cbf5a31cefa8f3846fdd9))
+* **internal:** remove mock server code ([6c9396f](https://github.com/hdresearch/vers-sdk-ts/commit/6c9396ff6cfded24f303b781dad25d1bbaa9355f))
+* **internal:** tweak CI branches ([3304626](https://github.com/hdresearch/vers-sdk-ts/commit/33046268a1520546806893cfe5d955444cbaa1cb))
+* **internal:** update `actions/checkout` version ([e779a77](https://github.com/hdresearch/vers-sdk-ts/commit/e779a77f44c8974808acba580ad2b4fcd90167b4))
+* **internal:** update dependencies to address dependabot vulnerabilities ([6f1b596](https://github.com/hdresearch/vers-sdk-ts/commit/6f1b59665c6125ce9157d8c473bbb717172f8f8d))
+* **internal:** update gitignore ([31f746d](https://github.com/hdresearch/vers-sdk-ts/commit/31f746da38d78fd97b5d2949d259227f26d0f675))
+* **internal:** upgrade babel, qs, js-yaml ([3cf6b9b](https://github.com/hdresearch/vers-sdk-ts/commit/3cf6b9b0dea74eb956655ed0b24b5838fda3d5b4))
+* update mock server docs ([7e27172](https://github.com/hdresearch/vers-sdk-ts/commit/7e271728bc36a2efa6998c79ce3b4a6a94c136b4))
+
 ## 0.1.0-alpha.5 (2026-01-09)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/hdresearch/vers-sdk-ts/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
