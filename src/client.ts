@@ -11,23 +11,89 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
+  CommitTagCreateParams,
+  CommitTagUpdateParams,
+  CommitTags,
+  CreateTagRequest,
+  CreateTagResponse,
+  ListTagsResponse,
+  TagInfo,
+  UpdateTagRequest,
+} from './resources/commit-tags';
+import {
+  CommitInfo,
+  CommitListParentsResponse,
+  CommitUpdateParams,
+  Commits,
+  ListCommitsResponse,
+  UpdateCommitRequest,
+} from './resources/commits';
+import {
+  ListPublicRepositoriesResponse,
+  PublicRepositories,
+  PublicRepositoryGetParams,
+  PublicRepositoryGetTagParams,
+  PublicRepositoryInfo,
+  PublicRepositoryListTagsParams,
+} from './resources/public-repositories';
+import {
+  CreateRepoTagRequest,
+  CreateRepoTagResponse,
+  CreateRepositoryRequest,
+  CreateRepositoryResponse,
+  ForkRepositoryRequest,
+  ForkRepositoryResponse,
+  ListRepoTagsResponse,
+  ListRepositoriesResponse,
+  RepoTagInfo,
+  Repositories,
+  RepositoryCreateParams,
+  RepositoryCreateTagParams,
+  RepositoryDeleteTagParams,
+  RepositoryForkParams,
+  RepositoryGetTagParams,
+  RepositoryInfo,
+  RepositorySetVisibilityParams,
+  RepositoryUpdateTagParams,
+  SetRepositoryVisibilityRequest,
+  UpdateRepoTagRequest,
+} from './resources/repositories';
+import {
   ErrorResponse,
   NewRootRequest,
   NewVmResponse,
+  NewVmsResponse,
   Vm,
+  VmBranchByCommitParams,
+  VmBranchByTagParams,
+  VmBranchByVmParams,
+  VmBranchParams,
   VmCommitParams,
   VmCommitResponse,
   VmCreateRootParams,
   VmDeleteParams,
   VmDeleteResponse,
+  VmExecLogQuery,
+  VmExecLogResponse,
+  VmExecParams,
+  VmExecRequest,
+  VmExecResponse,
+  VmExecStreamAttachParams,
+  VmExecStreamAttachRequest,
+  VmExecStreamParams,
   VmFromCommitRequest,
+  VmGetLogsParams,
   VmListResponse,
+  VmMetadataResponse,
+  VmResizeDiskParams,
+  VmResizeDiskRequest,
   VmResource,
   VmRestoreFromCommitParams,
   VmSSHKeyResponse,
@@ -236,21 +302,8 @@ export class Vers {
   /**
    * Basic re-implementation of `qs.stringify` for primitive types.
    */
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return Object.entries(query)
-      .filter(([_, value]) => typeof value !== 'undefined')
-      .map(([key, value]) => {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-        }
-        if (value === null) {
-          return `${encodeURIComponent(key)}=`;
-        }
-        throw new Errors.VersError(
-          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
-        );
-      })
-      .join('&');
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -282,12 +335,13 @@ export class Vers {
       : new URL(baseURL + (baseURL.endsWith('/') && path.startsWith('/') ? path.slice(1) : path));
 
     const defaultQuery = this.defaultQuery();
-    if (!isEmptyObj(defaultQuery)) {
-      query = { ...defaultQuery, ...query };
+    const pathQuery = Object.fromEntries(url.searchParams);
+    if (!isEmptyObj(defaultQuery) || !isEmptyObj(pathQuery)) {
+      query = { ...pathQuery, ...defaultQuery, ...query };
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -471,7 +525,7 @@ export class Vers {
       loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
-      const errJSON = safeJSON(errText);
+      const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
       loggerFor(this).debug(
@@ -512,9 +566,10 @@ export class Vers {
     controller: AbortController,
   ): Promise<Response> {
     const { signal, method, ...options } = init || {};
-    if (signal) signal.addEventListener('abort', () => controller.abort());
+    const abort = this._makeAbort(controller);
+    if (signal) signal.addEventListener('abort', abort, { once: true });
 
-    const timeout = setTimeout(() => controller.abort(), ms);
+    const timeout = setTimeout(abort, ms);
 
     const isReadableBody =
       ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
@@ -591,9 +646,9 @@ export class Vers {
       }
     }
 
-    // If the API asks us to wait a certain amount of time (and it's a reasonable amount),
-    // just do what it says, but otherwise calculate a default
-    if (!(timeoutMillis && 0 <= timeoutMillis && timeoutMillis < 60 * 1000)) {
+    // If the API asks us to wait a certain amount of time, just do what it
+    // says, but otherwise calculate a default
+    if (timeoutMillis === undefined) {
       const maxRetries = options.maxRetries ?? this.maxRetries;
       timeoutMillis = this.calculateDefaultRetryTimeoutMillis(retriesRemaining, maxRetries);
     }
@@ -681,6 +736,12 @@ export class Vers {
     return headers.values;
   }
 
+  private _makeAbort(controller: AbortController) {
+    // note: we can't just inline this method inside `fetchWithTimeout()` because then the closure
+    //       would capture all request options, and cause a memory leak.
+    return () => controller.abort();
+  }
+
   private buildBody({ options: { body, headers: rawHeaders } }: { options: FinalRequestOptions }): {
     bodyHeaders: HeadersLike;
     body: BodyInit | undefined;
@@ -713,6 +774,14 @@ export class Vers {
         (Symbol.iterator in body && 'next' in body && typeof body.next === 'function'))
     ) {
       return { bodyHeaders: undefined, body: Shims.ReadableStreamFrom(body as AsyncIterable<Uint8Array>) };
+    } else if (
+      typeof body === 'object' &&
+      headers.values.get('content-type') === 'application/x-www-form-urlencoded'
+    ) {
+      return {
+        bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: this.stringifyQuery(body),
+      };
     } else {
       return this.#encoder({ body, headers });
     }
@@ -738,9 +807,17 @@ export class Vers {
   static toFile = Uploads.toFile;
 
   vm: API.VmResource = new API.VmResource(this);
+  commits: API.Commits = new API.Commits(this);
+  commitTags: API.CommitTags = new API.CommitTags(this);
+  repositories: API.Repositories = new API.Repositories(this);
+  publicRepositories: API.PublicRepositories = new API.PublicRepositories(this);
 }
 
 Vers.VmResource = VmResource;
+Vers.Commits = Commits;
+Vers.CommitTags = CommitTags;
+Vers.Repositories = Repositories;
+Vers.PublicRepositories = PublicRepositories;
 
 export declare namespace Vers {
   export type RequestOptions = Opts.RequestOptions;
@@ -750,17 +827,86 @@ export declare namespace Vers {
     type ErrorResponse as ErrorResponse,
     type NewRootRequest as NewRootRequest,
     type NewVmResponse as NewVmResponse,
+    type NewVmsResponse as NewVmsResponse,
     type Vm as Vm,
     type VmCommitResponse as VmCommitResponse,
     type VmDeleteResponse as VmDeleteResponse,
+    type VmExecLogQuery as VmExecLogQuery,
+    type VmExecLogResponse as VmExecLogResponse,
+    type VmExecRequest as VmExecRequest,
+    type VmExecResponse as VmExecResponse,
+    type VmExecStreamAttachRequest as VmExecStreamAttachRequest,
     type VmFromCommitRequest as VmFromCommitRequest,
+    type VmMetadataResponse as VmMetadataResponse,
+    type VmResizeDiskRequest as VmResizeDiskRequest,
     type VmSSHKeyResponse as VmSSHKeyResponse,
     type VmUpdateStateRequest as VmUpdateStateRequest,
     type VmListResponse as VmListResponse,
     type VmDeleteParams as VmDeleteParams,
+    type VmBranchParams as VmBranchParams,
+    type VmBranchByCommitParams as VmBranchByCommitParams,
+    type VmBranchByTagParams as VmBranchByTagParams,
+    type VmBranchByVmParams as VmBranchByVmParams,
     type VmCommitParams as VmCommitParams,
     type VmCreateRootParams as VmCreateRootParams,
+    type VmExecParams as VmExecParams,
+    type VmExecStreamParams as VmExecStreamParams,
+    type VmExecStreamAttachParams as VmExecStreamAttachParams,
+    type VmGetLogsParams as VmGetLogsParams,
+    type VmResizeDiskParams as VmResizeDiskParams,
     type VmRestoreFromCommitParams as VmRestoreFromCommitParams,
     type VmUpdateStateParams as VmUpdateStateParams,
+  };
+
+  export {
+    Commits as Commits,
+    type CommitInfo as CommitInfo,
+    type ListCommitsResponse as ListCommitsResponse,
+    type UpdateCommitRequest as UpdateCommitRequest,
+    type CommitListParentsResponse as CommitListParentsResponse,
+    type CommitUpdateParams as CommitUpdateParams,
+  };
+
+  export {
+    CommitTags as CommitTags,
+    type CreateTagRequest as CreateTagRequest,
+    type CreateTagResponse as CreateTagResponse,
+    type ListTagsResponse as ListTagsResponse,
+    type TagInfo as TagInfo,
+    type UpdateTagRequest as UpdateTagRequest,
+    type CommitTagCreateParams as CommitTagCreateParams,
+    type CommitTagUpdateParams as CommitTagUpdateParams,
+  };
+
+  export {
+    Repositories as Repositories,
+    type CreateRepoTagRequest as CreateRepoTagRequest,
+    type CreateRepoTagResponse as CreateRepoTagResponse,
+    type CreateRepositoryRequest as CreateRepositoryRequest,
+    type CreateRepositoryResponse as CreateRepositoryResponse,
+    type ForkRepositoryRequest as ForkRepositoryRequest,
+    type ForkRepositoryResponse as ForkRepositoryResponse,
+    type ListRepoTagsResponse as ListRepoTagsResponse,
+    type ListRepositoriesResponse as ListRepositoriesResponse,
+    type RepoTagInfo as RepoTagInfo,
+    type RepositoryInfo as RepositoryInfo,
+    type SetRepositoryVisibilityRequest as SetRepositoryVisibilityRequest,
+    type UpdateRepoTagRequest as UpdateRepoTagRequest,
+    type RepositoryCreateParams as RepositoryCreateParams,
+    type RepositoryCreateTagParams as RepositoryCreateTagParams,
+    type RepositoryDeleteTagParams as RepositoryDeleteTagParams,
+    type RepositoryForkParams as RepositoryForkParams,
+    type RepositoryGetTagParams as RepositoryGetTagParams,
+    type RepositorySetVisibilityParams as RepositorySetVisibilityParams,
+    type RepositoryUpdateTagParams as RepositoryUpdateTagParams,
+  };
+
+  export {
+    PublicRepositories as PublicRepositories,
+    type ListPublicRepositoriesResponse as ListPublicRepositoriesResponse,
+    type PublicRepositoryInfo as PublicRepositoryInfo,
+    type PublicRepositoryGetParams as PublicRepositoryGetParams,
+    type PublicRepositoryGetTagParams as PublicRepositoryGetTagParams,
+    type PublicRepositoryListTagsParams as PublicRepositoryListTagsParams,
   };
 }
