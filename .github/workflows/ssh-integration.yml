@@ -2,17 +2,11 @@ name: SSH Integration Tests
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'src/lib/**'
-      - 'tests/lib/**'
-      - 'examples/ssh.ts'
+    branches-ignore:
+      - 'generated'
+      - 'codegen/**'
+      - 'stainless/**'
   pull_request:
-    paths:
-      - 'src/lib/**'
-      - 'tests/lib/**'
-      - 'examples/ssh.ts'
   workflow_dispatch:
 
 jobs:
